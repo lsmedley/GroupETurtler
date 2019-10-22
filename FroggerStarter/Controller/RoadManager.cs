@@ -40,13 +40,13 @@ namespace FroggerStarter.Controller
             this.Lanes = new List<LaneManager>();
             for (var i = 0; i < numLanes; i++)
             {
-                var l = new LaneManager(trafficFlow[i].Item1, trafficFlow[i].Item2);
+                var lane = new LaneManager(trafficFlow[i].Item1, trafficFlow[i].Item2);
                 for (var j = 0; j < vehicles[i].Item1; j++)
                 {
-                    l.AddVehicle(vehicles[i].Item2);
+                    lane.AddVehicle(vehicles[i].Item2);
                 }
 
-                this.Lanes.Add(l);
+                this.Lanes.Add(lane);
             }
 
         }
@@ -62,7 +62,7 @@ namespace FroggerStarter.Controller
             for (var i = 0; i < this.Lanes.Count; i++)
             {
                 this.Lanes[i].SetVehicleYs(totalHeight - LaneHeight * (i + 1) + VehicleOffset);
-                this.Lanes[i].SetVehicleXs(laneLength);
+                this.Lanes[i].PlaceAllVehiclesInLane(laneLength);
             }
         }
 
@@ -85,17 +85,17 @@ namespace FroggerStarter.Controller
 
         private void moveLaneVehicles(double laneLen)
         {
-            foreach (var l in this.Lanes)
+            foreach (var lane in this.Lanes)
             {
-                l.MoveVehicles(laneLen);
+                lane.MoveVehicles(laneLen);
             }
         }
 
         private void speedUpLanes()
         {
-            foreach (var l in this.Lanes)
+            foreach (var lane in this.Lanes)
             {
-                l.SpeedUp();
+                lane.SpeedUp();
             }
         }
 
@@ -104,9 +104,9 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void ResetLanes()
         {
-            foreach (var l in this.Lanes)
+            foreach (var lane in this.Lanes)
             {
-                l.ResetSpeed();
+                lane.ResetSpeed();
             }
         }
 
@@ -119,9 +119,9 @@ namespace FroggerStarter.Controller
         {
             var isCol = false;
 
-            foreach (var l in this.Lanes)
+            foreach (var lane in this.Lanes)
             {
-                if (l.CheckCollision(g))
+                if (lane.CheckCollision(g))
                 {
                     isCol = true;
                 }

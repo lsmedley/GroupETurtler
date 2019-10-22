@@ -59,7 +59,7 @@ namespace FroggerStarter.Controller
         /// Postcondition: Each vehicle is at an algorithmically computed X value.
         /// </summary>
         /// <param name="laneLength">Length of the lane.</param>
-        public void SetVehicleXs(double laneLength)
+        public void PlaceAllVehiclesInLane(double laneLength)
         {
             var space = this.GetSpacing(laneLength);
             double curX;
