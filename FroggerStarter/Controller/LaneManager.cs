@@ -146,7 +146,7 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         /// Speeds up all Vehicles in the lane.
-        /// Postcondition: All Vehicles in the lane are going 5 pixels faster.
+        /// Postcondition: This.Speed += 1, all vehicles are moving at the new speed.
         /// </summary>
         public void SpeedUp()
         {

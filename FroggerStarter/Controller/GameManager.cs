@@ -1,8 +1,8 @@
-﻿using FroggerStarter.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
 {
@@ -17,41 +17,35 @@ namespace FroggerStarter.Controller
         private const int BottomLaneOffset = 5;
         private const int TopOfGameOffset = 100;
         private const int TileHeight = 50;
+        private const int LaneNum = 5;
+
         private readonly double roadHeight;
         private readonly double backgroundWidth;
-        private Canvas gameCanvas;
 
+        private Canvas gameCanvas;
         private DispatcherTimer timer;
-        private const int LaneNum = 5;
         private RoadManager rm;
         private PlayerManager player;
-        /// <summary>
-        /// Gets the lives the player has left.
-        /// </summary>
-        /// <value>
-        /// The lives.
-        /// </value>
-        public int Lives => this.player.Lives;
-        /// <summary>
-        /// Gets the score of the player.
-        /// </summary>
-        /// <value>
-        /// The score.
-        /// </value>
-        public int Score => this.player.Score;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
-        /// Occurs when [lives updated].
+        ///     Gets the lives the player has left.
         /// </summary>
-        public event  EventHandler<EventArgs> LivesUpdated;
+        /// <value>
+        ///     The lives.
+        /// </value>
+        public int Lives => this.player.Lives;
+
         /// <summary>
-        /// Occurs when [score updated].
+        ///     Gets the score of the player.
         /// </summary>
-        public event EventHandler<EventArgs> ScoreUpdated;
-        /// <summary>
-        /// Occurs when [game over].
-        /// </summary>
-        public event EventHandler<EventArgs> GameOver; 
+        /// <value>
+        ///     The score.
+        /// </value>
+        public int Score => this.player.Score;
 
         #endregion
 
@@ -85,6 +79,25 @@ namespace FroggerStarter.Controller
             this.setupGameTimer();
         }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     Occurs when [lives updated].
+        /// </summary>
+        public event EventHandler<EventArgs> LivesUpdated;
+
+        /// <summary>
+        ///     Occurs when [score updated].
+        /// </summary>
+        public event EventHandler<EventArgs> ScoreUpdated;
+
+        /// <summary>
+        ///     Occurs when [game over].
+        /// </summary>
+        public event EventHandler<EventArgs> GameOver;
+
         private void createRoadManager()
         {
             var traffic = new List<(int, VehicleType)> {
@@ -105,10 +118,6 @@ namespace FroggerStarter.Controller
             this.rm.SetUpLanes(this.roadHeight, this.backgroundWidth);
             this.initializeRoad();
         }
-
-        #endregion
-
-        #region Methods
 
         private void setupGameTimer()
         {
@@ -209,7 +218,7 @@ namespace FroggerStarter.Controller
         public void MovePlayerUp()
         {
             this.player.MoveUp(TopOfGameOffset);
-            
+
             this.checkVictory();
         }
 
@@ -240,14 +249,13 @@ namespace FroggerStarter.Controller
             this.timer.Stop();
             this.onGameOver();
         }
-        #endregion
 
-         private void onLivesUpdated()
+        private void onLivesUpdated()
         {
             this.LivesUpdated?.Invoke(this, EventArgs.Empty);
         }
 
-        private  void onScoreUpdated()
+        private void onScoreUpdated()
         {
             this.ScoreUpdated?.Invoke(this, EventArgs.Empty);
         }
@@ -256,5 +264,7 @@ namespace FroggerStarter.Controller
         {
             this.GameOver?.Invoke(this, EventArgs.Empty);
         }
+
+        #endregion
     }
 }
