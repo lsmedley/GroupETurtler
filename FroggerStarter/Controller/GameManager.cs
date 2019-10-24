@@ -144,12 +144,16 @@ namespace FroggerStarter.Controller
 
         private void initializeRoad()
         {
-            foreach (var t in this.rm.Lanes)
+            //foreach (var t in this.rm.Lanes)
+            //{
+            //    foreach (var v in t.GetEnumerator())
+            //    {
+            //        this.gameCanvas.Children.Add(v.Sprite);
+            //    }
+            //}
+            foreach (var vehicle in this.rm)
             {
-                foreach (var v in t.Vehicles)
-                {
-                    this.gameCanvas.Children.Add(v.Sprite);
-                }
+                this.gameCanvas.Children.Add(vehicle.Sprite);
             }
         }
 

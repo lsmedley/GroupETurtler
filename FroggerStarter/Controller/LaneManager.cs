@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
@@ -6,7 +7,7 @@ namespace FroggerStarter.Controller
     /// <summary>
     ///     Manages vehicles in a lane.
     /// </summary>
-    public class LaneManager
+    public class LaneManager : IEnumerable<Vehicle>
     {
         /// <summary>
         /// Gets or sets the speed.
@@ -29,7 +30,7 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// The vehicles driving in this lane.
         /// </summary>
-        public readonly IList<Vehicle> Vehicles;
+        private readonly List<Vehicle> vehicles;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LaneManager"/> class.
@@ -41,17 +42,19 @@ namespace FroggerStarter.Controller
             this.Speed = startSpeed;
             this.StartSpeed = startSpeed;
             this.Direction = dir;
-            this.Vehicles = new List<Vehicle>();
+            this.vehicles = new List<Vehicle>();
         }
+
+       
 
         /// <summary>
         /// Adds a vehicle.
-        /// Postcondition: this.Vehicles += a vehicle with the given type and the same speed and direction as this lane.
+        /// Postcondition: this.vehicles += a vehicle with the given type and the same speed and direction as this lane.
         /// </summary>
         /// <param name="type">The type of the vehicle.</param>
         public void AddVehicle(VehicleType type)
         {
-            this.Vehicles.Add(new Vehicle(type, this.Direction, this.Speed));
+            this.vehicles.Add(new Vehicle(type, this.Direction, this.Speed));
         }
 
         /// <summary>
@@ -72,7 +75,7 @@ namespace FroggerStarter.Controller
                 curX = laneLength;
             }
 
-            foreach (var v in this.Vehicles)
+            foreach (var v in this.vehicles)
             {
                 v.X = curX;
 
@@ -95,68 +98,62 @@ namespace FroggerStarter.Controller
         /// <param name="y">The y.</param>
         public void SetVehicleYs(double y)
         {
-            foreach (var v in this.Vehicles)
+            foreach (var v in this.vehicles)
             {
                 v.Y = y;
             }
         }
 
         /// <summary>
-        /// Gets the space between Vehicles.
+        /// Gets the space between vehicles.
         /// </summary>
         /// <param name="laneLength">Length of the lane.</param>
-        /// <returns>The space between Vehicles</returns>
+        /// <returns>The space between vehicles</returns>
         public double GetSpacing(double laneLength)
         {
             double totalCarLen = 0;
-            foreach (var v in this.Vehicles)
+            foreach (var v in this.vehicles)
             {
                 totalCarLen += v.Width;
             }
 
-            return (laneLength - totalCarLen) / this.Vehicles.Count;
+            return (laneLength - totalCarLen) / this.vehicles.Count;
         }
 
         /// <summary>
-        /// Moves the Vehicles.
-        /// Postcondition: Each vehicle has been moved an amount equal to its SpeedX in the direction of the lane.
+        /// Moves the vehicles.
+        /// Postcondition: Each vehicle has been moved an amount equal to its SpeedX in the direction of the vehicle.
         /// </summary>
         public void MoveVehicles(double laneLength)
         {
-            foreach (var v in this.Vehicles)
+            foreach (var v in this.vehicles)
             {
-                if (this.Direction == Direction.Left)
+                v.MoveForward();
+                if (v.X < 0 - v.Width)
                 {
-                    v.MoveLeft();
-                    if (v.X < 0 - v.Width)
-                    {
-                        v.X = laneLength;
-                    }
+                    v.X = laneLength;
                 }
-                else
+
+                if (v.X > laneLength)
                 {
-                    v.MoveRight();
-                    if (v.X > laneLength)
-                    {
-                        v.X = 0 - v.Width;
-                    }
+                    v.X = 0 - v.Width;
                 }
             }
         }
 
         /// <summary>
-        /// Speeds up all Vehicles in the lane.
+        /// Speeds up all vehicles in the lane.
         /// Postcondition: This.Speed += 1, all vehicles are moving at the new speed.
         /// </summary>
-        public void SpeedUp()
+        public void SpeedUp(int speedInc)
         {
-            this.Speed += 1;
+            this.Speed += speedInc;
             this.updateVehicleSpeed();
         }
 
         /// <summary>
-        /// Resets the speed of all Vehicles to the starting speed.
-        /// Postcondition: All Vehicles are going the starting speed for this lane.
+        /// Resets the speed of all vehicles to the starting speed.
+        /// Postcondition: All vehicles are going the starting speed for this lane.
         /// </summary>
         public void ResetSpeed()
         {
@@ -166,7 +163,7 @@ namespace FroggerStarter.Controller
 
         private void updateVehicleSpeed()
         {
-            foreach (var v in this.Vehicles)
+            foreach (var v in this.vehicles)
             {
                 v.ChangeSpeed(this.Speed);
             }
@@ -180,7 +177,7 @@ namespace FroggerStarter.Controller
         public bool CheckCollision(GameObject g)
         {
 
-            foreach (var v in this.Vehicles)
+            foreach (var v in this.vehicles)
             {
                 if (v.IsColliding(g))
                 {
@@ -190,6 +187,15 @@ namespace FroggerStarter.Controller
 
             return false;
         }
-    
+
+        public IEnumerator<Vehicle> GetEnumerator()
+        {
+            return ((IEnumerable<Vehicle>)this.vehicles).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<Vehicle>)this.vehicles).GetEnumerator();
+        }
     }
 }

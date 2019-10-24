@@ -1,5 +1,6 @@
 ﻿using FroggerStarter.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace FroggerStarter.Controller
@@ -7,12 +8,12 @@ namespace FroggerStarter.Controller
     /// <summary>
     ///     Manages lanes in a road.
     /// </summary>
-    public class RoadManager
+    public class RoadManager : IEnumerable<Vehicle>
     {
         /// <summary>
         /// The lanes
         /// </summary>
-        public readonly IList<LaneManager> Lanes;
+        private readonly IList<LaneManager> lanes;
         private int currentTick;
         private const int SpeedUpTick = 150;
 
@@ -21,23 +22,23 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RoadManager"/> class.
-        /// Postcondition: Lanes.count == numLanes, Lanes[i] contains vehicles matching vehicles[i],
-        /// and Lanes[i].Direction == trafficFlow[i].Direction and Lanes[i].startSpeed == trafficFlow[i].int
+        /// Postcondition: lanes.count == numLanes, lanes[i] contains vehicles matching vehicles[i],
+        /// and lanes[i].Direction == trafficFlow[i].Direction and lanes[i].startSpeed == trafficFlow[i].int
         /// </summary>
-        /// <param name="numLanes">The number Lanes.</param>
+        /// <param name="numLanes">The number lanes.</param>
         /// <param name="vehicles">The number and type of vehicles for each lane.</param>
         /// <param name="trafficFlow">The direction and speed of traffic for each lane.</param>
-        /// <exception cref="Exception">Number of Lanes must equal number of lane definitions</exception>
+        /// <exception cref="Exception">Number of lanes must equal number of lane definitions</exception>
         public RoadManager(int numLanes, IList<(int, VehicleType)> vehicles, IList<(int, Direction)> trafficFlow)
         {
             if (vehicles.Count != numLanes || trafficFlow.Count != numLanes)
             {
-                throw new Exception("Number of Lanes must equal number of lane definitions");
+                throw new Exception("Number of lanes must equal number of lane definitions");
             }
 
             this.currentTick = 0;
 
-            this.Lanes = new List<LaneManager>();
+            this.lanes = new List<LaneManager>();
             for (var i = 0; i < numLanes; i++)
             {
                 var lane = new LaneManager(trafficFlow[i].Item1, trafficFlow[i].Item2);
@@ -46,7 +47,7 @@ namespace FroggerStarter.Controller
                     lane.AddVehicle(vehicles[i].Item2);
                 }
 
-                this.Lanes.Add(lane);
+                this.lanes.Add(lane);
             }
 
         }
@@ -59,10 +60,10 @@ namespace FroggerStarter.Controller
         /// <param name="laneLength">Length of the lane.</param>
         public void SetUpLanes(double totalHeight, double laneLength)
         {
-            for (var i = 0; i < this.Lanes.Count; i++)
+            for (var i = 0; i < this.lanes.Count; i++)
             {
-                this.Lanes[i].SetVehicleYs(totalHeight - LaneHeight * (i + 1) + VehicleOffset);
-                this.Lanes[i].PlaceAllVehiclesInLane(laneLength);
+                this.lanes[i].SetVehicleYs(totalHeight - LaneHeight * (i + 1) + VehicleOffset);
+                this.lanes[i].PlaceAllVehiclesInLane(laneLength);
             }
         }
 
@@ -76,7 +77,7 @@ namespace FroggerStarter.Controller
             this.currentTick++;
             if (this.currentTick == SpeedUpTick)
             {
-                this.speedUpLanes();
+                this.speedUpLanes(1);
                 this.currentTick = 0;
             }
 
@@ -85,17 +86,17 @@ namespace FroggerStarter.Controller
 
         private void moveLaneVehicles(double laneLen)
         {
-            foreach (var lane in this.Lanes)
+            foreach (var lane in this.lanes)
             {
                 lane.MoveVehicles(laneLen);
             }
         }
 
-        private void speedUpLanes()
+        private void speedUpLanes(int inc)
         {
-            foreach (var lane in this.Lanes)
+            foreach (var lane in this.lanes)
             {
-                lane.SpeedUp();
+                lane.SpeedUp(inc);
             }
         }
 
@@ -104,7 +105,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void ResetLanes()
         {
-            foreach (var lane in this.Lanes)
+            foreach (var lane in this.lanes)
             {
                 lane.ResetSpeed();
             }
@@ -119,7 +120,7 @@ namespace FroggerStarter.Controller
         {
             var isCol = false;
 
-            foreach (var lane in this.Lanes)
+            foreach (var lane in this.lanes)
             {
                 if (lane.CheckCollision(g))
                 {
@@ -130,5 +131,26 @@ namespace FroggerStarter.Controller
             return isCol;
         }
 
+        public IEnumerator<Vehicle> GetEnumerator()
+        {
+            foreach(var lane in this.lanes)
+            {
+                foreach(var vehicle in lane)
+                {
+                    yield return vehicle;
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            foreach (var lane in this.lanes)
+            {
+                foreach (var vehicle in lane)
+                {
+                    yield return vehicle;
+                }
+            }
+        }
     }
 }
