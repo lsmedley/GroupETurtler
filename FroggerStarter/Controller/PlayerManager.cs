@@ -31,10 +31,11 @@ namespace FroggerStarter.Controller
         /// Postcondition: this.Player is a new instance of <see cref="Turtle"/> class, this.Lives == 3,
         /// this.Score == 0.
         /// </summary>
-        public PlayerManager()
+        /// <param name="lives"></param>
+        public PlayerManager(int lives)
         {
             this.Player = new Turtle();
-            this.Lives = 3;
+            this.Lives = lives;
             this.Score = 0;
         }
 

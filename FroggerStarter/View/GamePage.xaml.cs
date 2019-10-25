@@ -48,7 +48,7 @@ namespace FroggerStarter.View
 
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
             this.gameManager = new GameManager(this.applicationHeight, this.applicationWidth);
-            this.gameManager.InitializeGame(this.canvas);
+            this.gameManager.InitializeGame(this.canvas, new GameSettings(4, 20));
 
             this.livesTextBlock = new TextBlock {Text = $"Lives: {this.gameManager.Lives.ToString()}"};
             this.scoreTextBlock = new TextBlock {Text = $"Score: {this.gameManager.Score.ToString()}"};

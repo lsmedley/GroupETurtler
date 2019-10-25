@@ -14,6 +14,19 @@ namespace FroggerStarter.Controller
     {
         #region Data members
 
+        /// <summary>
+        ///     Occurs when [lives updated].
+        /// </summary>
+        public event EventHandler<EventArgs> LivesUpdated;
+        /// <summary>
+        ///     Occurs when [score updated].
+        /// </summary>
+        public event EventHandler<EventArgs> ScoreUpdated;
+        /// <summary>
+        ///     Occurs when [game over].
+        /// </summary>
+        public event EventHandler<EventArgs> GameOver;
+
         private const int BottomLaneOffset = 5;
         private const int TopOfGameOffset = 100;
         private const int TileHeight = 50;
@@ -76,27 +89,12 @@ namespace FroggerStarter.Controller
             this.backgroundWidth = backgroundWidth;
             this.roadHeight = backgroundHeight - BottomLaneOffset - TileHeight;
 
-            this.setupGameTimer();
+            this.setupGameClock();
         }
 
         #endregion
 
         #region Methods
-
-        /// <summary>
-        ///     Occurs when [lives updated].
-        /// </summary>
-        public event EventHandler<EventArgs> LivesUpdated;
-
-        /// <summary>
-        ///     Occurs when [score updated].
-        /// </summary>
-        public event EventHandler<EventArgs> ScoreUpdated;
-
-        /// <summary>
-        ///     Occurs when [game over].
-        /// </summary>
-        public event EventHandler<EventArgs> GameOver;
 
         private void createRoadManager()
         {
@@ -127,7 +125,7 @@ namespace FroggerStarter.Controller
             this.initializeRoad();
         }
 
-        private void setupGameTimer()
+        private void setupGameClock()
         {
             this.timer = new DispatcherTimer();
             this.timer.Tick += this.timerOnTick;
@@ -143,10 +141,10 @@ namespace FroggerStarter.Controller
         /// </summary>
         /// <param name="gamePage">The game page.</param>
         /// <exception cref="ArgumentNullException">gameCanvas</exception>
-        public void InitializeGame(Canvas gamePage)
+        public void InitializeGame(Canvas gamePage, GameSettings gameSet)
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
-            this.createAndPlacePlayer();
+            this.createAndPlacePlayer(gameSet.PlayerLives);
             this.createRoadManager();
         }
 
@@ -165,9 +163,9 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void createAndPlacePlayer()
+        private void createAndPlacePlayer(int lives)
         {
-            this.player = new PlayerManager();
+            this.player = new PlayerManager(lives);
             this.gameCanvas.Children.Add(this.player.Player.Sprite);
 
             this.setPlayerToCenterOfBottomLane();
