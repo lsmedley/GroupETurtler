@@ -107,14 +107,22 @@ namespace FroggerStarter.Controller
                 (2, VehicleType.Bus),
                 (3, VehicleType.Car)
             };
-            var flow = new List<(int, Direction)> {
-                (1, Direction.Left),
-                (2, Direction.Right),
-                (3, Direction.Left),
-                (4, Direction.Left),
-                (5, Direction.Right)
+            var flow = new List<Direction> {
+                Direction.Left,
+                Direction.Right,
+                Direction.Left,
+                Direction.Left,
+                Direction.Right
             };
-            this.rm = new RoadManager(LaneNum, traffic, flow);
+            var speeds = new List<int> {
+                1,
+                2,
+                3,
+                4,
+                5
+            };
+            LaneSettings laneset = new LaneSettings(traffic, flow, speeds);
+            this.rm = new RoadManager(laneset);
             this.rm.SetUpLanes(this.roadHeight, this.backgroundWidth);
             this.initializeRoad();
         }

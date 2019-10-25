@@ -29,22 +29,24 @@ namespace FroggerStarter.Controller
         /// <param name="vehicles">The number and type of vehicles for each lane.</param>
         /// <param name="trafficFlow">The direction and speed of traffic for each lane.</param>
         /// <exception cref="Exception">Number of lanes must equal number of lane definitions</exception>
-        public RoadManager(int numLanes, IList<(int, VehicleType)> vehicles, IList<(int, Direction)> trafficFlow)
+        public RoadManager(LaneSettings laneset)
         {
-            if (vehicles.Count != numLanes || trafficFlow.Count != numLanes)
+            if (laneset.Vehicles.Count != laneset.TrafficDirections.Count 
+                || laneset.Vehicles.Count != laneset.TrafficSpeeds.Count 
+                || laneset.TrafficDirections.Count != laneset.TrafficSpeeds.Count)
             {
-                throw new Exception("Number of lanes must equal number of lane definitions");
+                throw new Exception("Each lane must be fully defined");
             }
 
             this.currentTick = 0;
 
             this.lanes = new List<LaneManager>();
-            for (var i = 0; i < numLanes; i++)
+            for (var i = 0; i < laneset.Vehicles.Count; i++)
             {
-                var lane = new LaneManager(trafficFlow[i].Item1, trafficFlow[i].Item2);
-                for (var j = 0; j < vehicles[i].Item1; j++)
+                var lane = new LaneManager(laneset.TrafficSpeeds[i], laneset.TrafficDirections[i]);
+                for (var j = 0; j < laneset.Vehicles[i].Item1; j++)
                 {
-                    lane.AddVehicle(vehicles[i].Item2);
+                    lane.AddVehicle(laneset.Vehicles[i].Item2);
                 }
 
                 this.lanes.Add(lane);
