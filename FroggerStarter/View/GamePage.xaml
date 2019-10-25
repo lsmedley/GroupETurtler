@@ -7,6 +7,11 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <SolidColorBrush x:Key="pipeColor" Color="Green" />
+        <SolidColorBrush x:Key="holeColor" Color="Black" />
+    </Page.Resources>
+
     <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}" Background="Black">
         <Rectangle Canvas.Top="55" Fill="Gray" Width="{StaticResource AppWidth}" Height="50" />
 

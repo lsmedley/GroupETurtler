@@ -22,7 +22,14 @@ namespace FroggerStarter.Controller
         /// <value>
         /// The score of the player.
         /// </value>
-        public int Score { get; private set; }
+        public int ScoresMade { get; private set; }
+        /// <summary>
+        /// Gets the scores to win.
+        /// </summary>
+        /// <value>
+        /// The scores to win.
+        /// </value>
+        public int ScoresToWin { get; }
         /// <summary>
         /// The player gameObject.
         /// </summary>
@@ -40,14 +47,15 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerManager"/> class.
         /// Postcondition: this.Player is a new instance of <see cref="Turtle"/> class, this.Lives == 3,
-        /// this.Score == 0.
+        /// this.ScoresMade == 0.
         /// </summary>
         /// <param name="lives"></param>
-        public PlayerManager(int lives)
+        public PlayerManager(int lives, int winScore)
         {
             this.Disabled = false;
             this.Lives = lives;
-            this.Score = 0;
+            this.ScoresToWin = winScore;
+            this.ScoresMade = 0;
             this.PlayerSprites = new List<BaseSprite>();
             this.setUpSprites();
             this.Player = new Turtle();
@@ -96,7 +104,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MoveLeft()
         {
-            if (this.Player.X > 0 && this.Lives > 0 && this.Score < 3 && !this.Disabled)
+            if (this.Player.X > 0 && this.Lives > 0 && this.ScoresMade < this.ScoresToWin && !this.Disabled)
             {
                 this.Player.MoveLeft();
             }
@@ -108,7 +116,7 @@ namespace FroggerStarter.Controller
         /// <param name="maxRight">The maximum distance right.</param>
         public void MoveRight(double maxRight)
         {
-            if (this.Player.X < maxRight - this.Player.Width && this.Lives > 0 && this.Score < 3 && !this.Disabled)
+            if (this.Player.X < maxRight - this.Player.Width && this.Lives > 0 && this.ScoresMade < this.ScoresToWin && !this.Disabled)
             {
                 this.Player.MoveRight();
             }
@@ -120,7 +128,7 @@ namespace FroggerStarter.Controller
         /// <param name="topOfGameOffset">The highest point that the player can go.</param>
         public void MoveUp(int topOfGameOffset)
         {
-            if (this.Player.Y > topOfGameOffset && this.Lives > 0 && this.Score < 3 && !this.Disabled)
+            if (this.Player.Y > topOfGameOffset && this.Lives > 0 && this.ScoresMade < this.ScoresToWin && !this.Disabled)
             {
                 this.Player.MoveUp();
             }
@@ -132,7 +140,7 @@ namespace FroggerStarter.Controller
         /// <param name="roadHeight">Maximum distance that the player can move down.</param>
         public void MoveDown(double roadHeight)
         {
-            if (this.Player.Y < roadHeight && this.Lives > 0 && this.Score < 3 && !this.Disabled)
+            if (this.Player.Y < roadHeight && this.Lives > 0 && this.ScoresMade < this.ScoresToWin && !this.Disabled)
             {
                 this.Player.MoveDown();
             }
@@ -149,7 +157,7 @@ namespace FroggerStarter.Controller
             var isWin = false;
             if (this.Player.Y <= winHeight)
             {
-                this.Score++;
+                this.ScoresMade++;
                 isWin = true;
             }
 

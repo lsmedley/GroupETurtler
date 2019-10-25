@@ -120,11 +120,13 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controller\GameSettings.cs" />
+    <Compile Include="Controller\HomeManager.cs" />
     <Compile Include="Controller\LaneSettings.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\RoadManager.cs" />
     <Compile Include="Model\Direction.cs" />
     <Compile Include="Controller\LaneManager.cs" />
+    <Compile Include="Model\HomeSpace.cs" />
     <Compile Include="Model\Vehicle.cs" />
     <Compile Include="Model\Turtle.cs" />
     <Compile Include="Controller\GameManager.cs" />
@@ -154,6 +156,9 @@
     </Compile>
     <Compile Include="View\Sprites\DeathSprite4.xaml.cs">
       <DependentUpon>DeathSprite4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\HomeSprite.xaml.cs">
+      <DependentUpon>HomeSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\TurtleSprite.xaml.cs">
       <DependentUpon>TurtleSprite.xaml</DependentUpon>
@@ -209,6 +214,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\DeathSprite4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\HomeSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

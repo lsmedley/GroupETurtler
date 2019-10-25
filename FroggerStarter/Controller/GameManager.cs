@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using FroggerStarter.Model;
+using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Controller
 {
@@ -40,6 +41,8 @@ namespace FroggerStarter.Controller
         private DispatcherTimer deathTimer;
         private RoadManager rm;
         private PlayerManager player;
+        private HomeManager homes;
+        private IList<TurtleSprite> takenTokens;
 
         #endregion
 
@@ -54,12 +57,12 @@ namespace FroggerStarter.Controller
         public int Lives => this.player.Lives;
 
         /// <summary>
-        ///     Gets the score of the player.
+        ///     Gets the scores made by the player.
         /// </summary>
         /// <value>
-        ///     The score.
+        ///     The number of scores made by the player.
         /// </value>
-        public int Score => this.player.Score;
+        public int ScoresMade => this.player.ScoresMade;
 
         #endregion
 
@@ -104,18 +107,48 @@ namespace FroggerStarter.Controller
         #region Methods
 
         /// <summary>
-        ///     Initializes the game working with appropriate classes to play frog
-        ///     and vehicle on game screen.
-        ///     Precondition: background != null
-        ///     Postcondition: Game is initialized and ready for play.
+        /// Initializes the game working with appropriate classes to play frog
+        /// and vehicle on game screen.
+        /// Precondition: background != null
+        /// Postcondition: Game is initialized and ready for play.
         /// </summary>
         /// <param name="gamePage">The game page.</param>
+        /// <param name="gameSet">The game settings.</param>
         /// <exception cref="ArgumentNullException">gameCanvas</exception>
         public void InitializeGame(Canvas gamePage, GameSettings gameSet)
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
-            this.createAndPlacePlayer(gameSet.PlayerLives);
             this.createRoadManager();
+            this.createHomeManager(gameSet.ScoresToWin);
+            this.createTakenTokens(gameSet.ScoresToWin);
+            this.createAndPlacePlayer(gameSet.PlayerLives, gameSet.ScoresToWin);
+        }
+
+        private void createTakenTokens(int scoresToWin)
+        {
+            this.takenTokens = new List<TurtleSprite>();
+            foreach (var home in this.homes)
+            {
+                var tToken = new TurtleSprite();
+                tToken.RenderAt(home.X, home.Y);
+                this.takenTokens.Add(tToken);
+            }
+
+            foreach (var tToken in this.takenTokens)
+            {
+                this.gameCanvas.Children.Add(tToken);
+                tToken.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void createHomeManager(int homeNum)
+        {
+            this.homes = new HomeManager(0, this.backgroundWidth, homeNum);
+            foreach (var home in this.homes)
+            {
+                this.gameCanvas.Children.Add(home.Sprite);
+            }
+
         }
 
         private void createRoadManager()
@@ -177,9 +210,9 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void createAndPlacePlayer(int lives)
+        private void createAndPlacePlayer(int lives, int score)
         {
-            this.player = new PlayerManager(lives);
+            this.player = new PlayerManager(lives, score);
             this.gameCanvas.Children.Add(this.player.Player.Sprite);
             foreach(var sp in this.player.PlayerSprites)
             {
@@ -281,20 +314,26 @@ namespace FroggerStarter.Controller
 
         private void checkVictory()
         {
-            if (!this.player.CheckWin(TopOfGameOffset + 1))
+            if (this.player.CheckWin(TopOfGameOffset + 1) && this.homes.CheckCollision(this.player.Player) != -1)
             {
-                return;
+                this.setPlayerToCenterOfBottomLane();
+                this.onScoreUpdated();
+                this.updateHomes(this.homes.CheckCollision(this.player.Player));
             }
 
-            this.setPlayerToCenterOfBottomLane();
-            this.onScoreUpdated();
-            if (this.Score < 3)
+            
+            if (this.ScoresMade < this.player.ScoresToWin)
             {
                 return;
             }
 
             this.timer.Stop();
             this.onGameOver();
+        }
+
+        private void updateHomes(int homeTaken)
+        {
+            this.takenTokens[homeTaken].Visibility = Visibility.Visible;
         }
 
         private void onLivesUpdated()

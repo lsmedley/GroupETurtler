@@ -181,7 +181,7 @@ namespace FroggerStarter.Model
         /// <returns>
         ///   <c>true</c> if the specified other is colliding with this instance; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsColliding(GameObject obj)
+        public virtual bool IsColliding(GameObject obj)
         {
             var topLeftCorner = new Point(this.X, this.Y);
             var topRightCorner = new Point(this.X + this.Width, this.Y);
