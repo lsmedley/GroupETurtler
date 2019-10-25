@@ -41,6 +41,12 @@ namespace FroggerStarter.Controller
             this.currentTick = 0;
 
             this.lanes = new List<LaneManager>();
+            this.setUpLanes(laneset);
+
+        }
+
+        private void setUpLanes(LaneSettings laneset)
+        {
             for (var i = 0; i < laneset.Vehicles.Count; i++)
             {
                 var lane = new LaneManager(laneset.TrafficSpeeds[i], laneset.TrafficDirections[i]);
@@ -51,7 +57,6 @@ namespace FroggerStarter.Controller
 
                 this.lanes.Add(lane);
             }
-
         }
 
         /// <summary>
