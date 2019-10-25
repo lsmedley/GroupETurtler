@@ -37,6 +37,7 @@ namespace FroggerStarter.Controller
 
         private Canvas gameCanvas;
         private DispatcherTimer timer;
+        private DispatcherTimer deathTimer;
         private RoadManager rm;
         private PlayerManager player;
 
@@ -89,12 +90,33 @@ namespace FroggerStarter.Controller
             this.backgroundWidth = backgroundWidth;
             this.roadHeight = backgroundHeight - BottomLaneOffset - TileHeight;
 
+            this.setUpTimers();
+        }
+
+        private void setUpTimers()
+        {
             this.setupGameClock();
+            this.setupDeathClock();
         }
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///     Initializes the game working with appropriate classes to play frog
+        ///     and vehicle on game screen.
+        ///     Precondition: background != null
+        ///     Postcondition: Game is initialized and ready for play.
+        /// </summary>
+        /// <param name="gamePage">The game page.</param>
+        /// <exception cref="ArgumentNullException">gameCanvas</exception>
+        public void InitializeGame(Canvas gamePage, GameSettings gameSet)
+        {
+            this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
+            this.createAndPlacePlayer(gameSet.PlayerLives);
+            this.createRoadManager();
+        }
 
         private void createRoadManager()
         {
@@ -133,19 +155,11 @@ namespace FroggerStarter.Controller
             this.timer.Start();
         }
 
-        /// <summary>
-        ///     Initializes the game working with appropriate classes to play frog
-        ///     and vehicle on game screen.
-        ///     Precondition: background != null
-        ///     Postcondition: Game is initialized and ready for play.
-        /// </summary>
-        /// <param name="gamePage">The game page.</param>
-        /// <exception cref="ArgumentNullException">gameCanvas</exception>
-        public void InitializeGame(Canvas gamePage, GameSettings gameSet)
+        private void setupDeathClock()
         {
-            this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
-            this.createAndPlacePlayer(gameSet.PlayerLives);
-            this.createRoadManager();
+            this.deathTimer = new DispatcherTimer();
+            this.deathTimer.Tick += this.deathTimerOnTick;
+            this.deathTimer.Interval = new TimeSpan(0, 0, 0, 0, 250);
         }
 
         private void initializeRoad()
@@ -167,6 +181,11 @@ namespace FroggerStarter.Controller
         {
             this.player = new PlayerManager(lives);
             this.gameCanvas.Children.Add(this.player.Player.Sprite);
+            foreach(var sp in this.player.PlayerSprites)
+            {
+                this.gameCanvas.Children.Add(sp);
+                sp.Visibility = Visibility.Collapsed;
+            }
 
             this.setPlayerToCenterOfBottomLane();
         }
@@ -185,10 +204,28 @@ namespace FroggerStarter.Controller
             }
         }
 
+        private void deathTimerOnTick(object sender, object e)
+        {
+            this.player.Player.Sprite.Visibility = Visibility.Collapsed;
+            this.player.MoveToNextSprite();
+            this.player.SyncSpriteToLocation();
+            this.player.Player.Sprite.Visibility = Visibility.Visible;
+            if (this.player.Player.Sprite.Equals(this.player.PlayerSprites[0]))
+            {
+                this.deathTimer.Stop();
+                this.timer.Start();
+                this.player.Disabled = false;
+                this.setPlayerToCenterOfBottomLane();
+            }
+        }
+
         private void onCollision()
         {
             this.rm.ResetLanes();
-            this.setPlayerToCenterOfBottomLane();
+            this.player.Disabled = true;
+            this.timer.Stop();
+            this.deathTimer.Start();
+
             this.player.LoseLife();
             this.onLivesUpdated();
             if (this.Lives > 0)

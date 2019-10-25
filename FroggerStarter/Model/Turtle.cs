@@ -26,6 +26,11 @@ namespace FroggerStarter.Model
             SetSpeed(SpeedXDirection, SpeedYDirection);
         }
 
+        public void ChangeSprite(BaseSprite sprite)
+        {
+            Sprite = sprite;
+        }
+
         #endregion
     }
 }

@@ -1,4 +1,6 @@
-﻿using FroggerStarter.Model;
+﻿using System.Collections.Generic;
+using FroggerStarter.Model;
+using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Controller
 {
@@ -26,6 +28,15 @@ namespace FroggerStarter.Controller
         /// </summary>
         public readonly Turtle Player;
 
+        public IList<BaseSprite> PlayerSprites { get; private set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="PlayerManager"/> is able to move.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if unable to move; otherwise, <c>false</c>.
+        /// </value>
+        public bool Disabled { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerManager"/> class.
         /// Postcondition: this.Player is a new instance of <see cref="Turtle"/> class, this.Lives == 3,
@@ -34,9 +45,22 @@ namespace FroggerStarter.Controller
         /// <param name="lives"></param>
         public PlayerManager(int lives)
         {
-            this.Player = new Turtle();
+            this.Disabled = false;
             this.Lives = lives;
             this.Score = 0;
+            this.PlayerSprites = new List<BaseSprite>();
+            this.setUpSprites();
+            this.Player = new Turtle();
+            //this.Player.ChangeSprite(this.PlayerSprites[0]);
+        }
+
+        private void setUpSprites()
+        {
+            this.PlayerSprites.Add(new TurtleSprite());
+            this.PlayerSprites.Add(new DeathSprite1());
+            this.PlayerSprites.Add(new DeathSprite2());
+            this.PlayerSprites.Add(new DeathSprite3());
+            this.PlayerSprites.Add(new DeathSprite4());
         }
 
         /// <summary>
@@ -52,6 +76,14 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
+        /// Displays the sprite at the player's location.
+        /// </summary>
+        public void SyncSpriteToLocation()
+        {
+            this.Player.Sprite.RenderAt(this.Player.X, this.Player.Y);
+        }
+
+        /// <summary>
         /// Loses a life.
         /// </summary>
         public void LoseLife()
@@ -64,7 +96,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MoveLeft()
         {
-            if (this.Player.X > 0 && this.Lives > 0 && this.Score < 3)
+            if (this.Player.X > 0 && this.Lives > 0 && this.Score < 3 && !this.Disabled)
             {
                 this.Player.MoveLeft();
             }
@@ -76,7 +108,7 @@ namespace FroggerStarter.Controller
         /// <param name="maxRight">The maximum distance right.</param>
         public void MoveRight(double maxRight)
         {
-            if (this.Player.X < maxRight - this.Player.Width && this.Lives > 0 && this.Score < 3)
+            if (this.Player.X < maxRight - this.Player.Width && this.Lives > 0 && this.Score < 3 && !this.Disabled)
             {
                 this.Player.MoveRight();
             }
@@ -88,7 +120,7 @@ namespace FroggerStarter.Controller
         /// <param name="topOfGameOffset">The highest point that the player can go.</param>
         public void MoveUp(int topOfGameOffset)
         {
-            if (this.Player.Y > topOfGameOffset && this.Lives > 0 && this.Score < 3)
+            if (this.Player.Y > topOfGameOffset && this.Lives > 0 && this.Score < 3 && !this.Disabled)
             {
                 this.Player.MoveUp();
             }
@@ -100,7 +132,7 @@ namespace FroggerStarter.Controller
         /// <param name="roadHeight">Maximum distance that the player can move down.</param>
         public void MoveDown(double roadHeight)
         {
-            if (this.Player.Y < roadHeight && this.Lives > 0 && this.Score < 3)
+            if (this.Player.Y < roadHeight && this.Lives > 0 && this.Score < 3 && !this.Disabled)
             {
                 this.Player.MoveDown();
             }
@@ -122,6 +154,24 @@ namespace FroggerStarter.Controller
             }
 
             return isWin;
+        }
+
+        /// <summary>
+        /// Moves to next sprite in this.PlayerSprites.
+        /// Postcondition: this.Sprite == the next sprite in this.PlayerSprites, or the first sprite
+        /// if already on the last sprite in the list.
+        /// </summary>
+        public void MoveToNextSprite()
+        {
+            int current = this.PlayerSprites.IndexOf(this.Player.Sprite);
+            if (current == this.PlayerSprites.Count - 1)
+            {
+                this.Player.ChangeSprite(this.PlayerSprites[0]);
+            }
+            else
+            {
+                this.Player.ChangeSprite(this.PlayerSprites[current + 1]);
+            }
         }
     }
 }

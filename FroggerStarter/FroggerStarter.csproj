@@ -143,6 +143,18 @@
     <Compile Include="View\Sprites\CarSprite.xaml.cs">
       <DependentUpon>CarSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Sprites\DeathSprite1.xaml.cs">
+      <DependentUpon>DeathSprite1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\DeathSprite2.xaml.cs">
+      <DependentUpon>DeathSprite2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\DeathSprite3.xaml.cs">
+      <DependentUpon>DeathSprite3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\DeathSprite4.xaml.cs">
+      <DependentUpon>DeathSprite4.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Sprites\TurtleSprite.xaml.cs">
       <DependentUpon>TurtleSprite.xaml</DependentUpon>
     </Compile>
@@ -181,6 +193,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\CarSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\DeathSprite1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\DeathSprite2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\DeathSprite3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\DeathSprite4.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
