@@ -18,21 +18,26 @@ namespace FroggerStarter.Controller
             for (int i = 0; i < numHomes; i++)
             {
                 this.homes.Add(new HomeSpace());
-                double x = Math.Round((wallWidth - spacing * (i + 2)) / 50.0) * 50.0;
-                this.homes[i].Sprite.RenderAt(x, heightOffset);
+                //double x = Math.Round((wallWidth - 50 - spacing * (i + 1)) / 50.0) * 50.0;
+                double x = Math.Round((wallWidth - spacing * (i + 1) + 50) / 50.0) * 50.0;
+                this.homes[i].X = x;
+                this.homes[i].Y = heightOffset;
             }
         }
 
         public int CheckCollision(GameObject g)
         {
-
-            foreach (var v in this.homes)
+            if (g.Y < 101)
             {
-                if (v.IsColliding(g) && !v.IsTaken)
+                foreach (var v in this.homes)
                 {
-                    return this.homes.IndexOf(v);
+                    if (!v.IsTaken && v.IsColliding(g))
+                    {
+                        return this.homes.IndexOf(v);
+                    }
                 }
             }
+            
 
             return -1;
         }

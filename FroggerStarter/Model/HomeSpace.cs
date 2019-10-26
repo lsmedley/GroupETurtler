@@ -41,12 +41,21 @@ namespace FroggerStarter.Model
         /// </returns>
         public override bool IsColliding(GameObject other)
         {
-            if (base.IsColliding(other))
+            bool isCol = false;
+
+            if (other.X == this.X && other.Y == this.Y)
             {
-                this.IsTaken = false;
+                this.IsTaken = true;
+                isCol = true;
             }
 
-            return base.IsColliding(other);
+            return isCol;
+            //if (base.IsColliding(other))
+            //{
+            //    this.IsTaken = true;
+            //}
+
+            //return base.IsColliding(other);
         }
     }
 }

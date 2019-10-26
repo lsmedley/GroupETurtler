@@ -51,7 +51,7 @@ namespace FroggerStarter.View
             this.gameManager.InitializeGame(this.canvas, new GameSettings(4, 20, 5));
 
             this.livesTextBlock = new TextBlock {Text = $"Lives: {this.gameManager.Lives.ToString()}"};
-            this.scoreTextBlock = new TextBlock {Text = $"Scores: {this.gameManager.ScoresMade.ToString()}"};
+            this.scoreTextBlock = new TextBlock {Text = $"Score: {this.gameManager.ScoresMade.ToString()}"};
             this.titleTextBlock = new TextBlock { Text = "Turtler" };
             this.gameOverTextBlock = new TextBlock {Text = "Game Over"};
 

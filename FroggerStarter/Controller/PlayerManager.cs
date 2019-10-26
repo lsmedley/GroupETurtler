@@ -147,21 +147,11 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Checks if the player has won a point.
-        /// Postcondition: if player.Y > winHeight, score == @prev score+1
+        /// Updates score and ScoresMade .
         /// </summary>
-        /// <param name="winHeight">Height above which the player has won a point.</param>
-        /// <returns>true if the player won a point, false otherwise.</returns>
-        public bool CheckWin(int winHeight)
+        public void HasScored()
         {
-            var isWin = false;
-            if (this.Player.Y <= winHeight)
-            {
-                this.ScoresMade++;
-                isWin = true;
-            }
-
-            return isWin;
+            this.ScoresMade++;
         }
 
         /// <summary>

@@ -16,8 +16,8 @@
 
     <Canvas Width="50" Height="50" Background="Transparent">
 
-        <Ellipse Width="50" Height="50" Fill="{StaticResource pipeColor}" Canvas.Top="55" Canvas.Left="200"/>
-        <Ellipse Width="40" Height="40" Fill="{StaticResource holeColor}" Canvas.Top="60" Canvas.Left="205"/>
+        <Ellipse Width="50" Height="50" Fill="{StaticResource pipeColor}" Canvas.Top="0" Canvas.Left="0"/>
+        <Ellipse Width="40" Height="40" Fill="{StaticResource holeColor}" Canvas.Top="5" Canvas.Left="5"/>
 
 </Canvas>
 </local:BaseSprite>

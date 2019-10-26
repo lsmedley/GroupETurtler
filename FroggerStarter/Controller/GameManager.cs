@@ -118,10 +118,10 @@ namespace FroggerStarter.Controller
         public void InitializeGame(Canvas gamePage, GameSettings gameSet)
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
-            this.createRoadManager();
             this.createHomeManager(gameSet.ScoresToWin);
             this.createTakenTokens(gameSet.ScoresToWin);
             this.createAndPlacePlayer(gameSet.PlayerLives, gameSet.ScoresToWin);
+            this.createRoadManager();
         }
 
         private void createTakenTokens(int scoresToWin)
@@ -143,7 +143,7 @@ namespace FroggerStarter.Controller
 
         private void createHomeManager(int homeNum)
         {
-            this.homes = new HomeManager(0, this.backgroundWidth, homeNum);
+            this.homes = new HomeManager(TopOfGameOffset - TileHeight + 5, this.backgroundWidth, homeNum);
             foreach (var home in this.homes)
             {
                 this.gameCanvas.Children.Add(home.Sprite);
@@ -246,9 +246,12 @@ namespace FroggerStarter.Controller
             if (this.player.Player.Sprite.Equals(this.player.PlayerSprites[0]))
             {
                 this.deathTimer.Stop();
-                this.timer.Start();
-                this.player.Disabled = false;
-                this.setPlayerToCenterOfBottomLane();
+                if (this.Lives > 0)
+                {
+                    this.timer.Start();
+                    this.player.Disabled = false;
+                    this.setPlayerToCenterOfBottomLane();
+                }
             }
         }
 
@@ -314,11 +317,18 @@ namespace FroggerStarter.Controller
 
         private void checkVictory()
         {
-            if (this.player.CheckWin(TopOfGameOffset + 1) && this.homes.CheckCollision(this.player.Player) != -1)
+            //this.player.CheckWin(TopOfGameOffset + 1)
+            var collidedHome = this.homes.CheckCollision(this.player.Player);
+            if ( collidedHome != -1)
             {
                 this.setPlayerToCenterOfBottomLane();
+                this.player.HasScored();
                 this.onScoreUpdated();
-                this.updateHomes(this.homes.CheckCollision(this.player.Player));
+                this.updateHomes(collidedHome);
+            }
+            else if (this.player.Player.Y < TopOfGameOffset + 1)
+            {
+                this.onCollision();
             }
 
             
