@@ -290,6 +290,7 @@ namespace FroggerStarter.Controller
                     this.timer.Start();
                     this.player.Disabled = false;
                     this.setPlayerToCenterOfBottomLane();
+                    this.levelTimer.UnPause();
                 }
             }
         }
@@ -299,6 +300,7 @@ namespace FroggerStarter.Controller
             this.rm.ResetLanes();
             this.player.Disabled = true;
             this.timer.Stop();
+            this.levelTimer.Pause();
             this.deathTimer.Start();
 
             this.player.LoseLife();

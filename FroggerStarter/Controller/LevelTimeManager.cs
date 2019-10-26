@@ -26,6 +26,10 @@ namespace FroggerStarter.Controller
         public int CurTime { get; private set; }
         private DispatcherTimer levelTime;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LevelTimeManager"/> class.
+        /// </summary>
+        /// <param name="maxTime">The maximum time.</param>
         public LevelTimeManager(int maxTime)
         {
             this.MaxTime = maxTime;
@@ -51,9 +55,28 @@ namespace FroggerStarter.Controller
             }
         }
 
+        /// <summary>
+        /// Resets the timer.
+        /// </summary>
         public void Reset()
         {
             this.CurTime = 0;
+        }
+
+        /// <summary>
+        /// Pauses the timer.
+        /// </summary>
+        public void Pause()
+        {
+            this.levelTime.Stop();
+        }
+
+        /// <summary>
+        /// Resumes the timer.
+        /// </summary>
+        public void UnPause()
+        {
+            this.levelTime.Start();
         }
 
         private void onTimeUp()
