@@ -30,6 +30,14 @@ namespace FroggerStarter.Controller
         /// The scores to win.
         /// </value>
         public int ScoresToWin { get; }
+
+        /// <summary>
+        /// Gets the total score.
+        /// </summary>
+        /// <value>
+        /// The total score.
+        /// </value>
+        public int TotalScore { get; private set; }
         /// <summary>
         /// The player gameObject.
         /// </summary>
@@ -56,6 +64,7 @@ namespace FroggerStarter.Controller
             this.Lives = lives;
             this.ScoresToWin = winScore;
             this.ScoresMade = 0;
+            this.TotalScore = 0;
             this.PlayerSprites = new List<BaseSprite>();
             this.setUpSprites();
             this.Player = new Turtle();
@@ -149,9 +158,11 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Updates score and ScoresMade .
         /// </summary>
-        public void HasScored()
+        /// <param name="timeLeft"></param>
+        public void HasScored(int timeLeft)
         {
             this.ScoresMade++;
+            this.TotalScore += timeLeft;
         }
 
         /// <summary>

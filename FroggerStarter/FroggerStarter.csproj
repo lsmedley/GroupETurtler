@@ -122,6 +122,7 @@
     <Compile Include="Controller\GameSettings.cs" />
     <Compile Include="Controller\HomeManager.cs" />
     <Compile Include="Controller\LaneSettings.cs" />
+    <Compile Include="Controller\LevelTimeManager.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\RoadManager.cs" />
     <Compile Include="Model\Direction.cs" />

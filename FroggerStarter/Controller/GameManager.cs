@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
 using FroggerStarter.View.Sprites;
 
@@ -31,14 +33,18 @@ namespace FroggerStarter.Controller
         private const int BottomLaneOffset = 5;
         private const int TopOfGameOffset = 100;
         private const int TileHeight = 50;
-        private const int LaneNum = 5;
 
         private readonly double roadHeight;
         private readonly double backgroundWidth;
 
         private Canvas gameCanvas;
+
         private DispatcherTimer timer;
         private DispatcherTimer deathTimer;
+        private LevelTimeManager levelTimer;
+        private int TimeLeft => Math.Abs(this.levelTimer.CurTime - this.levelTimer.MaxTime);
+        private ProgressBar timerBar;
+
         private RoadManager rm;
         private PlayerManager player;
         private HomeManager homes;
@@ -63,6 +69,14 @@ namespace FroggerStarter.Controller
         ///     The number of scores made by the player.
         /// </value>
         public int ScoresMade => this.player.ScoresMade;
+
+        /// <summary>
+        /// Gets the total score.
+        /// </summary>
+        /// <value>
+        /// The total score.
+        /// </value>
+        public int TotalScore => this.player.TotalScore;
 
         #endregion
 
@@ -92,14 +106,6 @@ namespace FroggerStarter.Controller
 
             this.backgroundWidth = backgroundWidth;
             this.roadHeight = backgroundHeight - BottomLaneOffset - TileHeight;
-
-            this.setUpTimers();
-        }
-
-        private void setUpTimers()
-        {
-            this.setupGameClock();
-            this.setupDeathClock();
         }
 
         #endregion
@@ -122,6 +128,7 @@ namespace FroggerStarter.Controller
             this.createTakenTokens(gameSet.ScoresToWin);
             this.createAndPlacePlayer(gameSet.PlayerLives, gameSet.ScoresToWin);
             this.createRoadManager();
+            this.setUpTimers(gameSet.TimerLengthSeconds);
         }
 
         private void createTakenTokens(int scoresToWin)
@@ -180,21 +187,7 @@ namespace FroggerStarter.Controller
             this.initializeRoad();
         }
 
-        private void setupGameClock()
-        {
-            this.timer = new DispatcherTimer();
-            this.timer.Tick += this.timerOnTick;
-            this.timer.Interval = new TimeSpan(0, 0, 0, 0, 15);
-            this.timer.Start();
-        }
-
-        private void setupDeathClock()
-        {
-            this.deathTimer = new DispatcherTimer();
-            this.deathTimer.Tick += this.deathTimerOnTick;
-            this.deathTimer.Interval = new TimeSpan(0, 0, 0, 0, 250);
-        }
-
+       
         private void initializeRoad()
         {
             //foreach (var t in this.rm.Lanes)
@@ -228,9 +221,55 @@ namespace FroggerStarter.Controller
             this.player.SetLocation(this.backgroundWidth / 2 - this.player.Player.Sprite.Width / 2, this.roadHeight);
         }
 
+        private void setUpTimers(int timerLen)
+        {
+            this.setupGameClock();
+            this.setupDeathClock();
+            this.setUpLevelClock(timerLen);
+        }
+
+        private void setUpLevelClock(int tLen)
+        {
+            this.levelTimer = new LevelTimeManager(tLen);
+            this.levelTimer.TimeUp += this.onTimeUp;
+
+            this.initializeTimerBar();
+        }
+
+        private void initializeTimerBar()
+        {
+            this.timerBar = new ProgressBar();
+            this.timerBar.Value = this.TimeLeft;
+            this.gameCanvas.Children.Add(this.timerBar);
+
+            this.timerBar.Height = 10;
+            Canvas.SetTop(this.timerBar, TopOfGameOffset / 2 - this.timerBar.Height);
+            this.timerBar.Width = this.backgroundWidth;
+            this.timerBar.Visibility = Visibility.Visible;
+            this.timerBar.Background = new SolidColorBrush(Colors.Transparent);
+            this.timerBar.Foreground = new SolidColorBrush(Colors.YellowGreen);
+        }
+
+        private void setupGameClock()
+        {
+            this.timer = new DispatcherTimer();
+            this.timer.Tick += this.timerOnTick;
+            this.timer.Interval = new TimeSpan(0, 0, 0, 0, 15);
+            this.timer.Start();
+        }
+
+        private void setupDeathClock()
+        {
+            this.deathTimer = new DispatcherTimer();
+            this.deathTimer.Tick += this.deathTimerOnTick;
+            this.deathTimer.Interval = new TimeSpan(0, 0, 0, 0, 250);
+        }
+
+
         private void timerOnTick(object sender, object e)
         {
             this.rm.OnTick(this.backgroundWidth);
+            this.timerBar.Value = 5 * this.TimeLeft;
             if (this.rm.CheckCollision(this.player.Player))
             {
                 this.onCollision();
@@ -264,6 +303,7 @@ namespace FroggerStarter.Controller
 
             this.player.LoseLife();
             this.onLivesUpdated();
+            this.levelTimer.Reset();
             if (this.Lives > 0)
             {
                 return;
@@ -322,9 +362,10 @@ namespace FroggerStarter.Controller
             if ( collidedHome != -1)
             {
                 this.setPlayerToCenterOfBottomLane();
-                this.player.HasScored();
+                this.player.HasScored(this.TimeLeft);
                 this.onScoreUpdated();
                 this.updateHomes(collidedHome);
+                this.levelTimer.Reset();
             }
             else if (this.player.Player.Y < TopOfGameOffset + 1)
             {
@@ -360,6 +401,12 @@ namespace FroggerStarter.Controller
         {
             this.GameOver?.Invoke(this, EventArgs.Empty);
         }
+
+        private void onTimeUp(object sender, EventArgs e)
+        {
+            this.onCollision();
+        }
+
 
         #endregion
     }
