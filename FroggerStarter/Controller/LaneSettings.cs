@@ -37,7 +37,7 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Initializes a new instance of the <see cref="LaneSettings" /> class.
         /// </summary>
-        /// <param name="vehicles">The vehicles.</param>
+        /// <param name="vehicles">The type and max number of vehicles in this lane.</param>
         /// <param name="flows">The directions of traffic.</param>
         /// <param name="speeds">The speeds of each lane.</param>
         public LaneSettings(IList<(int, VehicleType)> vehicles, IList<Direction> flows, IList<int> speeds)

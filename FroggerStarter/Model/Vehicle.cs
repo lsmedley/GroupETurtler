@@ -11,6 +11,8 @@ namespace FroggerStarter.Model
     {
         private Direction direction;
 
+        public VehicleType Type { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Vehicle"/> class.
         /// </summary>
@@ -19,6 +21,7 @@ namespace FroggerStarter.Model
         /// <param name="spd">The speed of the vehicle.</param>
         public Vehicle(VehicleType type, Direction dir, int spd)
         {
+            this.Type = type;
             switch (type)
             {
                 case VehicleType.Car:

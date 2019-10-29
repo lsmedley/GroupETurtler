@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
@@ -32,29 +33,88 @@ namespace FroggerStarter.Controller
         /// </summary>
         private readonly List<Vehicle> vehicles;
 
+        private readonly int maxVehicles;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LaneManager"/> class.
         /// </summary>
         /// <param name="startSpeed">The start speed.</param>
         /// <param name="dir">The dir.</param>
-        public LaneManager(int startSpeed, Direction dir)
+        public LaneManager(int startSpeed, Direction dir, int maxV)
         {
             this.Speed = startSpeed;
             this.StartSpeed = startSpeed;
+            this.maxVehicles = maxV;
             this.Direction = dir;
             this.vehicles = new List<Vehicle>();
         }
 
-       
-
         /// <summary>
-        /// Adds a vehicle.
-        /// Postcondition: this.vehicles += a vehicle with the given type and the same speed and direction as this lane.
+        /// Adds a vehicle to the lane.
+        /// Postcondition: If this.vehicles.Count < this.maxVehicles, then this.vehicles += a vehicle with the given type and the same speed and direction as this lane.
+        /// Else none.
         /// </summary>
         /// <param name="type">The type of the vehicle.</param>
         public void AddVehicle(VehicleType type)
         {
-            this.vehicles.Add(new Vehicle(type, this.Direction, this.Speed));
+            if (this.vehicles.Count < this.maxVehicles)
+            {
+                this.vehicles.Add(new Vehicle(type, this.Direction, this.Speed));
+            }
+        }
+
+        /// <summary>
+        /// Adds a vehicle to the appropriate place in the lane.
+        /// Postcondition: If this.vehicles.Count < this.maxVehicles, then this.vehicles += a vehicle with the given type and the same speed and direction as this lane,
+        /// appropriately spaced behind the last vehicle. Else none.
+        /// </summary>
+        /// <param name="type">The type of the vehicle.</param>
+        /// <param lanelen="double">The length of this lane</param>
+        public void AddVehicle(VehicleType type, double lanelen)
+        {
+            if (this.vehicles.Count < this.maxVehicles)
+            {
+                var space = this.GetSpacing(lanelen);
+                Vehicle prevV = this.vehicles[this.vehicles.Count - 1];
+                if (this.Direction == Direction.Right)
+                {
+                    foreach (var v in this.vehicles)
+                    {
+                        //if (v.X <= 0 - v.Width && 0 <= v.X && v != curV)
+                        if (v.X <= 0 || v.X >= lanelen - v.Width)
+                        {
+                            return;
+                        }
+                    }
+                    this.vehicles.Add(new Vehicle(type, this.Direction, this.Speed));
+                    this.vehicles[this.vehicles.Count - 1].X = 0 - this.vehicles[this.vehicles.Count - 1].Width;
+                }
+                else {
+                    foreach (var v in this.vehicles)
+                    {
+                        if (v.X >= lanelen - v.Width || v.X <= v.Width)
+                        {
+                            return;
+                        }
+                    }
+                    this.vehicles.Add(new Vehicle(type, this.Direction, this.Speed));
+                    this.vehicles[this.vehicles.Count - 1].X = lanelen;
+                }
+
+                this.vehicles[this.vehicles.Count - 1].Y = prevV.Y;
+            }
+
+        }
+
+        /// <summary>
+        /// Determines whether this instance is full.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is full; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsFull()
+        {
+            return this.vehicles.Count == this.maxVehicles;
         }
 
         /// <summary>
@@ -88,7 +148,7 @@ namespace FroggerStarter.Controller
                     curX -= v.Width + space;
                 }
             }
-            
+
         }
 
         /// <summary>
@@ -138,6 +198,17 @@ namespace FroggerStarter.Controller
                 {
                     v.X = 0 - v.Width;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Resets the vehicles, removing all but 1 vehicle from this lane.
+        /// </summary>
+        public void ResetVehicles()
+        {
+            for (int i = 1; i < this.vehicles.Count; i++)
+            {
+                this.vehicles.Remove(this.vehicles[i]);
             }
         }
 

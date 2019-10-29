@@ -57,7 +57,9 @@ namespace FroggerStarter.Controller
         /// Postcondition: this.Player is a new instance of <see cref="Turtle"/> class, this.Lives == 3,
         /// this.ScoresMade == 0.
         /// </summary>
-        /// <param name="lives"></param>
+        /// <param name="lives">The number of lives this player starts with</param>
+        /// <param name="winScore">The number of times that this player needs to score in order
+        /// to win.</param>
         public PlayerManager(int lives, int winScore)
         {
             this.Disabled = false;
@@ -66,9 +68,8 @@ namespace FroggerStarter.Controller
             this.ScoresMade = 0;
             this.TotalScore = 0;
             this.PlayerSprites = new List<BaseSprite>();
-            this.setUpSprites();
             this.Player = new Turtle();
-            //this.Player.ChangeSprite(this.PlayerSprites[0]);
+            this.setUpSprites();
         }
 
         private void setUpSprites()
@@ -78,6 +79,7 @@ namespace FroggerStarter.Controller
             this.PlayerSprites.Add(new DeathSprite2());
             this.PlayerSprites.Add(new DeathSprite3());
             this.PlayerSprites.Add(new DeathSprite4());
+            //this.Player.ChangeSprite(this.PlayerSprites[0]);
         }
 
         /// <summary>
@@ -181,6 +183,11 @@ namespace FroggerStarter.Controller
             {
                 this.Player.ChangeSprite(this.PlayerSprites[current + 1]);
             }
+        }
+
+        public void MoveToDeadSprite()
+        {
+            this.Player.ChangeSprite(this.PlayerSprites[this.PlayerSprites.Count - 1]);
         }
     }
 }

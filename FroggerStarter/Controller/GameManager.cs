@@ -161,11 +161,11 @@ namespace FroggerStarter.Controller
         private void createRoadManager()
         {
             var traffic = new List<(int, VehicleType)> {
-                (2, VehicleType.Car),
-                (3, VehicleType.Bus),
                 (3, VehicleType.Car),
                 (2, VehicleType.Bus),
-                (3, VehicleType.Car)
+                (4, VehicleType.Car),
+                (3, VehicleType.Bus),
+                (5, VehicleType.Car)
             };
             var flow = new List<Direction> {
                 Direction.Left,
@@ -176,31 +176,24 @@ namespace FroggerStarter.Controller
             };
             var speeds = new List<int> {
                 1,
-                2,
                 3,
-                4,
-                5
+                5,
+                7,
+                9
             };
             LaneSettings laneset = new LaneSettings(traffic, flow, speeds);
-            this.rm = new RoadManager(laneset);
-            this.rm.SetUpLanes(this.roadHeight, this.backgroundWidth);
+            this.rm = new RoadManager(laneset, this.roadHeight, this.backgroundWidth);
             this.initializeRoad();
         }
 
        
         private void initializeRoad()
         {
-            //foreach (var t in this.rm.Lanes)
-            //{
-            //    foreach (var v in t.GetEnumerator())
-            //    {
-            //        this.gameCanvas.Children.Add(v.Sprite);
-            //    }
-            //}
             foreach (var vehicle in this.rm)
             {
                 this.gameCanvas.Children.Add(vehicle.Sprite);
             }
+            this.rm.CarAdded += this.onCarAdded;
         }
 
         private void createAndPlacePlayer(int lives, int score)
@@ -292,12 +285,18 @@ namespace FroggerStarter.Controller
                     this.setPlayerToCenterOfBottomLane();
                     this.levelTimer.UnPause();
                 }
+                else
+                {
+                    this.player.Player.Sprite.Visibility = Visibility.Collapsed;
+                    this.player.MoveToDeadSprite();
+                    this.player.SyncSpriteToLocation();
+                    this.player.Player.Sprite.Visibility = Visibility.Visible;
+                }
             }
         }
 
         private void onCollision()
         {
-            this.rm.ResetLanes();
             this.player.Disabled = true;
             this.timer.Stop();
             this.levelTimer.Pause();
@@ -306,13 +305,29 @@ namespace FroggerStarter.Controller
             this.player.LoseLife();
             this.onLivesUpdated();
             this.levelTimer.Reset();
-            if (this.Lives > 0)
+            if (this.Lives <= 0)
             {
-                return;
+                this.onGameOver();
+            }
+            else
+            {
+                this.resetRoad();
             }
 
-            this.timer.Stop();
-            this.onGameOver();
+        }
+
+        private void resetRoad()
+        {
+            foreach (var v in this.rm)
+            {
+                this.gameCanvas.Children.Remove(v.Sprite);
+            }
+
+            this.rm.SetUpLanes(this.roadHeight, this.backgroundWidth);
+            foreach (var v in this.rm)
+            {
+                this.gameCanvas.Children.Add(v.Sprite);
+            }
         }
 
         /// <summary>
@@ -380,7 +395,6 @@ namespace FroggerStarter.Controller
                 return;
             }
 
-            this.timer.Stop();
             this.onGameOver();
         }
 
@@ -401,12 +415,25 @@ namespace FroggerStarter.Controller
 
         private void onGameOver()
         {
+            this.timer.Stop();
+            this.levelTimer.Pause();
             this.GameOver?.Invoke(this, EventArgs.Empty);
         }
 
         private void onTimeUp(object sender, EventArgs e)
         {
             this.onCollision();
+        }
+
+        private void onCarAdded(object sender, EventArgs e)
+        {
+            foreach (var vehicle in this.rm)
+            {
+                if (!this.gameCanvas.Children.Contains(vehicle.Sprite))
+                {
+                    this.gameCanvas.Children.Add(vehicle.Sprite);
+                }
+            }
         }
 
 
