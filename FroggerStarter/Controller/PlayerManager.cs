@@ -70,6 +70,7 @@ namespace FroggerStarter.Controller
             this.PlayerSprites = new List<BaseSprite>();
             this.Player = new Turtle();
             this.setUpSprites();
+            this.Player.ChangeSprite(this.PlayerSprites[0]);
         }
 
         private void setUpSprites()
@@ -79,7 +80,6 @@ namespace FroggerStarter.Controller
             this.PlayerSprites.Add(new DeathSprite2());
             this.PlayerSprites.Add(new DeathSprite3());
             this.PlayerSprites.Add(new DeathSprite4());
-            //this.Player.ChangeSprite(this.PlayerSprites[0]);
         }
 
         /// <summary>

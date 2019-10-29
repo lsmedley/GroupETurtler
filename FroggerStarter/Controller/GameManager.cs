@@ -199,11 +199,13 @@ namespace FroggerStarter.Controller
         private void createAndPlacePlayer(int lives, int score)
         {
             this.player = new PlayerManager(lives, score);
-            this.gameCanvas.Children.Add(this.player.Player.Sprite);
             foreach(var sp in this.player.PlayerSprites)
             {
                 this.gameCanvas.Children.Add(sp);
-                sp.Visibility = Visibility.Collapsed;
+                if (!sp.GetType().Name.Equals("TurtleSprite"))
+                {
+                    sp.Visibility = Visibility.Collapsed;
+                }
             }
 
             this.setPlayerToCenterOfBottomLane();
