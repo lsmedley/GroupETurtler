@@ -11,10 +11,13 @@ namespace FroggerStarter.Controller
     public class RoadManager : IEnumerable<Vehicle>
     {
 
+        /// <summary>
+        /// Occurs when [car added].
+        /// </summary>
         public event EventHandler<EventArgs> CarAdded;
 
         private readonly IList<LaneManager> lanes;
-        private LaneSettings laneset;
+        private readonly LaneSettings laneset;
         private int currentTick;
         private const int AddCarTick = 300;
 
@@ -23,12 +26,11 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RoadManager"/> class.
-        /// Postcondition: this.laneset = laneset, this.lanes = a list of lanes built according to laneset.
         /// </summary>
         /// <param name="laneset">The settings for this roadmanager's lanes.</param>
         /// <param name="totalHeight">The total height of the road.</param>
-        /// <param name="laneLength">Length of the lane.</param>
-        /// <exception cref="Exception">Number of lanes must equal number of lane definitions</exception>
+        /// <param name="laneLength">Length of the lanes.</param>
+        /// <exception cref="Exception">Each lane must be fully defined</exception>
         public RoadManager(LaneSettings laneset, double totalHeight, double laneLength)
         {
             if (laneset.Vehicles.Count != laneset.TrafficDirections.Count 
@@ -43,7 +45,6 @@ namespace FroggerStarter.Controller
 
             this.lanes = new List<LaneManager>();
             this.SetUpLanes(totalHeight, laneLength);
-
         }
 
         /// <summary>
@@ -56,9 +57,9 @@ namespace FroggerStarter.Controller
             this.lanes.Clear();
             for (var i = 0; i < this.laneset.Vehicles.Count; i++)
             {
-                var lane = new LaneManager(laneset.TrafficSpeeds[i], laneset.TrafficDirections[i], laneset.Vehicles[i].Item1);
+                var lane = new LaneManager(this.laneset.TrafficSpeeds[i], this.laneset.TrafficDirections[i], this.laneset.Vehicles[i].Item1);
 
-                lane.AddVehicle(laneset.Vehicles[i].Item2);
+                lane.AddVehicle(this.laneset.Vehicles[i].Item2);
 
                 this.lanes.Add(lane);
             }
@@ -75,8 +76,10 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Called when [tick]. Speeds vehicles up if currentTick == AddCarTick, then moves the vehicles
+        /// Called when [tick]. Adds a vehicle if currentTick == AddCarTick, then moves the vehicles
         /// in each lane, wrapping vehicles that are out of bounds back to the other side of the game.
+        /// Postcondition: Each lane has one more care if this.currentTick == AddCarTick and the requirements
+        /// to add a new vehicle are met.
         /// </summary>
         /// <param name="laneLen">Length of the lane.</param>
         public void OnTick(double laneLen)
@@ -101,7 +104,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var lane in this.lanes)
             {
-                VehicleType vt = VehicleType.Car;
+                var vt = VehicleType.Car;
                 foreach (var ve in lane)
                 {
                     vt = ve.Type;
@@ -118,14 +121,6 @@ namespace FroggerStarter.Controller
             foreach (var lane in this.lanes)
             {
                 lane.MoveVehicles(laneLen);
-            }
-        }
-
-        private void speedUpLanes(int inc)
-        {
-            foreach (var lane in this.lanes)
-            {
-                lane.SpeedUp(inc);
             }
         }
 

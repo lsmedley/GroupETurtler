@@ -161,6 +161,9 @@
     <Compile Include="View\Sprites\HomeSprite.xaml.cs">
       <DependentUpon>HomeSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Sprites\PlayerHomeSprite.xaml.cs">
+      <DependentUpon>PlayerHomeSprite.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Sprites\TurtleSprite.xaml.cs">
       <DependentUpon>TurtleSprite.xaml</DependentUpon>
     </Compile>
@@ -219,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\HomeSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\PlayerHomeSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,9 +9,9 @@ namespace FroggerStarter.Model
     /// </summary>
     public class Vehicle : GameObject
     {
-        private Direction direction;
+        private readonly Direction direction;
 
-        public VehicleType Type { get; private set; }
+        public VehicleType Type { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vehicle"/> class.
@@ -49,26 +49,15 @@ namespace FroggerStarter.Model
 
             SetSpeed(spd, 0);
         }
-
-        /// <summary>
-        /// Changes the speed of the vehicle.
-        /// Postcondition: this.SpeedX = newSpd
-        /// </summary>
-        /// <param name="newSpd">The new Speed.</param>
-        public void ChangeSpeed(int newSpd)
-        {
-            SetSpeed(newSpd, 0);
-        }
-
         public void MoveForward()
         {
             if (this.direction == Direction.Left)
             {
-                this.MoveLeft();
+                MoveLeft();
             }
             else
             {
-                this.MoveRight();
+                MoveRight();
             }
         }
     }

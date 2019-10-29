@@ -48,7 +48,7 @@ namespace FroggerStarter.Controller
         private RoadManager rm;
         private PlayerManager player;
         private HomeManager homes;
-        private IList<TurtleSprite> takenTokens;
+        private IList<PlayerHomeSprite> takenTokens;
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace FroggerStarter.Controller
         ///     Gets the lives the player has left.
         /// </summary>
         /// <value>
-        ///     The lives.
+        ///     The lives the player has left.
         /// </value>
         public int Lives => this.player.Lives;
 
@@ -74,7 +74,7 @@ namespace FroggerStarter.Controller
         /// Gets the total score.
         /// </summary>
         /// <value>
-        /// The total score.
+        /// The total score of the player.
         /// </value>
         public int TotalScore => this.player.TotalScore;
 
@@ -125,18 +125,18 @@ namespace FroggerStarter.Controller
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
             this.createHomeManager(gameSet.ScoresToWin);
-            this.createTakenTokens(gameSet.ScoresToWin);
+            this.createTakenTokens();
             this.createAndPlacePlayer(gameSet.PlayerLives, gameSet.ScoresToWin);
             this.createRoadManager();
             this.setUpTimers(gameSet.TimerLengthSeconds);
         }
 
-        private void createTakenTokens(int scoresToWin)
+        private void createTakenTokens()
         {
-            this.takenTokens = new List<TurtleSprite>();
+            this.takenTokens = new List<PlayerHomeSprite>();
             foreach (var home in this.homes)
             {
-                var tToken = new TurtleSprite();
+                var tToken = new PlayerHomeSprite();
                 tToken.RenderAt(home.X, home.Y);
                 this.takenTokens.Add(tToken);
             }
@@ -155,7 +155,6 @@ namespace FroggerStarter.Controller
             {
                 this.gameCanvas.Children.Add(home.Sprite);
             }
-
         }
 
         private void createRoadManager()
@@ -181,7 +180,7 @@ namespace FroggerStarter.Controller
                 7,
                 9
             };
-            LaneSettings laneset = new LaneSettings(traffic, flow, speeds);
+            var laneset = new LaneSettings(traffic, flow, speeds);
             this.rm = new RoadManager(laneset, this.roadHeight, this.backgroundWidth);
             this.initializeRoad();
         }
@@ -218,12 +217,12 @@ namespace FroggerStarter.Controller
 
         private void setUpTimers(int timerLen)
         {
-            this.setupGameClock();
-            this.setupDeathClock();
-            this.setUpLevelClock(timerLen);
+            this.setupGameTimer();
+            this.setupDeathTimer();
+            this.setUpLevelTimer(timerLen);
         }
 
-        private void setUpLevelClock(int tLen)
+        private void setUpLevelTimer(int tLen)
         {
             this.levelTimer = new LevelTimeManager(tLen);
             this.levelTimer.TimeUp += this.onTimeUp;
@@ -233,8 +232,7 @@ namespace FroggerStarter.Controller
 
         private void initializeTimerBar()
         {
-            this.timerBar = new ProgressBar();
-            this.timerBar.Value = this.TimeLeft;
+            this.timerBar = new ProgressBar {Value = this.TimeLeft};
             this.gameCanvas.Children.Add(this.timerBar);
 
             this.timerBar.Height = 10;
@@ -245,15 +243,15 @@ namespace FroggerStarter.Controller
             this.timerBar.Foreground = new SolidColorBrush(Colors.YellowGreen);
         }
 
-        private void setupGameClock()
+        private void setupGameTimer()
         {
             this.timer = new DispatcherTimer();
-            this.timer.Tick += this.timerOnTick;
+            this.timer.Tick += this.gameTimerOnTick;
             this.timer.Interval = new TimeSpan(0, 0, 0, 0, 15);
             this.timer.Start();
         }
 
-        private void setupDeathClock()
+        private void setupDeathTimer()
         {
             this.deathTimer = new DispatcherTimer();
             this.deathTimer.Tick += this.deathTimerOnTick;
@@ -261,13 +259,13 @@ namespace FroggerStarter.Controller
         }
 
 
-        private void timerOnTick(object sender, object e)
+        private void gameTimerOnTick(object sender, object e)
         {
             this.rm.OnTick(this.backgroundWidth);
             this.timerBar.Value = 5 * this.TimeLeft;
             if (this.rm.CheckCollision(this.player.Player))
             {
-                this.onCollision();
+                this.onDeath();
             }
         }
 
@@ -275,7 +273,6 @@ namespace FroggerStarter.Controller
         {
             this.player.Player.Sprite.Visibility = Visibility.Collapsed;
             this.player.MoveToNextSprite();
-            this.player.SyncSpriteToLocation();
             this.player.Player.Sprite.Visibility = Visibility.Visible;
             if (this.player.Player.Sprite.Equals(this.player.PlayerSprites[0]))
             {
@@ -291,13 +288,12 @@ namespace FroggerStarter.Controller
                 {
                     this.player.Player.Sprite.Visibility = Visibility.Collapsed;
                     this.player.MoveToDeadSprite();
-                    this.player.SyncSpriteToLocation();
                     this.player.Player.Sprite.Visibility = Visibility.Visible;
                 }
             }
         }
 
-        private void onCollision()
+        private void onDeath()
         {
             this.player.Disabled = true;
             this.timer.Stop();
@@ -376,7 +372,6 @@ namespace FroggerStarter.Controller
 
         private void checkVictory()
         {
-            //this.player.CheckWin(TopOfGameOffset + 1)
             var collidedHome = this.homes.CheckCollision(this.player.Player);
             if ( collidedHome != -1)
             {
@@ -388,16 +383,13 @@ namespace FroggerStarter.Controller
             }
             else if (this.player.Player.Y < TopOfGameOffset + 1)
             {
-                this.onCollision();
+                this.onDeath();
             }
 
-            
-            if (this.ScoresMade < this.player.ScoresToWin)
+            if (this.ScoresMade >= this.player.ScoresToWin)
             {
-                return;
+                this.onGameOver();
             }
-
-            this.onGameOver();
         }
 
         private void updateHomes(int homeTaken)
@@ -424,7 +416,7 @@ namespace FroggerStarter.Controller
 
         private void onTimeUp(object sender, EventArgs e)
         {
-            this.onCollision();
+            this.onDeath();
         }
 
         private void onCarAdded(object sender, EventArgs e)

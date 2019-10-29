@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace FroggerStarter.Controller
 {
     /// <summary>
-    /// Holds logic and functionality for the player's timer.
+    /// Holds logic and functionality for the level's timer, measuring how much time the player
+    /// has left to score.
     /// </summary>
-    class LevelTimeManager
+    public class LevelTimeManager
     {
+        /// <summary>
+        /// Occurs when [time up].
+        /// </summary>
         public event EventHandler<EventArgs> TimeUp;
         /// <summary>
         /// The maximum time before the player dies.
@@ -29,7 +29,7 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Initializes a new instance of the <see cref="LevelTimeManager"/> class.
         /// </summary>
-        /// <param name="maxTime">The maximum time.</param>
+        /// <param name="maxTime">The maximum time the player has to score.</param>
         public LevelTimeManager(int maxTime)
         {
             this.MaxTime = maxTime;

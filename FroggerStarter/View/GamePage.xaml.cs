@@ -27,7 +27,6 @@ namespace FroggerStarter.View
         private readonly TextBlock livesTextBlock;
         private readonly TextBlock scoreTextBlock;
         private readonly TextBlock gameOverTextBlock;
-        private readonly TextBlock titleTextBlock;
 
         private static readonly Brush HudBrush = new SolidColorBrush(Colors.White);
         private static readonly Brush TitleBrush = new SolidColorBrush(Colors.YellowGreen);
@@ -52,12 +51,12 @@ namespace FroggerStarter.View
 
             this.livesTextBlock = new TextBlock {Text = $"Lives: {this.gameManager.Lives.ToString()}"};
             this.scoreTextBlock = new TextBlock {Text = $"Score: {this.gameManager.TotalScore.ToString()}"};
-            this.titleTextBlock = new TextBlock { Text = "Turtler" };
+            var titleTextBlock = new TextBlock { Text = "Turtler" };
             this.gameOverTextBlock = new TextBlock {Text = "Game Over"};
 
             this.canvas.Children.Add(this.livesTextBlock);
             this.canvas.Children.Add(this.scoreTextBlock);
-            this.canvas.Children.Add(this.titleTextBlock);
+            this.canvas.Children.Add(titleTextBlock);
             this.canvas.Children.Add(this.gameOverTextBlock);
 
             this.livesTextBlock.FontSize = 15;
@@ -70,10 +69,10 @@ namespace FroggerStarter.View
             Canvas.SetLeft(this.scoreTextBlock, this.applicationWidth - 70);
             this.scoreTextBlock.Foreground = HudBrush;
 
-            this.titleTextBlock.FontSize = 20;
-            Canvas.SetTop(this.titleTextBlock, 10);
-            Canvas.SetLeft(this.titleTextBlock, this.applicationWidth / 2 - 25);
-            this.titleTextBlock.Foreground = TitleBrush;
+            titleTextBlock.FontSize = 20;
+            Canvas.SetTop(titleTextBlock, 10);
+            Canvas.SetLeft(titleTextBlock, this.applicationWidth / 2 - 25);
+            titleTextBlock.Foreground = TitleBrush;
 
             this.gameOverTextBlock.FontSize = 60;
             this.gameOverTextBlock.Foreground = HudBrush;

@@ -10,14 +10,14 @@
     Width="50">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="pipeColor" Color="Green" />
-        <SolidColorBrush x:Key="holeColor" Color="Black" />
+        <SolidColorBrush x:Key="PipeColor" Color="Green" />
+        <SolidColorBrush x:Key="HoleColor" Color="Black" />
     </UserControl.Resources>
 
     <Canvas Width="50" Height="50" Background="Transparent">
 
-        <Ellipse Width="50" Height="50" Fill="{StaticResource pipeColor}" Canvas.Top="0" Canvas.Left="0"/>
-        <Ellipse Width="40" Height="40" Fill="{StaticResource holeColor}" Canvas.Top="5" Canvas.Left="5"/>
+        <Ellipse Width="50" Height="50" Fill="{StaticResource PipeColor}" Canvas.Top="0" Canvas.Left="0"/>
+        <Ellipse Width="40" Height="40" Fill="{StaticResource HoleColor}" Canvas.Top="5" Canvas.Left="5"/>
 
 </Canvas>
 </local:BaseSprite>

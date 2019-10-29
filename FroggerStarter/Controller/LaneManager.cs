@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
@@ -16,11 +15,8 @@ namespace FroggerStarter.Controller
         /// <value>
         /// The speed of cars in this lane.
         /// </value>
-        public int Speed { get; set; }
-        /// <summary>
-        /// The start speed of vehicles in this lane.
-        /// </summary>
-        public readonly int StartSpeed;
+        public readonly int Speed;
+        
         /// <summary>
         /// Gets the direction.
         /// </summary>
@@ -38,21 +34,21 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Initializes a new instance of the <see cref="LaneManager"/> class.
         /// </summary>
-        /// <param name="startSpeed">The start speed.</param>
-        /// <param name="dir">The dir.</param>
+        /// <param name="startSpeed">The speed of the lane.</param>
+        /// <param name="dir">The direction of the lane.</param>
+        /// <param name="maxV">The maximum number of vehicles in this lane.</param>
         public LaneManager(int startSpeed, Direction dir, int maxV)
         {
             this.Speed = startSpeed;
-            this.StartSpeed = startSpeed;
             this.maxVehicles = maxV;
             this.Direction = dir;
             this.vehicles = new List<Vehicle>();
         }
 
         /// <summary>
-        /// Adds a vehicle to the lane.
-        /// Postcondition: If this.vehicles.Count < this.maxVehicles, then this.vehicles += a vehicle with the given type and the same speed and direction as this lane.
-        /// Else none.
+        /// Adds a vehicle to this lane if this.vehicles has fewer than the maximum number of vehicles.
+        /// Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
+        /// += a vehicle with the given type and the same speed and direction as this lane. Else none.
         /// </summary>
         /// <param name="type">The type of the vehicle.</param>
         public void AddVehicle(VehicleType type)
@@ -64,23 +60,23 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Adds a vehicle to the appropriate place in the lane.
-        /// Postcondition: If this.vehicles.Count < this.maxVehicles, then this.vehicles += a vehicle with the given type and the same speed and direction as this lane,
-        /// appropriately spaced behind the last vehicle. Else none.
+        /// Adds a vehicle to the appropriate place in the lane if this.vehicles has fewer than the maximum
+        /// number of vehicles.
+        /// Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
+        /// += a vehicle with the given type and the same speed and direction as this lane, appropriately
+        /// spaced behind the last vehicle. Else none.
         /// </summary>
         /// <param name="type">The type of the vehicle.</param>
-        /// <param lanelen="double">The length of this lane</param>
+        /// <param name="lanelen">The length of this lane</param>
         public void AddVehicle(VehicleType type, double lanelen)
         {
             if (this.vehicles.Count < this.maxVehicles)
             {
-                var space = this.GetSpacing(lanelen);
-                Vehicle prevV = this.vehicles[this.vehicles.Count - 1];
+                var prevV = this.vehicles[this.vehicles.Count - 1];
                 if (this.Direction == Direction.Right)
                 {
                     foreach (var v in this.vehicles)
                     {
-                        //if (v.X <= 0 - v.Width && 0 <= v.X && v != curV)
                         if (v.X <= 0 || v.X >= lanelen - v.Width)
                         {
                             return;
@@ -104,17 +100,6 @@ namespace FroggerStarter.Controller
                 this.vehicles[this.vehicles.Count - 1].Y = prevV.Y;
             }
 
-        }
-
-        /// <summary>
-        /// Determines whether this instance is full.
-        /// </summary>
-        /// <returns>
-        ///   <c>true</c> if this instance is full; otherwise, <c>false</c>.
-        /// </returns>
-        public bool IsFull()
-        {
-            return this.vehicles.Count == this.maxVehicles;
         }
 
         /// <summary>
@@ -152,10 +137,10 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Sets the vehicle ys.
+        /// Sets the vehicles' locations along the Y axis.
         /// Postcondition: Each vehicle is at the specified Y value.
         /// </summary>
-        /// <param name="y">The y.</param>
+        /// <param name="y">The y coordinate.</param>
         public void SetVehicleYs(double y)
         {
             foreach (var v in this.vehicles)
@@ -198,45 +183,6 @@ namespace FroggerStarter.Controller
                 {
                     v.X = 0 - v.Width;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Resets the vehicles, removing all but 1 vehicle from this lane.
-        /// </summary>
-        public void ResetVehicles()
-        {
-            for (int i = 1; i < this.vehicles.Count; i++)
-            {
-                this.vehicles.Remove(this.vehicles[i]);
-            }
-        }
-
-        /// <summary>
-        /// Speeds up all vehicles in the lane.
-        /// Postcondition: This.Speed += 1, all vehicles are moving at the new speed.
-        /// </summary>
-        public void SpeedUp(int speedInc)
-        {
-            this.Speed += speedInc;
-            this.updateVehicleSpeed();
-        }
-
-        /// <summary>
-        /// Resets the speed of all vehicles to the starting speed.
-        /// Postcondition: All vehicles are going the starting speed for this lane.
-        /// </summary>
-        public void ResetSpeed()
-        {
-            this.Speed = this.StartSpeed;
-            this.updateVehicleSpeed();
-        }
-
-        private void updateVehicleSpeed()
-        {
-            foreach (var v in this.vehicles)
-            {
-                v.ChangeSpeed(this.Speed);
             }
         }
 

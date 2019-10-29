@@ -17,10 +17,10 @@ namespace FroggerStarter.Controller
         /// </value>
         public int Lives { get; private set; }
         /// <summary>
-        /// Gets the score of the player.
+        /// Gets the scores made by the player.
         /// </summary>
         /// <value>
-        /// The score of the player.
+        /// The scores made by the player.
         /// </value>
         public int ScoresMade { get; private set; }
         /// <summary>
@@ -43,7 +43,13 @@ namespace FroggerStarter.Controller
         /// </summary>
         public readonly Turtle Player;
 
-        public IList<BaseSprite> PlayerSprites { get; private set; }
+        /// <summary>
+        /// Gets the player sprites.
+        /// </summary>
+        /// <value>
+        /// The player sprites.
+        /// </value>
+        public IList<BaseSprite> PlayerSprites { get; }
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="PlayerManager"/> is able to move.
         /// </summary>
@@ -94,10 +100,8 @@ namespace FroggerStarter.Controller
             this.Player.Y = y;
         }
 
-        /// <summary>
-        /// Displays the sprite at the player's location.
-        /// </summary>
-        public void SyncSpriteToLocation()
+        
+        private void syncSpriteToLocation()
         {
             this.Player.Sprite.RenderAt(this.Player.X, this.Player.Y);
         }
@@ -111,7 +115,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Moves the player to the left if the player is within bounds and the game is still going.
+        /// Moves the player to the left if the player is within bounds, enabled, and if the game is still going.
         /// </summary>
         public void MoveLeft()
         {
@@ -122,7 +126,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Moves the player to the right if the player is within bounds and the game is still going.
+        /// Moves the player to the right if the player is within bounds, enabled, and if the game is still going.
         /// </summary>
         /// <param name="maxRight">The maximum distance right.</param>
         public void MoveRight(double maxRight)
@@ -134,7 +138,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Moves the player up if the player is within bounds and the game is still going.
+        /// Moves the player up if the player is within bounds, enabled, and if the game is still going.
         /// </summary>
         /// <param name="topOfGameOffset">The highest point that the player can go.</param>
         public void MoveUp(int topOfGameOffset)
@@ -146,7 +150,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Moves the player down if the player is within bounds and the game is still going.
+        /// Moves the player down if the player is within bounds, enabled, and if the game is still going.
         /// </summary>
         /// <param name="roadHeight">Maximum distance that the player can move down.</param>
         public void MoveDown(double roadHeight)
@@ -164,7 +168,7 @@ namespace FroggerStarter.Controller
         public void HasScored(int timeLeft)
         {
             this.ScoresMade++;
-            this.TotalScore += timeLeft;
+            this.TotalScore += 5 + timeLeft;
         }
 
         /// <summary>
@@ -174,7 +178,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MoveToNextSprite()
         {
-            int current = this.PlayerSprites.IndexOf(this.Player.Sprite);
+            var current = this.PlayerSprites.IndexOf(this.Player.Sprite);
             if (current == this.PlayerSprites.Count - 1)
             {
                 this.Player.ChangeSprite(this.PlayerSprites[0]);
@@ -183,11 +187,13 @@ namespace FroggerStarter.Controller
             {
                 this.Player.ChangeSprite(this.PlayerSprites[current + 1]);
             }
+            this.syncSpriteToLocation();
         }
 
         public void MoveToDeadSprite()
         {
             this.Player.ChangeSprite(this.PlayerSprites[this.PlayerSprites.Count - 1]);
+            this.syncSpriteToLocation();
         }
     }
 }

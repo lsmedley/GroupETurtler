@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FroggerStarter.Controller
+﻿namespace FroggerStarter.Controller
 {
     /// <summary>
     /// Holds information about the game settings.
@@ -19,10 +13,10 @@ namespace FroggerStarter.Controller
         /// </value>
         public int PlayerLives { get; }
         /// <summary>
-        /// Gets the timer length in seconds.
+        /// Gets the level timer length in seconds.
         /// </summary>
         /// <value>
-        /// The timer length in seconds.
+        /// The level timer length in seconds.
         /// </value>
         public int TimerLengthSeconds { get; }
 

@@ -11,8 +11,8 @@
 
     <UserControl.Resources>
         <SolidColorBrush x:Key="BusColor" Color="Orange"/>
-        <SolidColorBrush x:Key="windowColor" Color="Black" />
-        <SolidColorBrush  x:Key="wheelColor" Color="Gray"/>
+        <SolidColorBrush x:Key="WindowColor" Color="Black" />
+        <SolidColorBrush  x:Key="WheelColor" Color="Gray"/>
     </UserControl.Resources>
 
     <Canvas Width="100" Height="40" Background="Transparent">
@@ -23,29 +23,29 @@
         <Rectangle Width="10" Height="2.5" Fill="Red" Canvas.Top="35" Canvas.Left="20" />
 
         <!-- Left windows-->
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource windowColor}" Canvas.Top="32.5" Canvas.Left="15" />
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource windowColor}" Canvas.Top="32.5" Canvas.Left="30" />
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource windowColor}" Canvas.Top="32.5" Canvas.Left="45" />
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource windowColor}" Canvas.Top="32.5" Canvas.Left="60" />
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource windowColor}" Canvas.Top="32.5" Canvas.Left="75" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WindowColor}" Canvas.Top="32.5" Canvas.Left="15" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WindowColor}" Canvas.Top="32.5" Canvas.Left="30" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WindowColor}" Canvas.Top="32.5" Canvas.Left="45" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WindowColor}" Canvas.Top="32.5" Canvas.Left="60" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WindowColor}" Canvas.Top="32.5" Canvas.Left="75" />
 
         <!-- Right windows-->
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource windowColor}" Canvas.Top="5" Canvas.Left="15" />
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource windowColor}" Canvas.Top="5" Canvas.Left="30" />
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource windowColor}" Canvas.Top="5" Canvas.Left="45" />
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource windowColor}" Canvas.Top="5" Canvas.Left="60" />
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource windowColor}" Canvas.Top="5" Canvas.Left="75" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WindowColor}" Canvas.Top="5" Canvas.Left="15" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WindowColor}" Canvas.Top="5" Canvas.Left="30" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WindowColor}" Canvas.Top="5" Canvas.Left="45" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WindowColor}" Canvas.Top="5" Canvas.Left="60" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WindowColor}" Canvas.Top="5" Canvas.Left="75" />
 
-        <Rectangle Width="2.5" Height="15" Fill="{StaticResource windowColor}" Canvas.Top="5" Canvas.Left="9" />
-        <Rectangle Width="2.5" Height="15" Fill="{StaticResource windowColor}" Canvas.Top="21" Canvas.Left="9" />
+        <Rectangle Width="2.5" Height="15" Fill="{StaticResource WindowColor}" Canvas.Top="5" Canvas.Left="9" />
+        <Rectangle Width="2.5" Height="15" Fill="{StaticResource WindowColor}" Canvas.Top="21" Canvas.Left="9" />
 
 
         <!-- Wheels -->
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource wheelColor}" Canvas.Top="0" Canvas.Left="15"/>
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource wheelColor}" Canvas.Top="0" Canvas.Left="70"/>
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="0" Canvas.Left="15"/>
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="0" Canvas.Left="70"/>
 
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource wheelColor}" Canvas.Top="37.5" Canvas.Left="15"/>
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource wheelColor}" Canvas.Top="37.5" Canvas.Left="70"/>
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="37.5" Canvas.Left="15"/>
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="37.5" Canvas.Left="70"/>
 
         <!-- Headlights -->
         <Ellipse Width="5" Height="2.5" Fill="Khaki" Canvas.Top="2.5" Canvas.Left="4"/>

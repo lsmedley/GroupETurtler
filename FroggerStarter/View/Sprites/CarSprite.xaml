@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <SolidColorBrush x:Key="CarColor" Color="Blue"/>
         <SolidColorBrush x:Key="WindowColor" Color="Black" />
-        <SolidColorBrush x:Key="wheelColor" Color="Gray" >
+        <SolidColorBrush x:Key="WheelColor" Color="Gray" >
             <SolidColorBrush.RelativeTransform>
                 <CompositeTransform CenterY="0.5" CenterX="0.5" TranslateX="-5"/>
             </SolidColorBrush.RelativeTransform>
@@ -21,10 +21,10 @@
 
     <Canvas Width="50" Height="40" Background="Transparent">
         <!-- Wheels -->
-        <Ellipse Width="10" Height="2.5" Fill="{StaticResource wheelColor}" Canvas.Top="34" Canvas.Left="10"/>
-        <Ellipse Width="10" Height="2.5" Fill="{StaticResource wheelColor}" Canvas.Top="3.5" Canvas.Left="10"/>
-        <Ellipse Width="10" Height="2.5" Fill="{StaticResource wheelColor}" Canvas.Top="34" Canvas.Left="30"/>
-        <Ellipse Width="10" Height="2.5" Fill="{StaticResource wheelColor}" Canvas.Top="3.5" Canvas.Left="30"/>
+        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="34" Canvas.Left="10"/>
+        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="3.5" Canvas.Left="10"/>
+        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="34" Canvas.Left="30"/>
+        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="3.5" Canvas.Left="30"/>
 
         <!-- Body -->
         <Rectangle Width="30" Height="30" Fill="{StaticResource CarColor}" Canvas.Top="5" Canvas.Left="10"/>

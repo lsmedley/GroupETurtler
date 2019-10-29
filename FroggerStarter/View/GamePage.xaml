@@ -8,14 +8,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="pipeColor" Color="Green" />
-        <SolidColorBrush x:Key="holeColor" Color="Black" />
     </Page.Resources>
 
     <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}" Background="Black">
         <Rectangle Canvas.Top="55" Fill="Gray" Width="{StaticResource AppWidth}" Height="50" />
 
-        <Rectangle Canvas.Top="355" Fill="Gray" Width="{StaticResource AppWidth}" Height="55" />
+        <Rectangle Canvas.Top="355" Fill="LightGoldenrodYellow" Width="{StaticResource AppWidth}" Height="55" />
         <!--<TextBlock Canvas.Left="10" Canvas.Top="10" Text="Lives: " TextWrapping="Wrap" Foreground="GreenYellow"/>-->
 
     </Canvas>

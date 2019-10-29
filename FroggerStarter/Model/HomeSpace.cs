@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model
@@ -12,7 +7,7 @@ namespace FroggerStarter.Model
     /// Holds logic for home spaces.
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.GameObject" />
-    class HomeSpace : GameObject
+    public class HomeSpace : GameObject
     {
         /// <summary>
         /// Gets or sets a value indicating whether this space is taken.
@@ -27,7 +22,7 @@ namespace FroggerStarter.Model
         /// </summary>
         public HomeSpace()
         {
-            this.Sprite = new HomeSprite();
+            Sprite = new HomeSprite();
             this.IsTaken = false;
         }
 
@@ -41,9 +36,10 @@ namespace FroggerStarter.Model
         /// </returns>
         public override bool IsColliding(GameObject other)
         {
-            bool isCol = false;
+            var isCol = false;
 
-            if (other.X == this.X && other.Y == this.Y)
+            var tolerance = 0.1;
+            if (Math.Abs(other.X - X) < tolerance && Math.Abs(other.Y - Y) < tolerance)
             {
                 this.IsTaken = true;
                 isCol = true;
