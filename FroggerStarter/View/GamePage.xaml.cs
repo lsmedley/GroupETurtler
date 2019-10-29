@@ -35,6 +35,9 @@ namespace FroggerStarter.View
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GamePage"/> class.
+        /// </summary>
         public GamePage()
         {
             this.InitializeComponent();
@@ -57,7 +60,6 @@ namespace FroggerStarter.View
             this.canvas.Children.Add(this.livesTextBlock);
             this.canvas.Children.Add(this.scoreTextBlock);
             this.canvas.Children.Add(titleTextBlock);
-            this.canvas.Children.Add(this.gameOverTextBlock);
 
             this.livesTextBlock.FontSize = 15;
             Canvas.SetTop(this.livesTextBlock, 10);
@@ -74,12 +76,6 @@ namespace FroggerStarter.View
             Canvas.SetLeft(titleTextBlock, this.applicationWidth / 2 - 25);
             titleTextBlock.Foreground = TitleBrush;
 
-            this.gameOverTextBlock.FontSize = 60;
-            this.gameOverTextBlock.Foreground = HudBrush;
-            Canvas.SetTop(this.gameOverTextBlock, this.applicationHeight / 2 - 40);
-            Canvas.SetLeft(this.gameOverTextBlock, this.applicationWidth / 2 - 150);
-            this.gameOverTextBlock.Visibility = Visibility.Collapsed;
-
             this.gameManager.LivesUpdated += this.onLivesUpdated;
             this.gameManager.ScoreUpdated += this.onScoreUpdated;
             this.gameManager.GameOver += this.onGameOver;
@@ -87,7 +83,17 @@ namespace FroggerStarter.View
 
         private void onGameOver(object sender, EventArgs e)
         {
-            this.gameOverTextBlock.Visibility = Visibility.Visible;
+            this.initializeGameOverText();
+        }
+
+        private void initializeGameOverText()
+        {
+            this.gameOverTextBlock.FontSize = 60;
+            this.gameOverTextBlock.Foreground = HudBrush;
+            Canvas.SetTop(this.gameOverTextBlock, this.applicationHeight / 2 - 40);
+            Canvas.SetLeft(this.gameOverTextBlock, this.applicationWidth / 2 - 150);
+            this.canvas.Children.Add(this.gameOverTextBlock);
+
         }
 
         private void onScoreUpdated(object sender, EventArgs e)

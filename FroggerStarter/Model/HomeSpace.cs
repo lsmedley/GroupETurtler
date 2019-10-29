@@ -46,12 +46,6 @@ namespace FroggerStarter.Model
             }
 
             return isCol;
-            //if (base.IsColliding(other))
-            //{
-            //    this.IsTaken = true;
-            //}
-
-            //return base.IsColliding(other);
         }
     }
 }

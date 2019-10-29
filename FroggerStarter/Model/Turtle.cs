@@ -26,6 +26,11 @@ namespace FroggerStarter.Model
             SetSpeed(SpeedXDirection, SpeedYDirection);
         }
 
+        /// <summary>
+        /// Changes the sprite.
+        /// Postcondition: this.Sprite = the specified sprite.
+        /// </summary>
+        /// <param name="sprite">The sprite.</param>
         public void ChangeSprite(BaseSprite sprite)
         {
             Sprite = sprite;

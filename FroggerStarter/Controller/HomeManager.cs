@@ -9,7 +9,6 @@ namespace FroggerStarter.Controller
     /// <summary>
     /// Manages logic pertaining to home spaces.
     /// </summary>
-    /// <seealso cref="System.Collections.Generic.IEnumerable{FroggerStarter.Model.HomeSpace}" />
     public class HomeManager : IEnumerable<HomeSpace>
     {
         /// <summary>

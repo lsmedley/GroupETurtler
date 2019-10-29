@@ -11,6 +11,12 @@ namespace FroggerStarter.Model
     {
         private readonly Direction direction;
 
+        /// <summary>
+        /// Gets the type.
+        /// </summary>
+        /// <value>
+        /// The type of vehicle.
+        /// </value>
         public VehicleType Type { get; }
 
         /// <summary>
@@ -49,6 +55,11 @@ namespace FroggerStarter.Model
 
             SetSpeed(spd, 0);
         }
+        /// <summary>
+        /// Moves this vehicle forward.
+        /// Postcondition: if this.direction == Direction.Left, this.X -= this.Speed.
+        /// else this.X += this.Speed.
+        /// </summary>
         public void MoveForward()
         {
             if (this.direction == Direction.Left)
