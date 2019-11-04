@@ -15,6 +15,8 @@ namespace FroggerStarter.Controller
         /// The homespaces
         /// </summary>
         private readonly IList<HomeSpace> homes;
+
+        private const int HomeTileWidth = 50;
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeManager"/> class.
         /// </summary>
@@ -28,14 +30,14 @@ namespace FroggerStarter.Controller
             for (var i = 0; i < numHomes; i++)
             {
                 this.homes.Add(new HomeSpace());
-                var x = Math.Round((wallWidth - spacing * (i + 1) + 50) / 50.0) * 50.0;
+                var x = Math.Round((wallWidth - spacing * (i + 1) + HomeTileWidth) / HomeTileWidth) * HomeTileWidth;
                 this.homes[i].X = x;
                 this.homes[i].Y = heightOffset;
             }
 
-            this.homes[0].X -= 50;
-            this.homes[1].X -= 50;
-            this.homes[this.homes.Count - 1].X += 50; //TODO find out what 50 is
+            this.homes[0].X -= HomeTileWidth;
+            this.homes[1].X -= HomeTileWidth;
+            this.homes[this.homes.Count - 1].X += HomeTileWidth;
         }
 
         /// <summary>
