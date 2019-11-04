@@ -23,7 +23,7 @@ namespace FroggerStarter.Controller
         /// <value>
         /// The current time.
         /// </value>
-        public int CurTime { get; private set; }
+        public int CurrTime { get; private set; }
         private DispatcherTimer levelTime;
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace FroggerStarter.Controller
         public LevelTimeManager(int maxTime)
         {
             this.MaxTime = maxTime;
-            this.CurTime = 0;
+            this.CurrTime = 0;
             this.setUpTimer();
         }
 
@@ -47,11 +47,11 @@ namespace FroggerStarter.Controller
 
         private void timerOnTick(object sender, object e)
         {
-            this.CurTime++;
-            if (this.CurTime >= this.MaxTime)
+            this.CurrTime++;
+            if (this.CurrTime >= this.MaxTime)
             {
                 this.onTimeUp();
-                this.CurTime = 0;
+                this.CurrTime = 0;
             }
         }
 
@@ -60,7 +60,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void Reset()
         {
-            this.CurTime = 0;
+            this.CurrTime = 0;
         }
 
         /// <summary>

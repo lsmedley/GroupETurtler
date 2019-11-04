@@ -48,14 +48,14 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Adds a vehicle to this lane if this.vehicles has fewer than the maximum number of vehicles.
         /// Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
-        /// += a vehicle with the given type and the same speed and direction as this lane. Else none.
+        /// += a vehicle with the given vehicleType and the same speed and direction as this lane. Else none.
         /// </summary>
-        /// <param name="type">The type of the vehicle.</param>
-        public void AddVehicle(VehicleType type)
+        /// <param name="vehicleType">The vehicleType of the vehicle.</param>
+        public void AddVehicle(VehicleType vehicleType)
         {
             if (this.vehicles.Count < this.maxVehicles)
             {
-                this.vehicles.Add(new Vehicle(type, this.Direction, this.Speed));
+                this.vehicles.Add(new Vehicle(vehicleType, this.Direction, this.Speed));
             }
         }
 
@@ -63,41 +63,41 @@ namespace FroggerStarter.Controller
         /// Adds a vehicle to the appropriate place in the lane if this.vehicles has fewer than the maximum
         /// number of vehicles.
         /// Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
-        /// += a vehicle with the given type and the same speed and direction as this lane, appropriately
+        /// += a vehicle with the given vehicleType and the same speed and direction as this lane, appropriately
         /// spaced behind the last vehicle. Else none.
         /// </summary>
-        /// <param name="type">The type of the vehicle.</param>
-        /// <param name="lanelen">The length of this lane</param>
-        public void AddVehicle(VehicleType type, double lanelen)
+        /// <param name="vehicleType">The vehicleType of the vehicle.</param>
+        /// <param name="laneLength">The length of this lane</param>
+        public void AddVehicle(VehicleType vehicleType, double laneLength)
         {
             if (this.vehicles.Count < this.maxVehicles)
             {
-                var prevV = this.vehicles[this.vehicles.Count - 1];
+                var prevVehicle = this.vehicles[this.vehicles.Count - 1];
                 if (this.Direction == Direction.Right)
                 {
-                    foreach (var v in this.vehicles)
+                    foreach (var vehicle in this.vehicles)
                     {
-                        if (v.X <= 0 || v.X >= lanelen - v.Width)
+                        if (vehicle.X <= 0 || vehicle.X >= laneLength - vehicle.Width)
                         {
                             return;
                         }
                     }
-                    this.vehicles.Add(new Vehicle(type, this.Direction, this.Speed));
+                    this.vehicles.Add(new Vehicle(vehicleType, this.Direction, this.Speed));
                     this.vehicles[this.vehicles.Count - 1].X = 0 - this.vehicles[this.vehicles.Count - 1].Width;
                 }
                 else {
-                    foreach (var v in this.vehicles)
+                    foreach (var vehicle in this.vehicles)
                     {
-                        if (v.X >= lanelen - v.Width || v.X <= v.Width)
+                        if (vehicle.X >= laneLength - vehicle.Width || vehicle.X <= vehicle.Width)
                         {
                             return;
                         }
                     }
-                    this.vehicles.Add(new Vehicle(type, this.Direction, this.Speed));
-                    this.vehicles[this.vehicles.Count - 1].X = lanelen;
+                    this.vehicles.Add(new Vehicle(vehicleType, this.Direction, this.Speed));
+                    this.vehicles[this.vehicles.Count - 1].X = laneLength;
                 }
 
-                this.vehicles[this.vehicles.Count - 1].Y = prevV.Y;
+                this.vehicles[this.vehicles.Count - 1].Y = prevVehicle.Y;
             }
 
         }
@@ -110,27 +110,27 @@ namespace FroggerStarter.Controller
         public void PlaceAllVehiclesInLane(double laneLength)
         {
             var space = this.GetSpacing(laneLength);
-            double curX;
+            double currX;
             if (this.Direction == Direction.Left)
             {
-                curX = 0;
+                currX = 0;
             }
             else
             {
-                curX = laneLength;
+                currX = laneLength;
             }
 
-            foreach (var v in this.vehicles)
+            foreach (var vehicle in this.vehicles)
             {
-                v.X = curX;
+                vehicle.X = currX;
 
                 if (this.Direction == Direction.Left)
                 {
-                    curX += v.Width + space;
+                    currX += vehicle.Width + space;
                 }
                 else
                 {
-                    curX -= v.Width + space;
+                    currX -= vehicle.Width + space;
                 }
             }
 
@@ -143,9 +143,9 @@ namespace FroggerStarter.Controller
         /// <param name="y">The y coordinate.</param>
         public void SetVehicleYs(double y)
         {
-            foreach (var v in this.vehicles)
+            foreach (var vehicle in this.vehicles)
             {
-                v.Y = y;
+                vehicle.Y = y;
             }
         }
 
@@ -156,13 +156,13 @@ namespace FroggerStarter.Controller
         /// <returns>The space between vehicles</returns>
         public double GetSpacing(double laneLength)
         {
-            double totalCarLen = 0;
-            foreach (var v in this.vehicles)
+            double totalCarLength = 0;
+            foreach (var vehicle in this.vehicles)
             {
-                totalCarLen += v.Width;
+                totalCarLength += vehicle.Width;
             }
 
-            return (laneLength - totalCarLen) / this.vehicles.Count;
+            return (laneLength - totalCarLength) / this.vehicles.Count;
         }
 
         /// <summary>
@@ -171,17 +171,17 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MoveVehicles(double laneLength)
         {
-            foreach (var v in this.vehicles)
+            foreach (var vehicle in this.vehicles)
             {
-                v.MoveForward();
-                if (v.X < 0 - v.Width)
+                vehicle.MoveForward();
+                if (vehicle.X < 0 - vehicle.Width)
                 {
-                    v.X = laneLength;
+                    vehicle.X = laneLength;
                 }
 
-                if (v.X > laneLength)
+                if (vehicle.X > laneLength)
                 {
-                    v.X = 0 - v.Width;
+                    vehicle.X = 0 - vehicle.Width;
                 }
             }
         }
@@ -194,9 +194,9 @@ namespace FroggerStarter.Controller
         public bool CheckCollision(GameObject g)
         {
 
-            foreach (var v in this.vehicles)
+            foreach (var vehicle in this.vehicles)
             {
-                if (v.IsColliding(g))
+                if (vehicle.IsColliding(g))
                 {
                     return true;
                 }

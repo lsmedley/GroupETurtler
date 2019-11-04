@@ -43,15 +43,15 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Checks if this home space has been collided with.
         /// </summary>
-        /// <param name="g">The g.</param>
+        /// <param name="gameObject">The gameObject.</param>
         /// <returns></returns>
-        public int CheckCollision(GameObject g)
+        public int CheckCollision(GameObject gameObject)
         {
-            foreach (var v in this.homes)
+            foreach (var home in this.homes)
             {
-                if (!v.IsTaken && v.IsColliding(g))
+                if (!home.IsTaken && home.IsColliding(gameObject))
                 {
-                    return this.homes.IndexOf(v);
+                    return this.homes.IndexOf(home);
                 }
             }
 

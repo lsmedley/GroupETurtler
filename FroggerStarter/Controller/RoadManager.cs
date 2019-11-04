@@ -17,7 +17,7 @@ namespace FroggerStarter.Controller
         public event EventHandler<EventArgs> CarAdded;
 
         private readonly IList<LaneManager> lanes;
-        private readonly LaneSettings laneset;
+        private readonly LaneSettings laneSettings;
         private int currentTick;
         private const int AddCarTick = 300;
 
@@ -27,20 +27,20 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Initializes a new instance of the <see cref="RoadManager"/> class.
         /// </summary>
-        /// <param name="laneset">The settings for this roadmanager's lanes.</param>
+        /// <param name="laneSettings">The settings for this roadmanager's lanes.</param>
         /// <param name="totalHeight">The total height of the road.</param>
         /// <param name="laneLength">Length of the lanes.</param>
         /// <exception cref="Exception">Each lane must be fully defined</exception>
-        public RoadManager(LaneSettings laneset, double totalHeight, double laneLength)
+        public RoadManager(LaneSettings laneSettings, double totalHeight, double laneLength)
         {
-            if (laneset.Vehicles.Count != laneset.TrafficDirections.Count 
-                || laneset.Vehicles.Count != laneset.TrafficSpeeds.Count 
-                || laneset.TrafficDirections.Count != laneset.TrafficSpeeds.Count)
+            if (laneSettings.Vehicles.Count != laneSettings.TrafficDirections.Count 
+                || laneSettings.Vehicles.Count != laneSettings.TrafficSpeeds.Count 
+                || laneSettings.TrafficDirections.Count != laneSettings.TrafficSpeeds.Count)
             {
                 throw new Exception("Each lane must be fully defined");
             }
 
-            this.laneset = laneset;
+            this.laneSettings = laneSettings;
             this.currentTick = 0;
 
             this.lanes = new List<LaneManager>();
@@ -55,11 +55,11 @@ namespace FroggerStarter.Controller
         public void SetUpLanes(double totalHeight, double laneLength)
         {
             this.lanes.Clear();
-            for (var i = 0; i < this.laneset.Vehicles.Count; i++)
+            for (var i = 0; i < this.laneSettings.Vehicles.Count; i++)
             {
-                var lane = new LaneManager(this.laneset.TrafficSpeeds[i], this.laneset.TrafficDirections[i], this.laneset.Vehicles[i].Item1);
+                var lane = new LaneManager(this.laneSettings.TrafficSpeeds[i], this.laneSettings.TrafficDirections[i], this.laneSettings.Vehicles[i].Item1);
 
-                lane.AddVehicle(this.laneset.Vehicles[i].Item2);
+                lane.AddVehicle(this.laneSettings.Vehicles[i].Item2);
 
                 this.lanes.Add(lane);
             }
@@ -104,13 +104,13 @@ namespace FroggerStarter.Controller
         {
             foreach (var lane in this.lanes)
             {
-                var vt = VehicleType.Car;
-                foreach (var ve in lane)
+                var vehicleType = VehicleType.Car;
+                foreach (var vehicle in lane)
                 {
-                    vt = ve.Type;
+                    vehicleType = vehicle.Type;
                 }
 
-                lane.AddVehicle(vt, laneLength);
+                lane.AddVehicle(vehicleType, laneLength);
 
             }
 
@@ -131,17 +131,17 @@ namespace FroggerStarter.Controller
         /// <returns>true if there is a collision, false otherwise.</returns>
         public bool CheckCollision(GameObject g)
         {
-            var isCol = false;
+            var hasCollided = false;
 
             foreach (var lane in this.lanes)
             {
                 if (lane.CheckCollision(g))
                 {
-                    isCol = true;
+                    hasCollided = true;
                 }
             }
 
-            return isCol;
+            return hasCollided;
         }
 
         public IEnumerator<Vehicle> GetEnumerator()

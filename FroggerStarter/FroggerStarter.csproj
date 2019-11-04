@@ -129,7 +129,7 @@
     <Compile Include="Controller\LaneManager.cs" />
     <Compile Include="Model\HomeSpace.cs" />
     <Compile Include="Model\Vehicle.cs" />
-    <Compile Include="Model\Turtle.cs" />
+    <Compile Include="Model\Player.cs" />
     <Compile Include="Controller\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\VehicleType.cs" />
@@ -164,8 +164,8 @@
     <Compile Include="View\Sprites\PlayerHomeSprite.xaml.cs">
       <DependentUpon>PlayerHomeSprite.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\TurtleSprite.xaml.cs">
-      <DependentUpon>TurtleSprite.xaml</DependentUpon>
+    <Compile Include="View\Sprites\PlayerSprite.xaml.cs">
+      <DependentUpon>PlayerSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\ISpriteRenderer.cs" />
   </ItemGroup>
@@ -229,7 +229,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\TurtleSprite.xaml">
+    <Page Include="View\Sprites\PlayerSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
