@@ -31,6 +31,8 @@ namespace FroggerStarter.Controller
         public event EventHandler<EventArgs> GameOver;
 
         private const int BottomLaneOffset = 5;
+        private const int TimerBlockWidth = 5;
+        private const int TimerBarHeight = 10;
         private const int TopOfGameOffset = 100;
         private const int TileHeight = 50;
 
@@ -235,7 +237,7 @@ namespace FroggerStarter.Controller
             this.timerBar = new ProgressBar {Value = this.TimeLeft};
             this.gameCanvas.Children.Add(this.timerBar);
 
-            this.timerBar.Height = 10;
+            this.timerBar.Height = TimerBarHeight;
             Canvas.SetTop(this.timerBar, (double)TopOfGameOffset / 2 - this.timerBar.Height);
             this.timerBar.Width = this.backgroundWidth;
             this.timerBar.Visibility = Visibility.Visible;
@@ -262,7 +264,7 @@ namespace FroggerStarter.Controller
         private void gameTimerOnTick(object sender, object e)
         {
             this.rm.OnTick(this.backgroundWidth);
-            this.timerBar.Value = 5 * this.TimeLeft;
+            this.timerBar.Value = TimerBlockWidth * this.TimeLeft;
             if (this.rm.CheckCollision(this.player.Player))
             {
                 this.onDeath();
@@ -373,7 +375,7 @@ namespace FroggerStarter.Controller
         private void checkVictory()
         {
             var collidedHome = this.homes.CheckCollision(this.player.Player);
-            if ( collidedHome != -1)
+            if ( collidedHome != -1) //TODO magic number will be fixed when collidedHome is refactored to bool
             {
                 this.setPlayerToCenterOfBottomLane();
                 this.player.HasScored(this.TimeLeft);

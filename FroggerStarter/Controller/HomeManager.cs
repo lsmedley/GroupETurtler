@@ -35,7 +35,7 @@ namespace FroggerStarter.Controller
 
             this.homes[0].X -= 50;
             this.homes[1].X -= 50;
-            this.homes[this.homes.Count - 1].X += 50;
+            this.homes[this.homes.Count - 1].X += 50; //TODO find out what 50 is
         }
 
         /// <summary>
