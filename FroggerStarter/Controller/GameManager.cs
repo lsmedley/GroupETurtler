@@ -236,7 +236,7 @@ namespace FroggerStarter.Controller
             this.gameCanvas.Children.Add(this.timerBar);
 
             this.timerBar.Height = 10;
-            Canvas.SetTop(this.timerBar, TopOfGameOffset / 2 - this.timerBar.Height);
+            Canvas.SetTop(this.timerBar, (double)TopOfGameOffset / 2 - this.timerBar.Height);
             this.timerBar.Width = this.backgroundWidth;
             this.timerBar.Visibility = Visibility.Visible;
             this.timerBar.Background = new SolidColorBrush(Colors.Transparent);
