@@ -121,16 +121,15 @@ namespace FroggerStarter.Controller
         /// Postcondition: Game is initialized and ready for play.
         /// </summary>
         /// <param name="gamePage">The game page.</param>
-        /// <param name="gameSettings">The game settings.</param>
         /// <exception cref="ArgumentNullException">gameCanvas</exception>
-        public void InitializeGame(Canvas gamePage, GameSettings gameSettings)
+        public void InitializeGame(Canvas gamePage)
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
-            this.createHomeManager(gameSettings.ScoresToWin);
+            this.createHomeManager(GameSettings.ScoresToWin);
             this.createTakenTokens();
-            this.createAndPlacePlayer(gameSettings.PlayerLives, gameSettings.ScoresToWin);
+            this.createAndPlacePlayer(GameSettings.PlayerLives, GameSettings.ScoresToWin);
             this.createRoadManager();
-            this.setUpTimers(gameSettings.TimerLengthSeconds);
+            this.setUpTimers(GameSettings.TimerLengthSeconds);
         }
 
         private void createTakenTokens()
@@ -161,29 +160,7 @@ namespace FroggerStarter.Controller
 
         private void createRoadManager()
         {
-            var traffic = new List<(int, VehicleType)> {
-                (3, VehicleType.Car),
-                (2, VehicleType.Bus),
-                (4, VehicleType.Car),
-                (3, VehicleType.Bus),
-                (5, VehicleType.Car)
-            };
-            var flow = new List<Direction> {
-                Direction.Left,
-                Direction.Right,
-                Direction.Left,
-                Direction.Left,
-                Direction.Right
-            };
-            var speeds = new List<int> {
-                1,
-                3,
-                5,
-                7,
-                9
-            };
-            var laneSettings = new LaneSettings(traffic, flow, speeds);
-            this.roadManager = new RoadManager(laneSettings, this.roadHeight, this.backgroundWidth);
+            this.roadManager = new RoadManager(GameSettings.LaneSettingsCollection, this.roadHeight, this.backgroundWidth);
             this.initializeRoad();
         }
 

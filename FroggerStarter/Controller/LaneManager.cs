@@ -18,10 +18,10 @@ namespace FroggerStarter.Controller
         public readonly int Speed;
         
         /// <summary>
-        /// Gets the direction.
+        /// Gets the Direction.
         /// </summary>
         /// <value>
-        /// The direction that vehicles in this lane drive in.
+        /// The Direction that vehicles in this lane drive in.
         /// </value>
         public Direction Direction { get; }
         /// <summary>
@@ -30,32 +30,35 @@ namespace FroggerStarter.Controller
         private readonly List<Vehicle> vehicles;
 
         private readonly int maxVehicles;
+        private readonly VehicleType vehicleType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LaneManager"/> class.
         /// </summary>
         /// <param name="startSpeed">The speed of the lane.</param>
-        /// <param name="direction">The direction of the lane.</param>
+        /// <param name="direction">The Direction of the lane.</param>
         /// <param name="maxNumVehicles">The maximum number of vehicles in this lane.</param>
-        public LaneManager(int startSpeed, Direction direction, int maxNumVehicles)
+        public LaneManager(LaneSettings laneSettings)
         {
-            this.Speed = startSpeed;
-            this.maxVehicles = maxNumVehicles;
-            this.Direction = direction;
+            this.Speed = laneSettings.StartSpeed;
+            this.maxVehicles = laneSettings.MaxNumVehicles;
+            this.Direction = laneSettings.Direction;
             this.vehicles = new List<Vehicle>();
+            this.vehicleType = laneSettings.VehicleType;
+            this.AddVehicle();
         }
 
         /// <summary>
         /// Adds a vehicle to this lane if this.vehicles has fewer than the maximum number of vehicles.
         /// Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
-        /// += a vehicle with the given vehicleType and the same speed and direction as this lane. Else none.
+        /// += a vehicle with the given vehicleType and the same speed and Direction as this lane. Else none.
         /// </summary>
         /// <param name="vehicleType">The vehicleType of the vehicle.</param>
-        public void AddVehicle(VehicleType vehicleType)
+        public void AddVehicle()
         {
             if (this.vehicles.Count < this.maxVehicles)
             {
-                this.vehicles.Add(new Vehicle(vehicleType, this.Direction, this.Speed));
+                this.vehicles.Add(new Vehicle(this.vehicleType, this.Direction, this.Speed));
             }
         }
 
@@ -63,12 +66,12 @@ namespace FroggerStarter.Controller
         /// Adds a vehicle to the appropriate place in the lane if this.vehicles has fewer than the maximum
         /// number of vehicles.
         /// Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
-        /// += a vehicle with the given vehicleType and the same speed and direction as this lane, appropriately
+        /// += a vehicle with the given vehicleType and the same speed and Direction as this lane, appropriately
         /// spaced behind the last vehicle. Else none.
         /// </summary>
         /// <param name="vehicleType">The vehicleType of the vehicle.</param>
         /// <param name="laneLength">The length of this lane</param>
-        public void AddVehicle(VehicleType vehicleType, double laneLength)
+        public void AddVehicle(double laneLength)
         {
             if (this.vehicles.Count < this.maxVehicles)
             {
@@ -167,7 +170,7 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         /// Moves the vehicles.
-        /// Postcondition: Each vehicle has been moved an amount equal to its SpeedX in the direction of the vehicle.
+        /// Postcondition: Each vehicle has been moved an amount equal to its SpeedX in the Direction of the vehicle.
         /// </summary>
         public void MoveVehicles(double laneLength)
         {
