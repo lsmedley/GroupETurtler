@@ -35,13 +35,13 @@ namespace FroggerStarter.Controller
         /// Initializes a new instance of the <see cref="LaneManager"/> class.
         /// </summary>
         /// <param name="startSpeed">The speed of the lane.</param>
-        /// <param name="dir">The direction of the lane.</param>
-        /// <param name="maxV">The maximum number of vehicles in this lane.</param>
-        public LaneManager(int startSpeed, Direction dir, int maxV)
+        /// <param name="direction">The direction of the lane.</param>
+        /// <param name="maxNumVehicles">The maximum number of vehicles in this lane.</param>
+        public LaneManager(int startSpeed, Direction direction, int maxNumVehicles)
         {
             this.Speed = startSpeed;
-            this.maxVehicles = maxV;
-            this.Direction = dir;
+            this.maxVehicles = maxNumVehicles;
+            this.Direction = direction;
             this.vehicles = new List<Vehicle>();
         }
 
