@@ -124,8 +124,8 @@ namespace FroggerStarter.Controller
         public void InitializeGame(Canvas gamePage)
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
-            this.createHomeManager(gameSet.ScoresToWin);
-            this.createAndPlacePlayer(gameSet.PlayerLives, gameSet.ScoresToWin);
+            this.createHomeManager(GameSettings.ScoresToWin);
+            this.createAndPlacePlayer(GameSettings.PlayerLives, GameSettings.ScoresToWin);
             this.createRoadManager();
             this.setUpTimers(GameSettings.TimerLengthSeconds);
         }
@@ -337,7 +337,7 @@ namespace FroggerStarter.Controller
 
         private void checkVictory()
         {
-            var collidedHome = this.homes.CheckCollision(this.player.Player);
+            var collidedHome = this.homes.CheckCollision(this.playerManager.Player);
             if ( collidedHome)
             {
                 this.setPlayerToCenterOfBottomLane();

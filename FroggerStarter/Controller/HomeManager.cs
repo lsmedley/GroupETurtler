@@ -47,7 +47,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         /// <param name="gameObject">The gameObject.</param>
         /// <returns>Whether one of the home spaces has been collided with.</returns>
-        public int CheckCollision(GameObject gameObject)
+        public bool CheckCollision(GameObject gameObject)
         {
             foreach (var home in this.homes)
             {
