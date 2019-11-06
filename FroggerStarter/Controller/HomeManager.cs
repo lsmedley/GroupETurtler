@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Windows.UI.Xaml;
 using FroggerStarter.Model;
+using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Controller
 {
@@ -15,6 +18,7 @@ namespace FroggerStarter.Controller
         /// The homespaces
         /// </summary>
         private readonly IList<HomeSpace> homes;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeManager"/> class.
         /// </summary>
@@ -39,21 +43,21 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Checks if this home space has been collided with.
+        /// Checks if one of the home spaces has been collided with.
         /// </summary>
         /// <param name="g">The g.</param>
-        /// <returns></returns>
-        public int CheckCollision(GameObject g)
+        /// <returns>Whether one of the home spaces has been collided with.</returns>
+        public bool CheckCollision(GameObject g)
         {
             foreach (var v in this.homes)
             {
                 if (!v.IsTaken && v.IsColliding(g))
                 {
-                    return this.homes.IndexOf(v);
+                    return true;
                 }
             }
 
-            return -1;
+            return false;
         }
 
         /// <summary>

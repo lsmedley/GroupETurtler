@@ -19,7 +19,7 @@ namespace FroggerStarter.Controller
         private readonly IList<LaneManager> lanes;
         private readonly LaneSettings laneset;
         private int currentTick;
-        private const int AddCarTick = 300;
+        private const int AddCarTick = 500;
 
         private const int LaneHeight = 50;
         private const int VehicleOffset = 5;

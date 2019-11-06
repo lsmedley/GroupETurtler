@@ -48,7 +48,6 @@ namespace FroggerStarter.Controller
         private RoadManager rm;
         private PlayerManager player;
         private HomeManager homes;
-        private IList<PlayerHomeSprite> takenTokens;
 
         #endregion
 
@@ -125,27 +124,9 @@ namespace FroggerStarter.Controller
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
             this.createHomeManager(gameSet.ScoresToWin);
-            this.createTakenTokens();
             this.createAndPlacePlayer(gameSet.PlayerLives, gameSet.ScoresToWin);
             this.createRoadManager();
             this.setUpTimers(gameSet.TimerLengthSeconds);
-        }
-
-        private void createTakenTokens()
-        {
-            this.takenTokens = new List<PlayerHomeSprite>();
-            foreach (var home in this.homes)
-            {
-                var tToken = new PlayerHomeSprite();
-                tToken.RenderAt(home.X, home.Y);
-                this.takenTokens.Add(tToken);
-            }
-
-            foreach (var tToken in this.takenTokens)
-            {
-                this.gameCanvas.Children.Add(tToken);
-                tToken.Visibility = Visibility.Collapsed;
-            }
         }
 
         private void createHomeManager(int homeNum)
@@ -154,6 +135,9 @@ namespace FroggerStarter.Controller
             foreach (var home in this.homes)
             {
                 this.gameCanvas.Children.Add(home.Sprite);
+                this.gameCanvas.Children.Add(home.TakenSprite);
+                Canvas.SetTop(home.TakenSprite, home.Y);
+                Canvas.SetLeft(home.TakenSprite, home.X);
             }
         }
 
@@ -175,10 +159,10 @@ namespace FroggerStarter.Controller
             };
             var speeds = new List<int> {
                 1,
-                3,
+                2,
+                4,
                 5,
-                7,
-                9
+                6
             };
             var laneset = new LaneSettings(traffic, flow, speeds);
             this.rm = new RoadManager(laneset, this.roadHeight, this.backgroundWidth);
@@ -373,12 +357,11 @@ namespace FroggerStarter.Controller
         private void checkVictory()
         {
             var collidedHome = this.homes.CheckCollision(this.player.Player);
-            if ( collidedHome != -1)
+            if (collidedHome)
             {
                 this.setPlayerToCenterOfBottomLane();
                 this.player.HasScored(this.TimeLeft);
                 this.onScoreUpdated();
-                this.updateHomes(collidedHome);
                 this.levelTimer.Reset();
             }
             else if (this.player.Player.Y < TopOfGameOffset + 1)
@@ -390,11 +373,6 @@ namespace FroggerStarter.Controller
             {
                 this.onGameOver();
             }
-        }
-
-        private void updateHomes(int homeTaken)
-        {
-            this.takenTokens[homeTaken].Visibility = Visibility.Visible;
         }
 
         private void onLivesUpdated()

@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Xaml;
 using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model
@@ -17,6 +18,8 @@ namespace FroggerStarter.Model
         /// </value>
         public bool IsTaken { get; private set; }
 
+        public BaseSprite TakenSprite { get; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeSpace" /> class.
         /// </summary>
@@ -24,11 +27,13 @@ namespace FroggerStarter.Model
         {
             Sprite = new HomeSprite();
             this.IsTaken = false;
+            this.TakenSprite = new PlayerHomeSprite();
+            this.TakenSprite.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
         /// Determines whether the specified other is colliding.
-        /// Postcondition: this.IsTaken == true if the specified other is colliding.
+        /// Postcondition: this.IsTaken == true and this.TakenSprite.Visibility == visible if the specified other is colliding.
         /// </summary>
         /// <param name="other">The other.</param>
         /// <returns>
@@ -43,6 +48,7 @@ namespace FroggerStarter.Model
             {
                 this.IsTaken = true;
                 isCol = true;
+                this.TakenSprite.Visibility = Visibility.Visible;
             }
 
             return isCol;
