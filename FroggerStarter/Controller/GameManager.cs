@@ -10,7 +10,7 @@ using FroggerStarter.View.Sprites;
 namespace FroggerStarter.Controller
 {
     /// <summary>
-    ///     Manages all aspects of the game play including moving the player,
+    ///     Manages all aspects of the game play including moving the playerManager,
     ///     the Vehicles as well as lives and score.
     /// </summary>
     public class GameManager
@@ -31,6 +31,8 @@ namespace FroggerStarter.Controller
         public event EventHandler<EventArgs> GameOver;
 
         private const int BottomLaneOffset = 5;
+        private const int TimerBlockWidth = 5;
+        private const int TimerBarHeight = 10;
         private const int TopOfGameOffset = 100;
         private const int TileHeight = 50;
 
@@ -42,11 +44,11 @@ namespace FroggerStarter.Controller
         private DispatcherTimer timer;
         private DispatcherTimer deathTimer;
         private LevelTimeManager levelTimer;
-        private int TimeLeft => Math.Abs(this.levelTimer.CurTime - this.levelTimer.MaxTime);
+        private int TimeLeft => Math.Abs(this.levelTimer.CurrTime - this.levelTimer.MaxTime);
         private ProgressBar timerBar;
 
-        private RoadManager rm;
-        private PlayerManager player;
+        private RoadManager roadManager;
+        private PlayerManager playerManager;
         private HomeManager homes;
 
         #endregion
@@ -54,28 +56,28 @@ namespace FroggerStarter.Controller
         #region Properties
 
         /// <summary>
-        ///     Gets the lives the player has left.
+        ///     Gets the lives the playerManager has left.
         /// </summary>
         /// <value>
-        ///     The lives the player has left.
+        ///     The lives the playerManager has left.
         /// </value>
-        public int Lives => this.player.Lives;
+        public int Lives => this.playerManager.Lives;
 
         /// <summary>
-        ///     Gets the scores made by the player.
+        ///     Gets the scores made by the playerManager.
         /// </summary>
         /// <value>
-        ///     The number of scores made by the player.
+        ///     The number of scores made by the playerManager.
         /// </value>
-        public int ScoresMade => this.player.ScoresMade;
+        public int ScoresMade => this.playerManager.ScoresMade;
 
         /// <summary>
         /// Gets the total score.
         /// </summary>
         /// <value>
-        /// The total score of the player.
+        /// The total score of the playerManager.
         /// </value>
-        public int TotalScore => this.player.TotalScore;
+        public int TotalScore => this.playerManager.TotalScore;
 
         #endregion
 
@@ -118,20 +120,21 @@ namespace FroggerStarter.Controller
         /// Postcondition: Game is initialized and ready for play.
         /// </summary>
         /// <param name="gamePage">The game page.</param>
-        /// <param name="gameSet">The game settings.</param>
         /// <exception cref="ArgumentNullException">gameCanvas</exception>
-        public void InitializeGame(Canvas gamePage, GameSettings gameSet)
+        public void InitializeGame(Canvas gamePage)
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
             this.createHomeManager(gameSet.ScoresToWin);
             this.createAndPlacePlayer(gameSet.PlayerLives, gameSet.ScoresToWin);
             this.createRoadManager();
-            this.setUpTimers(gameSet.TimerLengthSeconds);
+            this.setUpTimers(GameSettings.TimerLengthSeconds);
         }
 
-        private void createHomeManager(int homeNum)
+        
+
+        private void createHomeManager(int numHomes)
         {
-            this.homes = new HomeManager(TopOfGameOffset - TileHeight + 5, this.backgroundWidth, homeNum);
+            this.homes = new HomeManager(TopOfGameOffset - TileHeight + 5, this.backgroundWidth, numHomes);
             foreach (var home in this.homes)
             {
                 this.gameCanvas.Children.Add(home.Sprite);
@@ -143,51 +146,29 @@ namespace FroggerStarter.Controller
 
         private void createRoadManager()
         {
-            var traffic = new List<(int, VehicleType)> {
-                (3, VehicleType.Car),
-                (2, VehicleType.Bus),
-                (4, VehicleType.Car),
-                (3, VehicleType.Bus),
-                (5, VehicleType.Car)
-            };
-            var flow = new List<Direction> {
-                Direction.Left,
-                Direction.Right,
-                Direction.Left,
-                Direction.Left,
-                Direction.Right
-            };
-            var speeds = new List<int> {
-                1,
-                2,
-                4,
-                5,
-                6
-            };
-            var laneset = new LaneSettings(traffic, flow, speeds);
-            this.rm = new RoadManager(laneset, this.roadHeight, this.backgroundWidth);
+            this.roadManager = new RoadManager(GameSettings.LaneSettingsCollection, this.roadHeight, this.backgroundWidth);
             this.initializeRoad();
         }
 
        
         private void initializeRoad()
         {
-            foreach (var vehicle in this.rm)
+            foreach (var vehicle in this.roadManager)
             {
                 this.gameCanvas.Children.Add(vehicle.Sprite);
             }
-            this.rm.CarAdded += this.onCarAdded;
+            this.roadManager.CarAdded += this.onCarAdded;
         }
 
         private void createAndPlacePlayer(int lives, int score)
         {
-            this.player = new PlayerManager(lives, score);
-            foreach(var sp in this.player.PlayerSprites)
+            this.playerManager = new PlayerManager(lives, score);
+            foreach(var sprite in this.playerManager.PlayerSprites)
             {
-                this.gameCanvas.Children.Add(sp);
-                if (!sp.GetType().Name.Equals("TurtleSprite"))
+                this.gameCanvas.Children.Add(sprite);
+                if (sprite.GetType() != typeof(PlayerSprite))
                 {
-                    sp.Visibility = Visibility.Collapsed;
+                    sprite.Visibility = Visibility.Collapsed;
                 }
             }
 
@@ -196,7 +177,7 @@ namespace FroggerStarter.Controller
 
         private void setPlayerToCenterOfBottomLane()
         {
-            this.player.SetLocation(this.backgroundWidth / 2 - this.player.Player.Sprite.Width / 2, this.roadHeight);
+            this.playerManager.SetLocation(this.backgroundWidth / 2 - this.playerManager.Player.Sprite.Width / 2, this.roadHeight);
         }
 
         private void setUpTimers(int timerLen)
@@ -219,8 +200,8 @@ namespace FroggerStarter.Controller
             this.timerBar = new ProgressBar {Value = this.TimeLeft};
             this.gameCanvas.Children.Add(this.timerBar);
 
-            this.timerBar.Height = 10;
-            Canvas.SetTop(this.timerBar, TopOfGameOffset / 2 - this.timerBar.Height);
+            this.timerBar.Height = TimerBarHeight;
+            Canvas.SetTop(this.timerBar, (double)TopOfGameOffset / 2 - this.timerBar.Height);
             this.timerBar.Width = this.backgroundWidth;
             this.timerBar.Visibility = Visibility.Visible;
             this.timerBar.Background = new SolidColorBrush(Colors.Transparent);
@@ -245,46 +226,46 @@ namespace FroggerStarter.Controller
 
         private void gameTimerOnTick(object sender, object e)
         {
-            this.rm.OnTick(this.backgroundWidth);
-            this.timerBar.Value = 5 * this.TimeLeft;
-            if (this.rm.CheckCollision(this.player.Player))
+            this.roadManager.OnTick(this.backgroundWidth);
+            this.timerBar.Value = TimerBlockWidth * this.TimeLeft;
+            if (this.roadManager.CheckCollision(this.playerManager.Player))
             {
-                this.onDeath();
+                this.onPlayerDeath();
             }
         }
 
         private void deathTimerOnTick(object sender, object e)
         {
-            this.player.Player.Sprite.Visibility = Visibility.Collapsed;
-            this.player.MoveToNextSprite();
-            this.player.Player.Sprite.Visibility = Visibility.Visible;
-            if (this.player.Player.Sprite.Equals(this.player.PlayerSprites[0]))
+            this.playerManager.Player.Sprite.Visibility = Visibility.Collapsed;
+            this.playerManager.MoveToNextSprite();
+            this.playerManager.Player.Sprite.Visibility = Visibility.Visible;
+            if (this.playerManager.Player.Sprite.Equals(this.playerManager.PlayerSprites[0]))
             {
                 this.deathTimer.Stop();
                 if (this.Lives > 0)
                 {
                     this.timer.Start();
-                    this.player.Disabled = false;
+                    this.playerManager.Disabled = false;
                     this.setPlayerToCenterOfBottomLane();
                     this.levelTimer.UnPause();
                 }
                 else
                 {
-                    this.player.Player.Sprite.Visibility = Visibility.Collapsed;
-                    this.player.MoveToDeadSprite();
-                    this.player.Player.Sprite.Visibility = Visibility.Visible;
+                    this.playerManager.Player.Sprite.Visibility = Visibility.Collapsed;
+                    this.playerManager.MoveToDeadSprite();
+                    this.playerManager.Player.Sprite.Visibility = Visibility.Visible;
                 }
             }
         }
 
-        private void onDeath()
+        private void onPlayerDeath()
         {
-            this.player.Disabled = true;
+            this.playerManager.Disabled = true;
             this.timer.Stop();
             this.levelTimer.Pause();
             this.deathTimer.Start();
 
-            this.player.LoseLife();
+            this.playerManager.LoseLife();
             this.onLivesUpdated();
             this.levelTimer.Reset();
             if (this.Lives <= 0)
@@ -300,76 +281,76 @@ namespace FroggerStarter.Controller
 
         private void resetRoad()
         {
-            foreach (var v in this.rm)
+            foreach (var v in this.roadManager)
             {
                 this.gameCanvas.Children.Remove(v.Sprite);
             }
 
-            this.rm.SetUpLanes(this.roadHeight, this.backgroundWidth);
-            foreach (var v in this.rm)
+            this.roadManager.SetUpLanes(this.roadHeight, this.backgroundWidth);
+            foreach (var v in this.roadManager)
             {
                 this.gameCanvas.Children.Add(v.Sprite);
             }
         }
 
         /// <summary>
-        ///     Moves the player to the left.
+        ///     Moves the playerManager to the left.
         ///     Precondition: none
-        ///     Postcondition: player.X = player.X@prev - player.Width
+        ///     Postcondition: playerManager.X = playerManager.X@prev - playerManager.Width
         /// </summary>
         public void MovePlayerLeft()
         {
-            this.player.MoveLeft();
+            this.playerManager.MoveLeft();
         }
 
         /// <summary>
-        ///     Moves the player to the right.
+        ///     Moves the playerManager to the right.
         ///     Precondition: none
-        ///     Postcondition: player.X = player.X@prev + player.Width
+        ///     Postcondition: playerManager.X = playerManager.X@prev + playerManager.Width
         /// </summary>
         public void MovePlayerRight()
         {
-            this.player.MoveRight(this.backgroundWidth);
+            this.playerManager.MoveRight(this.backgroundWidth);
         }
 
         /// <summary>
-        ///     Moves the player up.
+        ///     Moves the playerManager up.
         ///     Precondition: none
-        ///     Postcondition: player.Y = player.Y@prev - player.Height
+        ///     Postcondition: playerManager.Y = playerManager.Y@prev - playerManager.Height
         /// </summary>
         public void MovePlayerUp()
         {
-            this.player.MoveUp(TopOfGameOffset);
+            this.playerManager.MoveUp(TopOfGameOffset);
 
             this.checkVictory();
         }
 
         /// <summary>
-        ///     Moves the player down.
+        ///     Moves the playerManager down.
         ///     Precondition: none
-        ///     Postcondition: player.Y = player.Y@prev + player.Height
+        ///     Postcondition: playerManager.Y = playerManager.Y@prev + playerManager.Height
         /// </summary>
         public void MovePlayerDown()
         {
-            this.player.MoveDown(this.roadHeight);
+            this.playerManager.MoveDown(this.roadHeight);
         }
 
         private void checkVictory()
         {
             var collidedHome = this.homes.CheckCollision(this.player.Player);
-            if (collidedHome)
+            if ( collidedHome)
             {
                 this.setPlayerToCenterOfBottomLane();
-                this.player.HasScored(this.TimeLeft);
+                this.playerManager.HasScored(this.TimeLeft);
                 this.onScoreUpdated();
                 this.levelTimer.Reset();
             }
-            else if (this.player.Player.Y < TopOfGameOffset + 1)
+            else if (this.playerManager.Player.Y < TopOfGameOffset + 1)
             {
-                this.onDeath();
+                this.onPlayerDeath();
             }
 
-            if (this.ScoresMade >= this.player.ScoresToWin)
+            if (this.ScoresMade >= this.playerManager.ScoresToWin)
             {
                 this.onGameOver();
             }
@@ -394,12 +375,12 @@ namespace FroggerStarter.Controller
 
         private void onTimeUp(object sender, EventArgs e)
         {
-            this.onDeath();
+            this.onPlayerDeath();
         }
 
         private void onCarAdded(object sender, EventArgs e)
         {
-            foreach (var vehicle in this.rm)
+            foreach (var vehicle in this.roadManager)
             {
                 if (!this.gameCanvas.Children.Contains(vehicle.Sprite))
                 {

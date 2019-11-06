@@ -3,10 +3,10 @@
 namespace FroggerStarter.Model
 {
     /// <summary>
-    ///     Defines the turtle model
+    ///     Defines the player model
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.GameObject" />
-    public class Turtle : GameObject
+    public class Player : GameObject
     {
         #region Data members
 
@@ -18,11 +18,11 @@ namespace FroggerStarter.Model
         #region Constructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Turtle" /> class.
+        ///     Initializes a new instance of the <see cref="Player" /> class.
         /// </summary>
-        public Turtle()
+        public Player()
         {
-            Sprite = new TurtleSprite();
+            Sprite = new PlayerSprite();
             SetSpeed(SpeedXDirection, SpeedYDirection);
         }
 

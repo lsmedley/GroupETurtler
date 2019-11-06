@@ -1,7 +1,7 @@
 ﻿namespace FroggerStarter.Model
 {
     /// <summary>
-    /// Describes the direction a Vehicle is facing.
+    /// Describes the Direction a Vehicle is facing.
     /// </summary>
     public enum Direction
     {

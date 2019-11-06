@@ -18,7 +18,7 @@ namespace FroggerStarter.Controller
         /// The homespaces
         /// </summary>
         private readonly IList<HomeSpace> homes;
-
+        private const int HomeTileWidth = 50;
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeManager"/> class.
         /// </summary>
@@ -32,26 +32,26 @@ namespace FroggerStarter.Controller
             for (var i = 0; i < numHomes; i++)
             {
                 this.homes.Add(new HomeSpace());
-                var x = Math.Round((wallWidth - spacing * (i + 1) + 50) / 50.0) * 50.0;
+                var x = Math.Round((wallWidth - spacing * (i + 1) + HomeTileWidth) / HomeTileWidth) * HomeTileWidth;
                 this.homes[i].X = x;
                 this.homes[i].Y = heightOffset;
             }
 
-            this.homes[0].X -= 50;
-            this.homes[1].X -= 50;
-            this.homes[this.homes.Count - 1].X += 50;
+            this.homes[0].X -= HomeTileWidth;
+            this.homes[1].X -= HomeTileWidth;
+            this.homes[this.homes.Count - 1].X += HomeTileWidth;
         }
 
         /// <summary>
         /// Checks if one of the home spaces has been collided with.
         /// </summary>
-        /// <param name="g">The g.</param>
+        /// <param name="gameObject">The gameObject.</param>
         /// <returns>Whether one of the home spaces has been collided with.</returns>
-        public bool CheckCollision(GameObject g)
+        public int CheckCollision(GameObject gameObject)
         {
-            foreach (var v in this.homes)
+            foreach (var home in this.homes)
             {
-                if (!v.IsTaken && v.IsColliding(g))
+                if (!home.IsTaken && home.IsColliding(gameObject))
                 {
                     return true;
                 }

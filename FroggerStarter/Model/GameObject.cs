@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Drawing;
 using Windows.Foundation;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using FroggerStarter.View.Sprites;
+using Point = Windows.Foundation.Point;
 
 namespace FroggerStarter.Model
 {
@@ -177,29 +181,30 @@ namespace FroggerStarter.Model
         /// Determines whether the current instance is colliding with the specified other, assuming
         /// that other is taller than the current instance.
         /// </summary>
-        /// <param name="obj">The other object.</param>
+        /// <param name="gameObject">The other object.</param>
         /// <returns>
         ///   <c>true</c> if the specified other is colliding with this instance; otherwise, <c>false</c>.
         /// </returns>
-        public virtual bool IsColliding(GameObject obj)
+        public virtual bool IsColliding(GameObject gameObject)
         {
-            var topLeftCorner = new Point(this.X, this.Y);
-            var topRightCorner = new Point(this.X + this.Width, this.Y);
-            var bottomRightCorner = new Point(this.X + this.Width, this.Y + this.Height);
-            var bottomLeftCorner = new Point(this.X, this.Y + this.Height);
-            var middle = new Point(this.X + this.Width / 2, this.Y + this.Height / 2);
+            var thisObjectRect = createRectangleForSprite(this.Sprite);
+            var otherObjectRect = createRectangleForSprite(gameObject.Sprite);
 
-
-            if (obj == null)
-            {
-                return false;
-            }
-
-            var oRect = new Rect(obj.X, obj.Y, obj.Width, obj.Height);
-
-            var isCol = oRect.Contains(topLeftCorner) || oRect.Contains(topRightCorner) || oRect.Contains(bottomRightCorner) ||
-                    oRect.Contains(bottomLeftCorner) || oRect.Contains(middle);
-            return isCol;
+            return thisObjectRect.IntersectsWith(otherObjectRect);
         }
+
+        private RectangleF createRectangleForSprite(FrameworkElement sprite)
+        {
+            var spriteRectangle = new RectangleF
+            {
+                X = (float)Canvas.GetLeft(sprite),
+                Y = (float)Canvas.GetTop(sprite),
+                Width = (float)sprite.Width,
+                Height = (float)sprite.Height
+            };
+
+            return spriteRectangle;
+        }
+
     }
 }

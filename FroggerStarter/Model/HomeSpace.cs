@@ -32,19 +32,19 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Determines whether the specified other is colliding.
-        /// Postcondition: this.IsTaken == true and this.TakenSprite.Visibility == visible if the specified other is colliding.
+        /// Determines whether the specified gameObject is colliding.
+        /// Postcondition: this.IsTaken == true and this.TakenSprite.Visibility == visible if the specified gameObject is colliding.
         /// </summary>
-        /// <param name="other">The other.</param>
+        /// <param name="gameObject">The gameObject.</param>
         /// <returns>
-        ///   <c>true</c> if the specified other is colliding; otherwise, <c>false</c>.
+        ///   <c>true</c> if the specified gameObject is colliding; otherwise, <c>false</c>.
         /// </returns>
-        public override bool IsColliding(GameObject other)
+        public override bool IsColliding(GameObject gameObject)
         {
             var isCol = false;
 
             var tolerance = 0.1;
-            if (Math.Abs(other.X - X) < tolerance && Math.Abs(other.Y - Y) < tolerance)
+            if (Math.Abs(gameObject.X - X) < tolerance && Math.Abs(gameObject.Y - Y) < tolerance)
             {
                 this.IsTaken = true;
                 isCol = true;

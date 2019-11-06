@@ -23,9 +23,9 @@ namespace FroggerStarter.Model
         /// Initializes a new instance of the <see cref="Vehicle"/> class.
         /// </summary>
         /// <param name="type">The type of vehicle.</param>
-        /// <param name="dir">The direction of the vehicle.</param>
+        /// <param name="direction">The Direction of the vehicle.</param>
         /// <param name="spd">The speed of the vehicle.</param>
-        public Vehicle(VehicleType type, Direction dir, int spd)
+        public Vehicle(VehicleType type, Direction direction, int spd)
         {
             this.Type = type;
             switch (type)
@@ -41,7 +41,7 @@ namespace FroggerStarter.Model
                     break;
             }
 
-            if (dir == Direction.Right)
+            if (direction == Direction.Right)
             {
                 var baseSprite = Sprite;
                 if (baseSprite != null)
@@ -51,13 +51,13 @@ namespace FroggerStarter.Model
                 }
             }
 
-            this.direction = dir;
+            this.direction = direction;
 
             SetSpeed(spd, 0);
         }
         /// <summary>
         /// Moves this vehicle forward.
-        /// Postcondition: if this.direction == Direction.Left, this.X -= this.Speed.
+        /// Postcondition: if this.Direction == Direction.Left, this.X -= this.Speed.
         /// else this.X += this.Speed.
         /// </summary>
         public void MoveForward()
