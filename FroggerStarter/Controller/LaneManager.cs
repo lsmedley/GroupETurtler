@@ -71,26 +71,31 @@ namespace FroggerStarter.Controller
         {
             if (this.vehicles.Count < this.maxVehicles)
             {
-                var prevVehicle = this.vehicles[this.vehicles.Count - 1];
-                
-                if (this.Direction == Direction.Right)
-                {
-                    if (this.hasSpaceForNewVehicle(laneLength))
-                    {
-                        this.vehicles.Add(new Vehicle(this.vehicleType, this.Direction, this.Speed));
-                        this.vehicles[this.vehicles.Count - 1].X = 0 - this.vehicles[this.vehicles.Count - 1].Width;
-                    }
-                }
-                else {
-                    if (this.hasSpaceForNewVehicle(laneLength))
-                    {
-                        this.vehicles.Add(new Vehicle(this.vehicleType, this.Direction, this.Speed));
-                        this.vehicles[this.vehicles.Count - 1].X = laneLength;
-                    }
-                }
-                this.vehicles[this.vehicles.Count - 1].Y = prevVehicle.Y;
+                this.placeVehicle(laneLength);
             }
 
+        }
+
+        private void placeVehicle(double laneLength)
+        {
+            var prevVehicle = this.vehicles[this.vehicles.Count - 1];
+            var xLocal = 0.0;
+            if (this.Direction == Direction.Right)
+            {
+                xLocal = 0 - this.vehicles[this.vehicles.Count - 1].Width;
+
+            }
+            else
+            {
+                xLocal = laneLength;
+            }
+
+            if (this.hasSpaceForNewVehicle(laneLength))
+            {
+                this.vehicles.Add(new Vehicle(this.vehicleType, this.Direction, this.Speed));
+                this.vehicles[this.vehicles.Count - 1].X = xLocal;
+                this.vehicles[this.vehicles.Count - 1].Y = prevVehicle.Y;
+            }
         }
 
         private bool hasSpaceForNewVehicle(double laneLength)
