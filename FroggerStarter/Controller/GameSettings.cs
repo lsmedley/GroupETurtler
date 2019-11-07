@@ -34,6 +34,9 @@ namespace FroggerStarter.Controller
         /// </value>
         public const int ScoresToWin = 5;
 
+        /// <summary>
+        /// The collection of lane settings
+        /// </summary>
         public static readonly  ICollection<LaneSettings> LaneSettingsCollection = new ReadOnlyCollection<LaneSettings>
         (new List<LaneSettings> { 
             new LaneSettings(1, Direction.Left, 3, VehicleType.Car),

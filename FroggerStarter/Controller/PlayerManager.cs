@@ -98,9 +98,10 @@ namespace FroggerStarter.Controller
         {
             this.Player.X = x;
             this.Player.Y = y;
+            this.syncSpriteToLocation();
         }
 
-        
+
         private void syncSpriteToLocation()
         {
             this.Player.Sprite.RenderAt(this.Player.X, this.Player.Y);
@@ -164,7 +165,7 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Updates score and ScoresMade .
         /// </summary>
-        /// <param name="timeLeft"></param>
+        /// <param name="timeLeft">The time left to score</param>
         public void HasScored(int timeLeft)
         {
             this.ScoresMade++;
@@ -190,6 +191,10 @@ namespace FroggerStarter.Controller
             this.syncSpriteToLocation();
         }
 
+        /// <summary>
+        /// Changes player sprite to dead sprite.
+        /// Postcondition: this.Player.sprite == the final frame of the death animation.
+        /// </summary>
         public void MoveToDeadSprite()
         {
             this.Player.ChangeSprite(this.PlayerSprites[this.PlayerSprites.Count - 1]);

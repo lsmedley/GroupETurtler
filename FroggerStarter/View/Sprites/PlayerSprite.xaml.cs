@@ -5,7 +5,7 @@
 namespace FroggerStarter.View.Sprites
 {
     /// <summary>
-    /// Holds functionality for turtle sprites.
+    /// Holds functionality for player sprites.
     /// </summary>
     /// <seealso cref="FroggerStarter.View.Sprites.BaseSprite" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />

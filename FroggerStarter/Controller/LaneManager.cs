@@ -13,7 +13,7 @@ namespace FroggerStarter.Controller
         /// Gets or sets the speed.
         /// </summary>
         /// <value>
-        /// The speed of cars in this lane.
+        /// The speed of vehicles in this lane.
         /// </value>
         public readonly int Speed;
         
@@ -35,9 +35,7 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Initializes a new instance of the <see cref="LaneManager"/> class.
         /// </summary>
-        /// <param name="startSpeed">The speed of the lane.</param>
-        /// <param name="direction">The Direction of the lane.</param>
-        /// <param name="maxNumVehicles">The maximum number of vehicles in this lane.</param>
+        /// <param name="laneSettings">The speed, Direction, and maximum number of vehicles for the lane.</param>
         public LaneManager(LaneSettings laneSettings)
         {
             this.Speed = laneSettings.StartSpeed;
@@ -53,7 +51,6 @@ namespace FroggerStarter.Controller
         /// Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
         /// += a vehicle with the given vehicleType and the same speed and Direction as this lane. Else none.
         /// </summary>
-        /// <param name="vehicleType">The vehicleType of the vehicle.</param>
         public void AddVehicle()
         {
             if (this.vehicles.Count < this.maxVehicles)
@@ -67,9 +64,8 @@ namespace FroggerStarter.Controller
         /// number of vehicles.
         /// Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
         /// += a vehicle with the given vehicleType and the same speed and Direction as this lane, appropriately
-        /// spaced behind the last vehicle. Else none.
+        /// placed on one end of the lane. Else none.
         /// </summary>
-        /// <param name="vehicleType">The vehicleType of the vehicle.</param>
         /// <param name="laneLength">The length of this lane</param>
         public void AddVehicle(double laneLength)
         {
@@ -81,14 +77,14 @@ namespace FroggerStarter.Controller
                 {
                     if (this.hasSpaceForNewVehicle(laneLength))
                     {
-                        this.vehicles.Add(new Vehicle(vehicleType, this.Direction, this.Speed));
+                        this.vehicles.Add(new Vehicle(this.vehicleType, this.Direction, this.Speed));
                         this.vehicles[this.vehicles.Count - 1].X = 0 - this.vehicles[this.vehicles.Count - 1].Width;
                     }
                 }
                 else {
                     if (this.hasSpaceForNewVehicle(laneLength))
                     {
-                        this.vehicles.Add(new Vehicle(vehicleType, this.Direction, this.Speed));
+                        this.vehicles.Add(new Vehicle(this.vehicleType, this.Direction, this.Speed));
                         this.vehicles[this.vehicles.Count - 1].X = laneLength;
                     }
                 }
@@ -213,11 +209,23 @@ namespace FroggerStarter.Controller
             return false;
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        /// An enumerator that can be used to iterate through the collection.
+        /// </returns>
         public IEnumerator<Vehicle> GetEnumerator()
         {
             return ((IEnumerable<Vehicle>)this.vehicles).GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<Vehicle>)this.vehicles).GetEnumerator();

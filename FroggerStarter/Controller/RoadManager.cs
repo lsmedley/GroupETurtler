@@ -27,7 +27,7 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Initializes a new instance of the <see cref="RoadManager"/> class.
         /// </summary>
-        /// <param name="laneSettings">The settings for this roadmanager's lanes.</param>
+        /// <param name="laneSettingsCollection">The collection of lane settings for this road's lanes.</param>
         /// <param name="totalHeight">The total height of the road.</param>
         /// <param name="laneLength">Length of the lanes.</param>
         /// <exception cref="Exception">Each lane must be fully defined</exception>
@@ -143,6 +143,12 @@ namespace FroggerStarter.Controller
             return hasCollided;
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collections of vehicles.
+        /// </summary>
+        /// <returns>
+        /// An enumerator that can be used to iterate through the collections of vehicles.
+        /// </returns>
         public IEnumerator<Vehicle> GetEnumerator()
         {
             foreach(var lane in this.lanes)
@@ -154,6 +160,12 @@ namespace FroggerStarter.Controller
             }
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             foreach (var lane in this.lanes)

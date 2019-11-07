@@ -14,9 +14,6 @@ namespace FroggerStarter.Controller
     /// </summary>
     public class HomeManager : IEnumerable<HomeSpace>
     {
-        /// <summary>
-        /// The homespaces
-        /// </summary>
         private readonly IList<HomeSpace> homes;
         private const int HomeTileWidth = 50;
         /// <summary>

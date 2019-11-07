@@ -18,6 +18,12 @@ namespace FroggerStarter.Model
         /// </value>
         public bool IsTaken { get; private set; }
 
+        /// <summary>
+        /// Gets the taken sprite.
+        /// </summary>
+        /// <value>
+        /// The taken sprite.
+        /// </value>
         public BaseSprite TakenSprite { get; }
 
         /// <summary>
