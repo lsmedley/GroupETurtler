@@ -76,33 +76,38 @@ namespace FroggerStarter.Controller
             if (this.vehicles.Count < this.maxVehicles)
             {
                 var prevVehicle = this.vehicles[this.vehicles.Count - 1];
+                
                 if (this.Direction == Direction.Right)
                 {
-                    foreach (var vehicle in this.vehicles)
+                    if (this.hasSpaceForNewVehicle(laneLength))
                     {
-                        if (vehicle.X <= 0 || vehicle.X >= laneLength - vehicle.Width)
-                        {
-                            return;
-                        }
+                        this.vehicles.Add(new Vehicle(vehicleType, this.Direction, this.Speed));
+                        this.vehicles[this.vehicles.Count - 1].X = 0 - this.vehicles[this.vehicles.Count - 1].Width;
                     }
-                    this.vehicles.Add(new Vehicle(vehicleType, this.Direction, this.Speed));
-                    this.vehicles[this.vehicles.Count - 1].X = 0 - this.vehicles[this.vehicles.Count - 1].Width;
                 }
                 else {
-                    foreach (var vehicle in this.vehicles)
+                    if (this.hasSpaceForNewVehicle(laneLength))
                     {
-                        if (vehicle.X >= laneLength - vehicle.Width || vehicle.X <= vehicle.Width)
-                        {
-                            return;
-                        }
+                        this.vehicles.Add(new Vehicle(vehicleType, this.Direction, this.Speed));
+                        this.vehicles[this.vehicles.Count - 1].X = laneLength;
                     }
-                    this.vehicles.Add(new Vehicle(vehicleType, this.Direction, this.Speed));
-                    this.vehicles[this.vehicles.Count - 1].X = laneLength;
                 }
-
                 this.vehicles[this.vehicles.Count - 1].Y = prevVehicle.Y;
             }
 
+        }
+
+        private bool hasSpaceForNewVehicle(double laneLength)
+        {
+            foreach (var vehicle in this.vehicles)
+            {
+                if (vehicle.X >= laneLength - vehicle.Width || vehicle.X <= vehicle.Width)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
