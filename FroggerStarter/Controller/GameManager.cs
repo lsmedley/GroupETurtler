@@ -256,6 +256,7 @@ namespace FroggerStarter.Controller
             this.playerManager.Disabled = false;
             this.setPlayerToCenterOfBottomLane();
             this.levelTimer.UnPause();
+            this.resetRoad();
         }
 
         private void setPlayerGameOverSprite()
@@ -375,7 +376,10 @@ namespace FroggerStarter.Controller
         {
             this.timer.Stop();
             this.levelTimer.Pause();
-            this.setPlayerGameOverSprite();
+            if (this.Lives <= 0)
+            {
+                this.setPlayerGameOverSprite();
+            }
             this.GameOver?.Invoke(this, EventArgs.Empty);
         }
 

@@ -33,8 +33,11 @@ namespace FroggerStarter.View
         private static readonly Brush HudBrush = new SolidColorBrush(Colors.White);
         private static readonly Brush TitleBrush = new SolidColorBrush(Colors.YellowGreen);
 
-        private MediaPlayer player;
+        private readonly MediaPlayer soundPlayer;
         private Windows.Storage.StorageFile gameOverSound;
+        private Windows.Storage.StorageFile vehicleCollisionSound;
+        private Windows.Storage.StorageFile scoreMadeSound;
+
 
         #endregion
 
@@ -85,7 +88,7 @@ namespace FroggerStarter.View
             this.gameManager.ScoreUpdated += this.onScoreUpdated;
             this.gameManager.GameOver += this.onGameOver;
 
-            this.player = new MediaPlayer();
+            this.soundPlayer = new MediaPlayer();
             this.setUpPlayer();
         }
 
@@ -94,8 +97,10 @@ namespace FroggerStarter.View
             Windows.Storage.StorageFolder folder =
                 await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"View\\SoundEffects");
             this.gameOverSound = await folder.GetFileAsync("GameOverSound.wav");
+            this.vehicleCollisionSound = await folder.GetFileAsync("CarCollisionSound.wav");
+            this.scoreMadeSound = await folder.GetFileAsync("ScoreMadeSound.wav");
 
-            this.player.AutoPlay = false;
+            this.soundPlayer.AutoPlay = false;
         }
 
         private void onGameOver(object sender, EventArgs e)
@@ -106,8 +111,8 @@ namespace FroggerStarter.View
 
         private void playSoundEffect(Windows.Storage.StorageFile sound)
         {
-            this.player.Source = MediaSource.CreateFromStorageFile(sound);
-            this.player.Play();
+            this.soundPlayer.Source = MediaSource.CreateFromStorageFile(sound);
+            this.soundPlayer.Play();
         }
 
         private void initializeGameOverText()
@@ -123,11 +128,13 @@ namespace FroggerStarter.View
         private void onScoreUpdated(object sender, EventArgs e)
         {
             this.scoreTextBlock.Text = $"Score: {this.gameManager.TotalScore.ToString()}";
+            this.playSoundEffect(this.scoreMadeSound);
         }
 
         private void onLivesUpdated(object sender, EventArgs e)
         {
             this.livesTextBlock.Text = $"Lives: {this.gameManager.Lives.ToString()}";
+            this.playSoundEffect(this.vehicleCollisionSound);
         }
 
 
