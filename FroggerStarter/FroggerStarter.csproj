@@ -125,6 +125,7 @@
     <Compile Include="Controller\LevelTimeManager.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\RoadManager.cs" />
+    <Compile Include="Controller\SoundType.cs" />
     <Compile Include="Model\Direction.cs" />
     <Compile Include="Controller\LaneManager.cs" />
     <Compile Include="Model\HomeSpace.cs" />

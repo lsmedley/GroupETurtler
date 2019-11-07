@@ -103,17 +103,16 @@ namespace FroggerStarter.View
             this.soundPlayer.AutoPlay = false;
         }
 
-        private void onGameOver(object sender, EventArgs e)
+        private void onGameOver(object sender, SoundType sound)
         {
             this.initializeGameOverText();
-            this.playSoundEffect(this.gameOverSound);
+            if (sound == SoundType.GameLost)
+            {
+                this.playSoundEffect(this.gameOverSound);
+            }
         }
 
-        private void playSoundEffect(Windows.Storage.StorageFile sound)
-        {
-            this.soundPlayer.Source = MediaSource.CreateFromStorageFile(sound);
-            this.soundPlayer.Play();
-        }
+        
 
         private void initializeGameOverText()
         {
@@ -131,10 +130,19 @@ namespace FroggerStarter.View
             this.playSoundEffect(this.scoreMadeSound);
         }
 
-        private void onLivesUpdated(object sender, EventArgs e)
+        private void onLivesUpdated(object sender, SoundType sound)
         {
             this.livesTextBlock.Text = $"Lives: {this.gameManager.Lives.ToString()}";
-            this.playSoundEffect(this.vehicleCollisionSound);
+            if (sound.Equals(SoundType.VehicleDeath))
+            {
+                this.playSoundEffect(this.vehicleCollisionSound);
+            }
+        }
+
+        private void playSoundEffect(Windows.Storage.StorageFile sound)
+        {
+            this.soundPlayer.Source = MediaSource.CreateFromStorageFile(sound);
+            this.soundPlayer.Play();
         }
 
 

@@ -20,7 +20,7 @@ namespace FroggerStarter.Controller
         /// <summary>
         ///     Occurs when [lives updated].
         /// </summary>
-        public event EventHandler<EventArgs> LivesUpdated;
+        public event EventHandler<SoundType> LivesUpdated;
         /// <summary>
         ///     Occurs when [score updated].
         /// </summary>
@@ -28,7 +28,7 @@ namespace FroggerStarter.Controller
         /// <summary>
         ///     Occurs when [game over].
         /// </summary>
-        public event EventHandler<EventArgs> GameOver;
+        public event EventHandler<SoundType> GameOver;
 
         private const int BottomLaneOffset = 5;
         private const int TimerBlockWidth = 5;
@@ -364,7 +364,7 @@ namespace FroggerStarter.Controller
 
         private void onLivesUpdated()
         {
-            this.LivesUpdated?.Invoke(this, EventArgs.Empty);
+            this.LivesUpdated?.Invoke(this, SoundType.VehicleDeath);
         }
 
         private void onScoreUpdated()
@@ -380,7 +380,7 @@ namespace FroggerStarter.Controller
             {
                 this.setPlayerGameOverSprite();
             }
-            this.GameOver?.Invoke(this, EventArgs.Empty);
+            this.GameOver?.Invoke(this, SoundType.GameLost);
         }
 
         private void onTimeUp(object sender, EventArgs e)
