@@ -236,26 +236,41 @@ namespace FroggerStarter.Controller
 
         private void deathTimerOnTick(object sender, object e)
         {
-            this.playerManager.Player.Sprite.Visibility = Visibility.Collapsed;
-            this.playerManager.MoveToNextSprite();
-            this.playerManager.Player.Sprite.Visibility = Visibility.Visible;
+            this.animateDeath();
             if (this.playerManager.Player.Sprite.Equals(this.playerManager.PlayerSprites[0]))
             {
                 this.deathTimer.Stop();
                 if (this.Lives > 0)
                 {
-                    this.timer.Start();
-                    this.playerManager.Disabled = false;
-                    this.setPlayerToCenterOfBottomLane();
-                    this.levelTimer.UnPause();
+                    this.resumePlay();
                 }
                 else
                 {
-                    this.playerManager.Player.Sprite.Visibility = Visibility.Collapsed;
-                    this.playerManager.MoveToDeadSprite();
-                    this.playerManager.Player.Sprite.Visibility = Visibility.Visible;
+                    this.setPlayerGameOverSprite();
                 }
             }
+        }
+
+        private void resumePlay()
+        {
+            this.timer.Start();
+            this.playerManager.Disabled = false;
+            this.setPlayerToCenterOfBottomLane();
+            this.levelTimer.UnPause();
+        }
+
+        private void setPlayerGameOverSprite()
+        {
+            this.playerManager.Player.Sprite.Visibility = Visibility.Collapsed;
+            this.playerManager.MoveToDeadSprite();
+            this.playerManager.Player.Sprite.Visibility = Visibility.Visible;
+        }
+
+        private void animateDeath()
+        {
+            this.playerManager.Player.Sprite.Visibility = Visibility.Collapsed;
+            this.playerManager.MoveToNextSprite();
+            this.playerManager.Player.Sprite.Visibility = Visibility.Visible;
         }
 
         private void onPlayerDeath()
