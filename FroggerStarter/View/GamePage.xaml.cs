@@ -1,5 +1,7 @@
 ﻿using System;
 using Windows.Foundation;
+using Windows.Media.Core;
+using Windows.Media.Playback;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -30,6 +32,9 @@ namespace FroggerStarter.View
 
         private static readonly Brush HudBrush = new SolidColorBrush(Colors.White);
         private static readonly Brush TitleBrush = new SolidColorBrush(Colors.YellowGreen);
+
+        private MediaPlayer player;
+        private Windows.Storage.StorageFile gameOverSound;
 
         #endregion
 
@@ -79,11 +84,30 @@ namespace FroggerStarter.View
             this.gameManager.LivesUpdated += this.onLivesUpdated;
             this.gameManager.ScoreUpdated += this.onScoreUpdated;
             this.gameManager.GameOver += this.onGameOver;
+
+            this.player = new MediaPlayer();
+            this.setUpPlayer();
+        }
+
+        private async void setUpPlayer()
+        {
+            Windows.Storage.StorageFolder folder =
+                await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"View\\SoundEffects");
+            this.gameOverSound = await folder.GetFileAsync("GameOverSound.wav");
+
+            this.player.AutoPlay = false;
         }
 
         private void onGameOver(object sender, EventArgs e)
         {
             this.initializeGameOverText();
+            this.playSoundEffect(this.gameOverSound);
+        }
+
+        private void playSoundEffect(Windows.Storage.StorageFile sound)
+        {
+            this.player.Source = MediaSource.CreateFromStorageFile(sound);
+            this.player.Play();
         }
 
         private void initializeGameOverText()

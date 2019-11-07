@@ -127,10 +127,16 @@ namespace FroggerStarter.Controller
         /// Checks to see if there is a collision.
         /// </summary>
         /// <param name="g">The game object being checked for collisions with a vehicle.</param>
+        /// <param name="playerManagerDisabled"></param>
         /// <returns>true if there is a collision, false otherwise.</returns>
-        public bool CheckCollision(GameObject g)
+        public bool CheckCollision(GameObject g, bool playerManagerDisabled)
         {
             var hasCollided = false;
+
+            if (playerManagerDisabled)
+            {
+                return false;
+            }
 
             foreach (var lane in this.lanes)
             {

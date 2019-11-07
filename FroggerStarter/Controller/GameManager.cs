@@ -228,7 +228,7 @@ namespace FroggerStarter.Controller
         {
             this.roadManager.OnTick(this.backgroundWidth);
             this.timerBar.Value = TimerBlockWidth * this.TimeLeft;
-            if (this.roadManager.CheckCollision(this.playerManager.Player))
+            if (this.roadManager.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
                 this.onPlayerDeath();
             }
@@ -246,14 +246,13 @@ namespace FroggerStarter.Controller
                 }
                 else
                 {
-                    this.setPlayerGameOverSprite();
+                    this.onGameOver();
                 }
             }
         }
 
         private void resumePlay()
         {
-            this.timer.Start();
             this.playerManager.Disabled = false;
             this.setPlayerToCenterOfBottomLane();
             this.levelTimer.UnPause();
@@ -276,21 +275,12 @@ namespace FroggerStarter.Controller
         private void onPlayerDeath()
         {
             this.playerManager.Disabled = true;
-            this.timer.Stop();
             this.levelTimer.Pause();
             this.deathTimer.Start();
 
             this.playerManager.LoseLife();
             this.onLivesUpdated();
             this.levelTimer.Reset();
-            if (this.Lives <= 0)
-            {
-                this.onGameOver();
-            }
-            else
-            {
-                this.resetRoad();
-            }
 
         }
 
@@ -385,6 +375,7 @@ namespace FroggerStarter.Controller
         {
             this.timer.Stop();
             this.levelTimer.Pause();
+            this.setPlayerGameOverSprite();
             this.GameOver?.Invoke(this, EventArgs.Empty);
         }
 
