@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Media.Core;
 using Windows.Media.Playback;
@@ -101,6 +102,23 @@ namespace FroggerStarter.View
 
         private async void setUpPlayers()
         {
+            await this.setUpSoundPlayer();
+
+            await this.setUpMusicPlayer();
+        }
+
+        private async Task setUpMusicPlayer()
+        {
+            Windows.Storage.StorageFolder musicFolder =
+                await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"View\\Music");
+            this.Level1Music = await musicFolder.GetFileAsync("Level1Song.wav");
+            this.musicPlayer.AutoPlay = true;
+            this.musicPlayer.IsLoopingEnabled = true;
+            this.musicPlayer.Source = MediaSource.CreateFromStorageFile(this.Level1Music);
+        }
+
+        private async Task setUpSoundPlayer()
+        {
             Windows.Storage.StorageFolder folder =
                 await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"View\\SoundEffects");
             this.gameOverSound = await folder.GetFileAsync("GameOverSound.wav");
@@ -111,12 +129,6 @@ namespace FroggerStarter.View
             this.scoreMadeSound = await folder.GetFileAsync("ScoreMadeSound.wav");
 
             this.soundPlayer.AutoPlay = false;
-
-            Windows.Storage.StorageFolder musicFolder =
-                await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"View\\Music");
-            this.Level1Music = await musicFolder.GetFileAsync("Level1Song.wav");
-            this.musicPlayer.AutoPlay = true;
-            this.musicPlayer.Source = MediaSource.CreateFromStorageFile(this.Level1Music);
         }
 
         private void onGameOver(object sender, SoundType sound)
