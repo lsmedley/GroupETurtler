@@ -346,16 +346,34 @@ namespace FroggerStarter.Controller
             var collidedHome = this.homes.CheckCollision(this.playerManager.Player);
             if (collidedHome)
             {
-                this.setPlayerToCenterOfBottomLane();
-                this.playerManager.HasScored(this.TimeLeft);
-                this.onScoreUpdated();
-                this.levelTimer.Reset();
+                this.processPlayerHome();
             }
-            else if (this.playerManager.Player.Y < TopOfGameOffset + 1)
+            else
+            {
+                this.checkIfPlayerHitWall();
+            }
+
+            this.checkIfPlayerWins();
+        }
+
+        private void processPlayerHome()
+        {
+            this.setPlayerToCenterOfBottomLane();
+            this.playerManager.HasScored(this.TimeLeft);
+            this.onScoreUpdated();
+            this.levelTimer.Reset();
+        }
+
+        private void checkIfPlayerHitWall()
+        {
+            if (this.playerManager.Player.Y < TopOfGameOffset + 1)
             {
                 this.onPlayerDeath(SoundType.WallDeath);
             }
+        }
 
+        private void checkIfPlayerWins()
+        {
             if (this.ScoresMade >= this.playerManager.ScoresToWin)
             {
                 this.onGameOver();
