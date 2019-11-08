@@ -102,5 +102,14 @@ namespace FroggerStarter.Controller
         }
 
         #endregion
+
+        /// <summary>
+        /// Increases the time left.
+        /// </summary>
+        /// <param name="increment">The increment.</param>
+        public void AddTime(int increment)
+        {
+            this.CurrTime -= increment;
+        }
     }
 }

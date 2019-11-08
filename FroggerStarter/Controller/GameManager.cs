@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
 using FroggerStarter.Utils;
+using FroggerStarter.View.Sprites;
 using FroggerStarter.View.Sprites.PlayerSprites;
 
 namespace FroggerStarter.Controller
@@ -36,6 +37,7 @@ namespace FroggerStarter.Controller
         private Road roadManager;
         private PlayerManager playerManager;
         private HomeManager homes;
+        private PowerupManager powerUpManager;
 
         #endregion
 
@@ -130,7 +132,14 @@ namespace FroggerStarter.Controller
             this.createHomeManager(GameSettings.ScoresToWin);
             this.createAndPlacePlayer(GameSettings.PlayerLives, GameSettings.ScoresToWin);
             this.createRoadManager();
+            this.createPowerupManager();
             this.setUpTimers(GameSettings.TimerLengthSeconds);
+        }
+
+        private void createPowerupManager()
+        {
+            this.powerUpManager = new PowerupManager();
+            this.gameCanvas.Children.Add(this.powerUpManager.GetTimeSprite());
         }
 
         private void createHomeManager(int numHomes)
@@ -229,9 +238,15 @@ namespace FroggerStarter.Controller
         {
             this.roadManager.OnTick(this.backgroundWidth);
             this.timerBar.Value = TimerBlockWidth * this.TimeLeft;
+            this.powerUpManager.OnTick(this.backgroundWidth, TopOfGameOffset, this.roadHeight - TileHeight);
             if (this.roadManager.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
                 this.onPlayerDeath(SoundType.VehicleDeath);
+            }
+
+            if (this.powerUpManager.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
+            {
+                this.levelTimer.AddTime(7);
             }
         }
 
