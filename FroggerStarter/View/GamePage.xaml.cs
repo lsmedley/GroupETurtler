@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Media.Core;
 using Windows.Media.Playback;
@@ -24,6 +25,9 @@ namespace FroggerStarter.View
     {
         #region Data members
 
+        private static readonly Brush HudBrush = new SolidColorBrush(Colors.White);
+        private static readonly Brush TitleBrush = new SolidColorBrush(Colors.YellowGreen);
+
         private readonly double applicationHeight = (double) Application.Current.Resources["AppHeight"];
         private readonly double applicationWidth = (double) Application.Current.Resources["AppWidth"];
         private readonly GameManager gameManager;
@@ -31,9 +35,6 @@ namespace FroggerStarter.View
         private readonly TextBlock livesTextBlock;
         private readonly TextBlock scoreTextBlock;
         private readonly TextBlock gameOverTextBlock;
-
-        private static readonly Brush HudBrush = new SolidColorBrush(Colors.White);
-        private static readonly Brush TitleBrush = new SolidColorBrush(Colors.YellowGreen);
 
         private readonly MediaPlayer soundPlayer;
         private StorageFile gameOverSound;
@@ -51,7 +52,7 @@ namespace FroggerStarter.View
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GamePage"/> class.
+        ///     Initializes a new instance of the <see cref="GamePage" /> class.
         /// </summary>
         public GamePage()
         {
@@ -69,7 +70,7 @@ namespace FroggerStarter.View
 
             this.livesTextBlock = new TextBlock {Text = $"Lives: {this.gameManager.Lives.ToString()}"};
             this.scoreTextBlock = new TextBlock {Text = $"Score: {this.gameManager.TotalScore.ToString()}"};
-            var titleTextBlock = new TextBlock { Text = "Turtler" };
+            var titleTextBlock = new TextBlock {Text = "Turtler"};
             this.gameOverTextBlock = new TextBlock {Text = "Game Over"};
 
             this.canvas.Children.Add(this.livesTextBlock);
@@ -100,6 +101,10 @@ namespace FroggerStarter.View
             this.setUpPlayers();
         }
 
+        #endregion
+
+        #region Methods
+
         private async void setUpPlayers()
         {
             await this.setUpSoundPlayer();
@@ -109,8 +114,8 @@ namespace FroggerStarter.View
 
         private async Task setUpMusicPlayer()
         {
-            Windows.Storage.StorageFolder musicFolder =
-                await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"View\\Music");
+            var musicFolder =
+                await Package.Current.InstalledLocation.GetFolderAsync(@"View\\Music");
             this.Level1Music = await musicFolder.GetFileAsync("Level1Song.wav");
             this.musicPlayer.AutoPlay = true;
             this.musicPlayer.IsLoopingEnabled = true;
@@ -119,8 +124,8 @@ namespace FroggerStarter.View
 
         private async Task setUpSoundPlayer()
         {
-            Windows.Storage.StorageFolder folder =
-                await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"View\\SoundEffects");
+            var folder =
+                await Package.Current.InstalledLocation.GetFolderAsync(@"View\\SoundEffects");
             this.gameOverSound = await folder.GetFileAsync("GameOverSound.wav");
             this.gameWonSound = await folder.GetFileAsync("GameWonSound.wav");
             this.vehicleCollisionSound = await folder.GetFileAsync("CarCollisionSound.wav");
@@ -145,8 +150,6 @@ namespace FroggerStarter.View
             }
         }
 
-        
-
         private void initializeGameOverText()
         {
             this.gameOverTextBlock.FontSize = 60;
@@ -154,7 +157,6 @@ namespace FroggerStarter.View
             Canvas.SetTop(this.gameOverTextBlock, this.applicationHeight / 2 - 40);
             Canvas.SetLeft(this.gameOverTextBlock, this.applicationWidth / 2 - 150);
             this.canvas.Children.Add(this.gameOverTextBlock);
-
         }
 
         private void onScoreUpdated(object sender, EventArgs e)
@@ -169,26 +171,22 @@ namespace FroggerStarter.View
             if (sound.Equals(SoundType.VehicleDeath))
             {
                 this.playSoundEffect(this.vehicleCollisionSound);
-            } else if (sound.Equals(SoundType.WallDeath))
+            }
+            else if (sound.Equals(SoundType.WallDeath))
             {
                 this.playSoundEffect(this.wallCollisionSound);
-            } else if (sound.Equals(SoundType.TimeDeath))
+            }
+            else if (sound.Equals(SoundType.TimeDeath))
             {
                 this.playSoundEffect(this.timerDeathSound);
             }
         }
 
-        private void playSoundEffect(Windows.Storage.StorageFile sound)
+        private void playSoundEffect(StorageFile sound)
         {
             this.soundPlayer.Source = MediaSource.CreateFromStorageFile(sound);
             this.soundPlayer.Play();
         }
-
-
-
-        #endregion
-
-        #region Methods
 
         private void coreWindowOnKeyDown(CoreWindow sender, KeyEventArgs args)
         {

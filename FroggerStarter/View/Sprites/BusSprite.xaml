@@ -10,14 +10,14 @@
     Width="100">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="BusColor" Color="Orange"/>
+        <SolidColorBrush x:Key="BusColor" Color="Orange" />
         <SolidColorBrush x:Key="WindowColor" Color="Black" />
-        <SolidColorBrush  x:Key="WheelColor" Color="Gray"/>
+        <SolidColorBrush x:Key="WheelColor" Color="Gray" />
     </UserControl.Resources>
 
     <Canvas Width="100" Height="40" Background="Transparent">
 
-        <Rectangle Width="90" Height="35" Fill="{StaticResource BusColor}" Canvas.Top="2.5" Canvas.Left="10"/>
+        <Rectangle Width="90" Height="35" Fill="{StaticResource BusColor}" Canvas.Top="2.5" Canvas.Left="10" />
         <Ellipse Width="20" Height="35" Fill="{StaticResource BusColor}" Canvas.Top="2.5" Canvas.Left="0" />
 
         <Rectangle Width="10" Height="2.5" Fill="Red" Canvas.Top="35" Canvas.Left="20" />
@@ -41,15 +41,15 @@
 
 
         <!-- Wheels -->
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="0" Canvas.Left="15"/>
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="0" Canvas.Left="70"/>
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="0" Canvas.Left="15" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="0" Canvas.Left="70" />
 
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="37.5" Canvas.Left="15"/>
-        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="37.5" Canvas.Left="70"/>
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="37.5" Canvas.Left="15" />
+        <Rectangle Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="37.5" Canvas.Left="70" />
 
         <!-- Headlights -->
-        <Ellipse Width="5" Height="2.5" Fill="Khaki" Canvas.Top="2.5" Canvas.Left="4"/>
-        <Ellipse Width="5" Height="2.5" Fill="Khaki" Canvas.Top="35" Canvas.Left="4"/>
+        <Ellipse Width="5" Height="2.5" Fill="Khaki" Canvas.Top="2.5" Canvas.Left="4" />
+        <Ellipse Width="5" Height="2.5" Fill="Khaki" Canvas.Top="35" Canvas.Left="4" />
 
         <!-- Taillights -->
         <Ellipse Width="2.5" Height="5" Fill="Red" Canvas.Top="2.5" Canvas.Left="97.5" />

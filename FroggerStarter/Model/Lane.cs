@@ -1,55 +1,93 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using FroggerStarter.Model;
+using FroggerStarter.Model.Vehicle;
+using FroggerStarter.Utils;
 
-namespace FroggerStarter.Controller
+namespace FroggerStarter.Model
 {
     /// <summary>
     ///     Manages vehicles in a lane.
     /// </summary>
-    public class LaneManager : IEnumerable<Vehicle>
+    public class Lane : IEnumerable<Vehicle.Vehicle>
     {
+        #region Data members
+
         /// <summary>
-        /// Gets or sets the speed.
+        ///     Gets or sets the speed.
         /// </summary>
         /// <value>
-        /// The speed of vehicles in this lane.
+        ///     The speed of vehicles in this lane.
         /// </value>
         public readonly int Speed;
-        
+
         /// <summary>
-        /// Gets the Direction.
+        ///     The vehicles driving in this lane.
         /// </summary>
-        /// <value>
-        /// The Direction that vehicles in this lane drive in.
-        /// </value>
-        public Direction Direction { get; }
-        /// <summary>
-        /// The vehicles driving in this lane.
-        /// </summary>
-        private readonly List<Vehicle> vehicles;
+        private readonly List<Vehicle.Vehicle> vehicles;
 
         private readonly int maxVehicles;
         private readonly VehicleType vehicleType;
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="LaneManager"/> class.
+        ///     Gets the Direction.
+        /// </summary>
+        /// <value>
+        ///     The Direction that vehicles in this lane drive in.
+        /// </value>
+        public Direction Direction { get; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Lane" /> class.
         /// </summary>
         /// <param name="laneSettings">The speed, Direction, and maximum number of vehicles for the lane.</param>
-        public LaneManager(LaneSettings laneSettings)
+        public Lane(LaneSettings laneSettings)
         {
             this.Speed = laneSettings.StartSpeed;
             this.maxVehicles = laneSettings.MaxNumVehicles;
             this.Direction = laneSettings.Direction;
-            this.vehicles = new List<Vehicle>();
+            this.vehicles = new List<Vehicle.Vehicle>();
             this.vehicleType = laneSettings.VehicleType;
             this.AddVehicle();
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
-        /// Adds a vehicle to this lane if this.vehicles has fewer than the maximum number of vehicles.
-        /// Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
-        /// += a vehicle with the given vehicleType and the same speed and Direction as this lane. Else none.
+        ///     Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        ///     An enumerator that can be used to iterate through the collection.
+        /// </returns>
+        public IEnumerator<Vehicle.Vehicle> GetEnumerator()
+        {
+            return ((IEnumerable<Vehicle.Vehicle>) this.vehicles).GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        /// </returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<Vehicle.Vehicle>) this.vehicles).GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Adds a vehicle to this lane if this.vehicles has fewer than the maximum number of vehicles.
+        ///     Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
+        ///     += a vehicle with the given vehicleType and the same speed and Direction as this lane. Else none.
         /// </summary>
         public void AddVehicle()
         {
@@ -60,11 +98,11 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Adds a vehicle to the appropriate place in the lane if this.vehicles has fewer than the maximum
-        /// number of vehicles.
-        /// Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
-        /// += a vehicle with the given vehicleType and the same speed and Direction as this lane, appropriately
-        /// placed on one end of the lane. Else none.
+        ///     Adds a vehicle to the appropriate place in the lane if this.vehicles has fewer than the maximum
+        ///     number of vehicles.
+        ///     Postcondition: If this.vehicles.Count is less than this.maxVehicles, then this.vehicles
+        ///     += a vehicle with the given vehicleType and the same speed and Direction as this lane, appropriately
+        ///     placed on one end of the lane. Else none.
         /// </summary>
         /// <param name="laneLength">The length of this lane</param>
         public void AddVehicle(double laneLength)
@@ -73,7 +111,6 @@ namespace FroggerStarter.Controller
             {
                 this.placeVehicle(laneLength);
             }
-
         }
 
         private void placeVehicle(double laneLength)
@@ -83,7 +120,6 @@ namespace FroggerStarter.Controller
             if (this.Direction == Direction.Right)
             {
                 xLocal = 0 - this.vehicles[this.vehicles.Count - 1].Width;
-
             }
             else
             {
@@ -112,8 +148,8 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Sets the location of each vehicle along the X axis.
-        /// Postcondition: Each vehicle is at an algorithmically computed X value.
+        ///     Sets the location of each vehicle along the X axis.
+        ///     Postcondition: Each vehicle is at an algorithmically computed X value.
         /// </summary>
         /// <param name="laneLength">Length of the lane.</param>
         public void PlaceAllVehiclesInLane(double laneLength)
@@ -142,12 +178,11 @@ namespace FroggerStarter.Controller
                     currX -= vehicle.Width + space;
                 }
             }
-
         }
 
         /// <summary>
-        /// Sets the vehicles' locations along the Y axis.
-        /// Postcondition: Each vehicle is at the specified Y value.
+        ///     Sets the vehicles' locations along the Y axis.
+        ///     Postcondition: Each vehicle is at the specified Y value.
         /// </summary>
         /// <param name="y">The y coordinate.</param>
         public void SetVehicleYs(double y)
@@ -159,7 +194,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Gets the space between vehicles.
+        ///     Gets the space between vehicles.
         /// </summary>
         /// <param name="laneLength">Length of the lane.</param>
         /// <returns>The space between vehicles</returns>
@@ -175,8 +210,8 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Moves the vehicles.
-        /// Postcondition: Each vehicle has been moved an amount equal to its SpeedX in the Direction of the vehicle.
+        ///     Moves the vehicles.
+        ///     Postcondition: Each vehicle has been moved an amount equal to its SpeedX in the Direction of the vehicle.
         /// </summary>
         public void MoveVehicles(double laneLength)
         {
@@ -196,13 +231,12 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Checks if there is a collision.
+        ///     Checks if there is a collision.
         /// </summary>
         /// <param name="g">The g.</param>
         /// <returns>True if one of the vehicles has collided with g, false otherwise.</returns>
         public bool CheckCollision(GameObject g)
         {
-
             foreach (var vehicle in this.vehicles)
             {
                 if (vehicle.IsColliding(g))
@@ -214,26 +248,6 @@ namespace FroggerStarter.Controller
             return false;
         }
 
-        /// <summary>
-        /// Returns an enumerator that iterates through the collection.
-        /// </summary>
-        /// <returns>
-        /// An enumerator that can be used to iterate through the collection.
-        /// </returns>
-        public IEnumerator<Vehicle> GetEnumerator()
-        {
-            return ((IEnumerable<Vehicle>)this.vehicles).GetEnumerator();
-        }
-
-        /// <summary>
-        /// Returns an enumerator that iterates through a collection.
-        /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
-        /// </returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<Vehicle>)this.vehicles).GetEnumerator();
-        }
+        #endregion
     }
 }

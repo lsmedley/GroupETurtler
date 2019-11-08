@@ -16,10 +16,10 @@
     </UserControl.Resources>
 
     <Canvas Width="50" Height="50" Background="Transparent">
-        
+
         <!-- Cloud -->
         <Ellipse Width="40" Height="50" Fill="{StaticResource CloudColor}" Canvas.Top="0" Canvas.Left="5" />
-        
+
         <!-- Skull -->
         <Ellipse Width="20" Height="25" Fill="{StaticResource SkullColor}" Canvas.Top="10" Canvas.Left="15" />
         <Rectangle Width="20" Height="5" Fill="{StaticResource SkullColor}" Canvas.Top="30" Canvas.Left="15" />
@@ -27,8 +27,8 @@
         <Ellipse Width="7" Height="7" Fill="{StaticResource HoleColor}" Canvas.Top="15" Canvas.Left="17" />
         <Ellipse Width="7" Height="7" Fill="{StaticResource HoleColor}" Canvas.Top="15" Canvas.Left="26.5" />
 
-        <Ellipse Width="2" Height="3" Fill="{StaticResource HoleColor}" Canvas.Top="23" Canvas.Left="23"/>
-        <Ellipse Width="2" Height="3" Fill="{StaticResource HoleColor}" Canvas.Top="23" Canvas.Left="26"/>
+        <Ellipse Width="2" Height="3" Fill="{StaticResource HoleColor}" Canvas.Top="23" Canvas.Left="23" />
+        <Ellipse Width="2" Height="3" Fill="{StaticResource HoleColor}" Canvas.Top="23" Canvas.Left="26" />
 
         <!-- Teeth -->
         <Rectangle Width="2" Height="5" Fill="{StaticResource HoleColor}" Canvas.Top="30" Canvas.Left="16" />

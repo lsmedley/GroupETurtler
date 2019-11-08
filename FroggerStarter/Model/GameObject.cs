@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using FroggerStarter.View.Sprites;
@@ -175,36 +174,34 @@ namespace FroggerStarter.Model
             this.SpeedY = speedY;
         }
 
-        #endregion
-
         /// <summary>
-        /// Determines whether the current instance is colliding with the specified other, assuming
-        /// that other is taller than the current instance.
+        ///     Determines whether the current instance is colliding with the specified other, assuming
+        ///     that other is taller than the current instance.
         /// </summary>
         /// <param name="gameObject">The other object.</param>
         /// <returns>
-        ///   <c>true</c> if the specified other is colliding with this instance; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified other is colliding with this instance; otherwise, <c>false</c>.
         /// </returns>
         public virtual bool IsColliding(GameObject gameObject)
         {
-            var thisObjectRect = createRectangleForSprite(this.Sprite);
-            var otherObjectRect = createRectangleForSprite(gameObject.Sprite);
+            var thisObjectRect = this.createRectangleForSprite(this.Sprite);
+            var otherObjectRect = this.createRectangleForSprite(gameObject.Sprite);
 
             return thisObjectRect.IntersectsWith(otherObjectRect);
         }
 
         private RectangleF createRectangleForSprite(FrameworkElement sprite)
         {
-            var spriteRectangle = new RectangleF
-            {
-                X = (float)Canvas.GetLeft(sprite),
-                Y = (float)Canvas.GetTop(sprite),
-                Width = (float)sprite.Width,
-                Height = (float)sprite.Height
+            var spriteRectangle = new RectangleF {
+                X = (float) Canvas.GetLeft(sprite),
+                Y = (float) Canvas.GetTop(sprite),
+                Width = (float) sprite.Width,
+                Height = (float) sprite.Height
             };
 
             return spriteRectangle;
         }
 
+        #endregion
     }
 }

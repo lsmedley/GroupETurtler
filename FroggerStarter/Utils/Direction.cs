@@ -1,16 +1,17 @@
-﻿namespace FroggerStarter.Model
+﻿namespace FroggerStarter.Utils
 {
     /// <summary>
-    /// Describes the Direction a Vehicle is facing.
+    ///     Describes the Direction a Vehicle is facing.
     /// </summary>
     public enum Direction
     {
         /// <summary>
-        /// The left
+        ///     The left
         /// </summary>
         Left,
+
         /// <summary>
-        /// The right
+        ///     The right
         /// </summary>
         Right
     }

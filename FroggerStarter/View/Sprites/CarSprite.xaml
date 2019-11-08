@@ -10,36 +10,36 @@
     Width="50">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="CarColor" Color="Blue"/>
+        <SolidColorBrush x:Key="CarColor" Color="Blue" />
         <SolidColorBrush x:Key="WindowColor" Color="Black" />
-        <SolidColorBrush x:Key="WheelColor" Color="Gray" >
+        <SolidColorBrush x:Key="WheelColor" Color="Gray">
             <SolidColorBrush.RelativeTransform>
-                <CompositeTransform CenterY="0.5" CenterX="0.5" TranslateX="-5"/>
+                <CompositeTransform CenterY="0.5" CenterX="0.5" TranslateX="-5" />
             </SolidColorBrush.RelativeTransform>
         </SolidColorBrush>
     </UserControl.Resources>
 
     <Canvas Width="50" Height="40" Background="Transparent">
         <!-- Wheels -->
-        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="34" Canvas.Left="10"/>
-        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="3.5" Canvas.Left="10"/>
-        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="34" Canvas.Left="30"/>
-        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="3.5" Canvas.Left="30"/>
+        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="34" Canvas.Left="10" />
+        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="3.5" Canvas.Left="10" />
+        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="34" Canvas.Left="30" />
+        <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="3.5" Canvas.Left="30" />
 
         <!-- Body -->
-        <Rectangle Width="30" Height="30" Fill="{StaticResource CarColor}" Canvas.Top="5" Canvas.Left="10"/>
+        <Rectangle Width="30" Height="30" Fill="{StaticResource CarColor}" Canvas.Top="5" Canvas.Left="10" />
         <Ellipse Width="10" Height="30" Fill="{StaticResource CarColor}" Canvas.Top="5" Canvas.Left="5" />
         <Ellipse Width="10" Height="30" Fill="{StaticResource CarColor}" Canvas.Top="5" Canvas.Left="35" />
         <Ellipse Width="10" Height="25" Fill="{StaticResource CarColor}" Canvas.Top="7.5" Canvas.Left="2" />
 
         <!-- Windows -->
-        <Ellipse Width="5" Height="18" Fill="{StaticResource WindowColor}" Canvas.Top="10.5" Canvas.Left="10"/>
-        <Ellipse Width="7" Height="18" Fill="{StaticResource WindowColor}" Canvas.Top="10.5" Canvas.Left="33"/>
+        <Ellipse Width="5" Height="18" Fill="{StaticResource WindowColor}" Canvas.Top="10.5" Canvas.Left="10" />
+        <Ellipse Width="7" Height="18" Fill="{StaticResource WindowColor}" Canvas.Top="10.5" Canvas.Left="33" />
 
-        <Ellipse Width="10" Height="5" Fill="{StaticResource WindowColor}" Canvas.Top="5" Canvas.Left="12.5"/>
-        <Ellipse Width="10" Height="5" Fill="{StaticResource WindowColor}" Canvas.Top="5" Canvas.Left="27.5"/>
-        <Ellipse Width="10" Height="5" Fill="{StaticResource WindowColor}" Canvas.Top="30" Canvas.Left="12.5"/>
-        <Ellipse Width="10" Height="5" Fill="{StaticResource WindowColor}" Canvas.Top="30" Canvas.Left="27.5"/>
+        <Ellipse Width="10" Height="5" Fill="{StaticResource WindowColor}" Canvas.Top="5" Canvas.Left="12.5" />
+        <Ellipse Width="10" Height="5" Fill="{StaticResource WindowColor}" Canvas.Top="5" Canvas.Left="27.5" />
+        <Ellipse Width="10" Height="5" Fill="{StaticResource WindowColor}" Canvas.Top="30" Canvas.Left="12.5" />
+        <Ellipse Width="10" Height="5" Fill="{StaticResource WindowColor}" Canvas.Top="30" Canvas.Left="27.5" />
 
         <!-- Headlights -->
         <Ellipse Width="5" Height="7" Fill="DarkKhaki" Canvas.Top="10" Canvas.Left="2" />
@@ -48,7 +48,6 @@
         <Ellipse Width="5" Height="7" Fill="Red" Canvas.Top="8" Canvas.Left="40" />
         <Ellipse Width="5" Height="7" Fill="Red" Canvas.Top="25" Canvas.Left="40" />
 
-        
+
     </Canvas>
 </local:BaseSprite>
-

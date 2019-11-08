@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FroggerStarter.Utils;
 using FroggerStarter.View.Sprites;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Model.Vehicle
 {
     /// <summary>
-    /// Handles Busses, which are Vehicles
+    ///     Handles Busses, which are Vehicles
     /// </summary>
-    /// <seealso cref="FroggerStarter.Model.Vehicle" />
+    /// <seealso cref="Vehicle" />
     public class Bus : Vehicle
     {
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Bus"/> class.
+        ///     Initializes a new instance of the <see cref="Bus" /> class.
         /// </summary>
         /// <param name="speed">The speed.</param>
         /// <param name="direction">The direction.</param>
@@ -25,5 +23,7 @@ namespace FroggerStarter.Model
             Sprite = new BusSprite();
             RenderSprite();
         }
+
+        #endregion
     }
 }

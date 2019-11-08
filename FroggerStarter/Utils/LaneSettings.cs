@@ -1,44 +1,50 @@
-﻿using System.Collections.Generic;
-using FroggerStarter.Model;
-
-namespace FroggerStarter.Controller
+﻿namespace FroggerStarter.Utils
 {
     /// <summary>
-    /// Defines settings for lanes.
+    ///     Defines settings for lanes.
     /// </summary>
     public class LaneSettings
     {
+        #region Properties
+
         /// <summary>
-        /// Gets the start speed.
+        ///     Gets the start speed.
         /// </summary>
         /// <value>
-        /// The start speed.
+        ///     The start speed.
         /// </value>
         public int StartSpeed { get; }
+
         /// <summary>
-        /// Gets the direction.
+        ///     Gets the direction.
         /// </summary>
         /// <value>
-        /// The direction.
+        ///     The direction.
         /// </value>
         public Direction Direction { get; }
+
         /// <summary>
-        /// Gets the maximum number vehicles.
+        ///     Gets the maximum number vehicles.
         /// </summary>
         /// <value>
-        /// The maximum number vehicles.
+        ///     The maximum number vehicles.
         /// </value>
         public int MaxNumVehicles { get; }
+
         /// <summary>
-        /// Gets the type of the vehicle.
+        ///     Gets the type of the vehicle.
         /// </summary>
         /// <value>
-        /// The type of the vehicle.
+        ///     The type of the vehicle.
         /// </value>
         public VehicleType VehicleType { get; }
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="LaneSettings"/> class.
+        ///     Initializes a new instance of the <see cref="LaneSettings" /> class.
         /// </summary>
         /// <param name="startSpeed">The start speed.</param>
         /// <param name="direction">The direction.</param>
@@ -51,5 +57,7 @@ namespace FroggerStarter.Controller
             this.MaxNumVehicles = maxNumVehicles;
             this.VehicleType = vehicleType;
         }
+
+        #endregion
     }
 }

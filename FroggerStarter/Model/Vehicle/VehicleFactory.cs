@@ -1,12 +1,16 @@
-﻿namespace FroggerStarter.Model
+﻿using FroggerStarter.Utils;
+
+namespace FroggerStarter.Model.Vehicle
 {
     /// <summary>
-    /// Creates vehicles
+    ///     Creates vehicles
     /// </summary>
     public static class VehicleFactory
     {
+        #region Methods
+
         /// <summary>
-        /// Makes the vehicle of given type.
+        ///     Makes the vehicle of given type.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="speed">The speed.</param>
@@ -23,10 +27,11 @@
                 case VehicleType.Bus:
                     vehicle = new Bus(speed, direction);
                     break;
-
             }
 
             return vehicle;
         }
+
+        #endregion
     }
 }

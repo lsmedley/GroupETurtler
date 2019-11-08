@@ -119,24 +119,24 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controller\GameSettings.cs" />
+    <Compile Include="Utils\GameSettings.cs" />
     <Compile Include="Controller\HomeManager.cs" />
-    <Compile Include="Controller\LaneSettings.cs" />
+    <Compile Include="Utils\LaneSettings.cs" />
     <Compile Include="Controller\LevelTimeManager.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
-    <Compile Include="Controller\RoadManager.cs" />
+    <Compile Include="Model\Road.cs" />
     <Compile Include="Controller\SoundType.cs" />
-    <Compile Include="Model\Bus.cs" />
-    <Compile Include="Model\Car.cs" />
-    <Compile Include="Model\Direction.cs" />
-    <Compile Include="Controller\LaneManager.cs" />
+    <Compile Include="Model\Vehicle\Bus.cs" />
+    <Compile Include="Model\Vehicle\Car.cs" />
+    <Compile Include="Utils\Direction.cs" />
+    <Compile Include="Model\Lane.cs" />
     <Compile Include="Model\HomeSpace.cs" />
-    <Compile Include="Model\Vehicle.cs" />
+    <Compile Include="Model\Vehicle\Vehicle.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Controller\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />
-    <Compile Include="Model\VehicleFactory.cs" />
-    <Compile Include="Model\VehicleType.cs" />
+    <Compile Include="Model\Vehicle\VehicleFactory.cs" />
+    <Compile Include="Utils\VehicleType.cs" />
     <Compile Include="View\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -255,9 +255,7 @@
       <Version>6.2.8</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Settings\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

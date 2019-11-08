@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FroggerStarter.Utils;
 using FroggerStarter.View.Sprites;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Model.Vehicle
 {
     /// <summary>
-    /// Handles Cars, which are Vehicles
+    ///     Handles Cars, which are Vehicles
     /// </summary>
-    /// <seealso cref="FroggerStarter.Model.Vehicle" />
+    /// <seealso cref="Vehicle" />
     public class Car : Vehicle
     {
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Car"/> class.
+        ///     Initializes a new instance of the <see cref="Car" /> class.
         /// </summary>
         /// <param name="speed">The speed.</param>
         /// <param name="direction">The direction.</param>
@@ -26,5 +24,6 @@ namespace FroggerStarter.Model
             RenderSprite();
         }
 
+        #endregion
     }
 }

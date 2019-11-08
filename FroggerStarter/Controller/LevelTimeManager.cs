@@ -4,30 +4,38 @@ using Windows.UI.Xaml;
 namespace FroggerStarter.Controller
 {
     /// <summary>
-    /// Holds logic and functionality for the level's timer, measuring how much time the player
-    /// has left to score.
+    ///     Holds logic and functionality for the level's timer, measuring how much time the player
+    ///     has left to score.
     /// </summary>
     public class LevelTimeManager
     {
-        /// <summary>
-        /// Occurs when [time up].
-        /// </summary>
-        public event EventHandler<EventArgs> TimeUp;
-        /// <summary>
-        /// The maximum time before the player dies.
-        /// </summary>
-        public readonly int MaxTime;
-        /// <summary>
-        /// Gets the current time.
-        /// </summary>
-        /// <value>
-        /// The current time.
-        /// </value>
-        public int CurrTime { get; private set; }
-        private DispatcherTimer levelTime;
+        #region Data members
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LevelTimeManager"/> class.
+        ///     The maximum time before the player dies.
+        /// </summary>
+        public readonly int MaxTime;
+
+        private DispatcherTimer levelTime;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     Gets the current time.
+        /// </summary>
+        /// <value>
+        ///     The current time.
+        /// </value>
+        public int CurrTime { get; private set; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="LevelTimeManager" /> class.
         /// </summary>
         /// <param name="maxTime">The maximum time the player has to score.</param>
         public LevelTimeManager(int maxTime)
@@ -36,6 +44,15 @@ namespace FroggerStarter.Controller
             this.CurrTime = 0;
             this.setUpTimer();
         }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     Occurs when [time up].
+        /// </summary>
+        public event EventHandler<EventArgs> TimeUp;
 
         private void setUpTimer()
         {
@@ -56,7 +73,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Resets the timer.
+        ///     Resets the timer.
         /// </summary>
         public void Reset()
         {
@@ -64,7 +81,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Pauses the timer.
+        ///     Pauses the timer.
         /// </summary>
         public void Pause()
         {
@@ -72,7 +89,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Resumes the timer.
+        ///     Resumes the timer.
         /// </summary>
         public void UnPause()
         {
@@ -83,5 +100,7 @@ namespace FroggerStarter.Controller
         {
             this.TimeUp?.Invoke(this, EventArgs.Empty);
         }
+
+        #endregion
     }
 }
