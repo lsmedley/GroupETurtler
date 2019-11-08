@@ -35,12 +35,15 @@ namespace FroggerStarter.View
         private static readonly Brush TitleBrush = new SolidColorBrush(Colors.YellowGreen);
 
         private readonly MediaPlayer soundPlayer;
-        private Windows.Storage.StorageFile gameOverSound;
-        private Windows.Storage.StorageFile gameWonSound;
-        private Windows.Storage.StorageFile vehicleCollisionSound;
-        private Windows.Storage.StorageFile scoreMadeSound;
+        private StorageFile gameOverSound;
+        private StorageFile gameWonSound;
+        private StorageFile vehicleCollisionSound;
+        private StorageFile scoreMadeSound;
         private StorageFile wallCollisionSound;
         private StorageFile timerDeathSound;
+
+        private readonly MediaPlayer musicPlayer;
+        private StorageFile Level1Music;
 
         #endregion
 
@@ -92,10 +95,11 @@ namespace FroggerStarter.View
             this.gameManager.GameOver += this.onGameOver;
 
             this.soundPlayer = new MediaPlayer();
-            this.setUpPlayer();
+            this.musicPlayer = new MediaPlayer();
+            this.setUpPlayers();
         }
 
-        private async void setUpPlayer()
+        private async void setUpPlayers()
         {
             Windows.Storage.StorageFolder folder =
                 await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"View\\SoundEffects");
@@ -107,11 +111,18 @@ namespace FroggerStarter.View
             this.scoreMadeSound = await folder.GetFileAsync("ScoreMadeSound.wav");
 
             this.soundPlayer.AutoPlay = false;
+
+            Windows.Storage.StorageFolder musicFolder =
+                await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"View\\Music");
+            this.Level1Music = await musicFolder.GetFileAsync("Level1Song.wav");
+            this.musicPlayer.AutoPlay = true;
+            this.musicPlayer.Source = MediaSource.CreateFromStorageFile(this.Level1Music);
         }
 
         private void onGameOver(object sender, SoundType sound)
         {
             this.initializeGameOverText();
+            this.musicPlayer.Pause();
             if (sound == SoundType.GameLost)
             {
                 this.playSoundEffect(this.gameOverSound);

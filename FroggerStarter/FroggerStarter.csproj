@@ -176,6 +176,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="View\Music\Level1Song.wav" />
+    <Content Include="View\Music\Level2Song.wav" />
+    <Content Include="View\Music\Level3Song.wav" />
     <Content Include="View\SoundEffects\CarCollisionSound.wav" />
     <Content Include="View\SoundEffects\GameOverSound.wav" />
     <Content Include="Properties\Default.rd.xml" />
