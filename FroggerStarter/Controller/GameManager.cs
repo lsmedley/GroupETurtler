@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
 using FroggerStarter.Utils;
-using FroggerStarter.View.Sprites;
+using FroggerStarter.View.Sprites.PlayerSprites;
 
 namespace FroggerStarter.Controller
 {

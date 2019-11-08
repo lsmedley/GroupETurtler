@@ -1,21 +1,21 @@
 ﻿// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace FroggerStarter.View.Sprites
+namespace FroggerStarter.View.Sprites.PlayerSprites
 {
     /// <summary>
-    ///     Holds functionality for player sprites.
+    ///     Holds functionality for the third frame of the death animation.
     /// </summary>
     /// <seealso cref="FroggerStarter.View.Sprites.BaseSprite" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
-    public sealed partial class PlayerSprite
+    public sealed partial class DeathSprite3
     {
         #region Constructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="PlayerSprite" /> class.
+        ///     Initializes a new instance of the <see cref="DeathSprite3" /> class.
         /// </summary>
-        public PlayerSprite()
+        public DeathSprite3()
         {
             this.InitializeComponent();
         }

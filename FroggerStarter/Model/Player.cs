@@ -1,4 +1,5 @@
 ﻿using FroggerStarter.View.Sprites;
+using FroggerStarter.View.Sprites.PlayerSprites;
 
 namespace FroggerStarter.Model
 {

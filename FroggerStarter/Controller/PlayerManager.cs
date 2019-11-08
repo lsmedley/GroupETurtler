@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FroggerStarter.Model;
 using FroggerStarter.View.Sprites;
+using FroggerStarter.View.Sprites.PlayerSprites;
 
 namespace FroggerStarter.Controller
 {
