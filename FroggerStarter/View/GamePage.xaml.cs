@@ -2,6 +2,7 @@
 using Windows.Foundation;
 using Windows.Media.Core;
 using Windows.Media.Playback;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -35,9 +36,11 @@ namespace FroggerStarter.View
 
         private readonly MediaPlayer soundPlayer;
         private Windows.Storage.StorageFile gameOverSound;
+        private Windows.Storage.StorageFile gameWonSound;
         private Windows.Storage.StorageFile vehicleCollisionSound;
         private Windows.Storage.StorageFile scoreMadeSound;
-
+        private StorageFile wallCollisionSound;
+        private StorageFile timerDeathSound;
 
         #endregion
 
@@ -97,7 +100,10 @@ namespace FroggerStarter.View
             Windows.Storage.StorageFolder folder =
                 await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"View\\SoundEffects");
             this.gameOverSound = await folder.GetFileAsync("GameOverSound.wav");
+            this.gameWonSound = await folder.GetFileAsync("GameWonSound.wav");
             this.vehicleCollisionSound = await folder.GetFileAsync("CarCollisionSound.wav");
+            this.wallCollisionSound = await folder.GetFileAsync("WallCollisionSound.wav");
+            this.timerDeathSound = await folder.GetFileAsync("TimerDeathSound.wav");
             this.scoreMadeSound = await folder.GetFileAsync("ScoreMadeSound.wav");
 
             this.soundPlayer.AutoPlay = false;
@@ -109,6 +115,10 @@ namespace FroggerStarter.View
             if (sound == SoundType.GameLost)
             {
                 this.playSoundEffect(this.gameOverSound);
+            }
+            else
+            {
+                this.playSoundEffect(this.gameWonSound);
             }
         }
 
@@ -136,6 +146,12 @@ namespace FroggerStarter.View
             if (sound.Equals(SoundType.VehicleDeath))
             {
                 this.playSoundEffect(this.vehicleCollisionSound);
+            } else if (sound.Equals(SoundType.WallDeath))
+            {
+                this.playSoundEffect(this.wallCollisionSound);
+            } else if (sound.Equals(SoundType.TimeDeath))
+            {
+                this.playSoundEffect(this.timerDeathSound);
             }
         }
 

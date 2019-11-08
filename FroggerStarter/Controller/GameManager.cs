@@ -230,7 +230,7 @@ namespace FroggerStarter.Controller
             this.timerBar.Value = TimerBlockWidth * this.TimeLeft;
             if (this.roadManager.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
-                this.onPlayerDeath();
+                this.onPlayerDeath(SoundType.VehicleDeath);
             }
         }
 
@@ -273,14 +273,14 @@ namespace FroggerStarter.Controller
             this.playerManager.Player.Sprite.Visibility = Visibility.Visible;
         }
 
-        private void onPlayerDeath()
+        private void onPlayerDeath(SoundType deathType)
         {
             this.playerManager.Disabled = true;
             this.levelTimer.Pause();
             this.deathTimer.Start();
 
             this.playerManager.LoseLife();
-            this.onLivesUpdated();
+            this.onLivesUpdated(deathType);
             this.levelTimer.Reset();
 
         }
@@ -353,7 +353,7 @@ namespace FroggerStarter.Controller
             }
             else if (this.playerManager.Player.Y < TopOfGameOffset + 1)
             {
-                this.onPlayerDeath();
+                this.onPlayerDeath(SoundType.WallDeath);
             }
 
             if (this.ScoresMade >= this.playerManager.ScoresToWin)
@@ -362,9 +362,9 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void onLivesUpdated()
+        private void onLivesUpdated(SoundType deathType)
         {
-            this.LivesUpdated?.Invoke(this, SoundType.VehicleDeath);
+            this.LivesUpdated?.Invoke(this, deathType);
         }
 
         private void onScoreUpdated()
@@ -379,13 +379,17 @@ namespace FroggerStarter.Controller
             if (this.Lives <= 0)
             {
                 this.setPlayerGameOverSprite();
+                this.GameOver?.Invoke(this, SoundType.GameLost);
             }
-            this.GameOver?.Invoke(this, SoundType.GameLost);
+            else
+            {
+                this.GameOver?.Invoke(this, SoundType.GameWon);
+            }
         }
 
         private void onTimeUp(object sender, EventArgs e)
         {
-            this.onPlayerDeath();
+            this.onPlayerDeath(SoundType.TimeDeath);
         }
 
         private void onCarAdded(object sender, EventArgs e)

@@ -186,7 +186,13 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="View\SoundEffects\GameWonSound.wav" />
+    <Content Include="View\SoundEffects\LevelWonSound.wav" />
+    <Content Include="View\SoundEffects\PowerupSound.wav" />
     <Content Include="View\SoundEffects\ScoreMadeSound.wav" />
+    <Content Include="View\SoundEffects\TimerDeathSound.wav" />
+    <Content Include="View\SoundEffects\WallCollisionSound.wav" />
+    <Content Include="View\SoundEffects\WaterDeathSound.wav" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
