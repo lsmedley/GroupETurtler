@@ -43,9 +43,10 @@ namespace FroggerStarter.View
         private StorageFile scoreMadeSound;
         private StorageFile wallCollisionSound;
         private StorageFile timerDeathSound;
+        private StorageFile timerPowerupSound;
 
         private readonly MediaPlayer musicPlayer;
-        private StorageFile Level1Music;
+        private StorageFile level1Music;
 
         #endregion
 
@@ -95,6 +96,7 @@ namespace FroggerStarter.View
             this.gameManager.LivesUpdated += this.onLivesUpdated;
             this.gameManager.ScoreUpdated += this.onScoreUpdated;
             this.gameManager.GameOver += this.onGameOver;
+            this.gameManager.PowerUpActivated += this.onPowerUp;
 
             this.soundPlayer = new MediaPlayer();
             this.musicPlayer = new MediaPlayer();
@@ -116,10 +118,10 @@ namespace FroggerStarter.View
         {
             var musicFolder =
                 await Package.Current.InstalledLocation.GetFolderAsync(@"View\\Music");
-            this.Level1Music = await musicFolder.GetFileAsync("Level1Song.wav");
+            this.level1Music = await musicFolder.GetFileAsync("Level1Song.wav");
             this.musicPlayer.AutoPlay = true;
             this.musicPlayer.IsLoopingEnabled = true;
-            this.musicPlayer.Source = MediaSource.CreateFromStorageFile(this.Level1Music);
+            this.musicPlayer.Source = MediaSource.CreateFromStorageFile(this.level1Music);
         }
 
         private async Task setUpSoundPlayer()
@@ -131,6 +133,7 @@ namespace FroggerStarter.View
             this.vehicleCollisionSound = await folder.GetFileAsync("CarCollisionSound.wav");
             this.wallCollisionSound = await folder.GetFileAsync("WallCollisionSound.wav");
             this.timerDeathSound = await folder.GetFileAsync("TimerDeathSound.wav");
+            this.timerPowerupSound = await folder.GetFileAsync("PowerupSound.wav");
             this.scoreMadeSound = await folder.GetFileAsync("ScoreMadeSound.wav");
 
             this.soundPlayer.AutoPlay = false;
@@ -179,6 +182,14 @@ namespace FroggerStarter.View
             else if (sound.Equals(SoundType.TimeDeath))
             {
                 this.playSoundEffect(this.timerDeathSound);
+            }
+        }
+
+        private void onPowerUp(object sender, SoundType e)
+        {
+            if (e == SoundType.TimePowerUp)
+            {
+                this.playSoundEffect(this.timerPowerupSound);
             }
         }
 

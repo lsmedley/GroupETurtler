@@ -118,6 +118,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public event EventHandler<SoundType> GameOver;
 
+        public event EventHandler<SoundType> PowerUpActivated;
         /// <summary>
         ///     Initializes the game working with appropriate classes to play frog
         ///     and vehicle on game screen.
@@ -247,6 +248,7 @@ namespace FroggerStarter.Controller
             if (this.powerUpManager.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
                 this.levelTimer.AddTime(7);
+                this.onPowerUp();
             }
         }
 
@@ -418,6 +420,11 @@ namespace FroggerStarter.Controller
             {
                 this.GameOver?.Invoke(this, SoundType.GameWon);
             }
+        }
+
+        private void onPowerUp()
+        {
+            this.PowerUpActivated?.Invoke(this, SoundType.TimePowerUp);
         }
 
         private void onTimeUp(object sender, EventArgs e)

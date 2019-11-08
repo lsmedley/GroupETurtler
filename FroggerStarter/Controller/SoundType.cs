@@ -29,6 +29,10 @@
         /// <summary>
         ///     Death by the inescapable march of time
         /// </summary>
-        TimeDeath
+        TimeDeath,
+        /// <summary>
+        /// The time power up
+        /// </summary>
+        TimePowerUp
     }
 }
