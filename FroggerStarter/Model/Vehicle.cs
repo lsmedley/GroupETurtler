@@ -7,54 +7,28 @@ namespace FroggerStarter.Model
     /// <summary>
     ///     Defines basic properties and behavior of vehicle objects.
     /// </summary>
-    public class Vehicle : GameObject
+    public abstract class Vehicle : GameObject
     {
-        private readonly Direction direction;
-
-        /// <summary>
-        /// Gets the type.
-        /// </summary>
-        /// <value>
-        /// The type of vehicle.
-        /// </value>
-        public VehicleType Type { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vehicle"/> class.
-        /// </summary>
-        /// <param name="type">The type of vehicle.</param>
-        /// <param name="direction">The Direction of the vehicle.</param>
-        /// <param name="spd">The speed of the vehicle.</param>
-        public Vehicle(VehicleType type, Direction direction, int spd)
+        protected int Speed
         {
-            this.Type = type;
-            switch (type)
-            {
-                case VehicleType.Car:
-                    Sprite = new CarSprite();
-                    break;
-                case VehicleType.Bus:
-                    Sprite = new BusSprite();
-                    break;
-                default:
-                    Sprite = null;
-                    break;
-            }
+            get => this.SpeedX;
+            set => this.SetSpeed(value, 0);
+        }
+        protected Direction Direction { get; set; }
 
-            if (direction == Direction.Right)
+        protected void RenderSprite()
+        {
+            if (this.Direction == Direction.Right)
             {
                 var baseSprite = Sprite;
                 if (baseSprite != null)
                 {
                     baseSprite.RenderTransformOrigin = new Point(0.5, 0.5);
-                    baseSprite.RenderTransform = new ScaleTransform {ScaleX = -1};
+                    baseSprite.RenderTransform = new ScaleTransform { ScaleX = -1 };
                 }
             }
-
-            this.direction = direction;
-
-            SetSpeed(spd, 0);
         }
+
         /// <summary>
         /// Moves this vehicle forward.
         /// Postcondition: if this.Direction == Direction.Left, this.X -= this.Speed.
@@ -62,7 +36,7 @@ namespace FroggerStarter.Model
         /// </summary>
         public void MoveForward()
         {
-            if (this.direction == Direction.Left)
+            if (this.Direction == Direction.Left)
             {
                 MoveLeft();
             }

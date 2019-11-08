@@ -103,14 +103,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var lane in this.lanes)
             {
-                var vehicleType = VehicleType.Car;
-                foreach (var vehicle in lane)
-                {
-                    vehicleType = vehicle.Type;
-                }
-
                 lane.AddVehicle(laneLength);
-
             }
 
         }

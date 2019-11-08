@@ -126,6 +126,8 @@
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\RoadManager.cs" />
     <Compile Include="Controller\SoundType.cs" />
+    <Compile Include="Model\Bus.cs" />
+    <Compile Include="Model\Car.cs" />
     <Compile Include="Model\Direction.cs" />
     <Compile Include="Controller\LaneManager.cs" />
     <Compile Include="Model\HomeSpace.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="Model\Player.cs" />
     <Compile Include="Controller\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />
+    <Compile Include="Model\VehicleFactory.cs" />
     <Compile Include="Model\VehicleType.cs" />
     <Compile Include="View\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>

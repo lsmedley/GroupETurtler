@@ -55,7 +55,7 @@ namespace FroggerStarter.Controller
         {
             if (this.vehicles.Count < this.maxVehicles)
             {
-                this.vehicles.Add(new Vehicle(this.vehicleType, this.Direction, this.Speed));
+                this.vehicles.Add(VehicleFactory.MakeVehicle(this.vehicleType, this.Speed, this.Direction));
             }
         }
 
@@ -92,7 +92,7 @@ namespace FroggerStarter.Controller
 
             if (this.hasSpaceForNewVehicle(laneLength))
             {
-                this.vehicles.Add(new Vehicle(this.vehicleType, this.Direction, this.Speed));
+                this.vehicles.Add(VehicleFactory.MakeVehicle(this.vehicleType, this.Speed, this.Direction));
                 this.vehicles[this.vehicles.Count - 1].X = xLocal;
                 this.vehicles[this.vehicles.Count - 1].Y = prevVehicle.Y;
             }
