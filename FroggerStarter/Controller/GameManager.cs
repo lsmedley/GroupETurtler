@@ -250,10 +250,6 @@ namespace FroggerStarter.Controller
 
         private void gameTimerOnTick(object sender, object e)
         {
-            this.roadManager.OnTick(this.backgroundWidth);
-            this.timerBar.Value = TimerBlockWidth * this.TimeLeft;
-            this.powerUpManager.OnTick(this.backgroundWidth, TopOfGameOffset, this.roadHeight - TileHeight);
-            if (this.roadManager.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
             var speedToAdd = 0;
             if (this.CurrentLevel == 2)
             {
