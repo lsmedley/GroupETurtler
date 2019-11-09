@@ -3,7 +3,7 @@
 namespace FroggerStarter.View.Sprites.PlayerSprites
 {
     /// <summary>
-    /// Holds functionality for the first frame of the death animation.
+    ///     Holds functionality for the first frame of the death animation.
     /// </summary>
     /// <seealso cref="FroggerStarter.View.Sprites.BaseSprite" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
@@ -14,7 +14,7 @@ namespace FroggerStarter.View.Sprites.PlayerSprites
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DeathSprite1" /> class.
+        ///     Initializes a new instance of the <see cref="DeathSprite1" /> class.
         /// </summary>
         public DeathSprite1()
         {

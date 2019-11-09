@@ -5,7 +5,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
 using FroggerStarter.Utils;
-using FroggerStarter.View.Sprites;
 using FroggerStarter.View.Sprites.PlayerSprites;
 
 namespace FroggerStarter.Controller
@@ -130,7 +129,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public event EventHandler<SoundType> GameOver;
 
+        /// <summary>
+        ///     Occurs when [power up activated].
+        /// </summary>
         public event EventHandler<SoundType> PowerUpActivated;
+
         /// <summary>
         ///     Initializes the game working with appropriate classes to play frog
         ///     and vehicle on game screen.
