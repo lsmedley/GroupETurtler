@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
 using FroggerStarter.Utils;
+using FroggerStarter.View.Sprites;
 using FroggerStarter.View.Sprites.PlayerSprites;
 
 namespace FroggerStarter.Controller
@@ -30,6 +31,7 @@ namespace FroggerStarter.Controller
         private Road road;
         private PlayerManager playerManager;
         private HomeManager homes;
+        private PowerupManager powerUpManager;
 
         #endregion
 
@@ -128,6 +130,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public event EventHandler<SoundType> GameOver;
 
+        public event EventHandler<SoundType> PowerUpActivated;
         /// <summary>
         ///     Initializes the game working with appropriate classes to play frog
         ///     and vehicle on game screen.
@@ -142,7 +145,14 @@ namespace FroggerStarter.Controller
             this.createHomeManager(GameSettings.ScoresToWin);
             this.createAndPlacePlayer(GameSettings.PlayerLives, GameSettings.ScoresToWin);
             this.createRoadManager();
+            this.createPowerupManager();
             this.setUpTimers(GameSettings.TimerLengthSeconds);
+        }
+
+        private void createPowerupManager()
+        {
+            this.powerUpManager = new PowerupManager();
+            this.gameCanvas.Children.Add(this.powerUpManager.GetTimeSprite());
         }
 
         private void createHomeManager(int numHomes)
@@ -240,6 +250,10 @@ namespace FroggerStarter.Controller
 
         private void gameTimerOnTick(object sender, object e)
         {
+            this.roadManager.OnTick(this.backgroundWidth);
+            this.timerBar.Value = TimerBlockWidth * this.TimeLeft;
+            this.powerUpManager.OnTick(this.backgroundWidth, TopOfGameOffset, this.roadHeight - TileHeight);
+            if (this.roadManager.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
             var speedToAdd = 0;
             if (this.CurrentLevel == 2)
             {
@@ -255,6 +269,12 @@ namespace FroggerStarter.Controller
             if (this.road.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
                 this.onPlayerDeath(SoundType.VehicleDeath);
+            }
+
+            if (this.powerUpManager.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
+            {
+                this.levelTimer.AddTime(7);
+                this.onPowerUp();
             }
         }
 
@@ -475,6 +495,11 @@ namespace FroggerStarter.Controller
         private void onLevelUpdated()
         {
             this.LevelUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void onPowerUp()
+        {
+            this.PowerUpActivated?.Invoke(this, SoundType.TimePowerUp);
         }
 
         private void onTimeUp(object sender, EventArgs e)
