@@ -18,7 +18,7 @@ namespace FroggerStarter.Model
         /// <value>
         ///     <c>true</c> if this space is taken; otherwise, <c>false</c>.
         /// </value>
-        public bool IsTaken { get; private set; }
+        public bool IsTaken { get; internal set; }
 
         /// <summary>
         ///     Gets the taken sprite.

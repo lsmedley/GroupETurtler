@@ -33,6 +33,7 @@ namespace FroggerStarter.View
         private readonly GameManager gameManager;
 
         private readonly TextBlock livesTextBlock;
+        private readonly TextBlock levelTextBlock;
         private readonly TextBlock scoreTextBlock;
         private readonly TextBlock gameOverTextBlock;
 
@@ -71,9 +72,11 @@ namespace FroggerStarter.View
             this.livesTextBlock = new TextBlock {Text = $"Lives: {this.gameManager.Lives.ToString()}"};
             this.scoreTextBlock = new TextBlock {Text = $"Score: {this.gameManager.TotalScore.ToString()}"};
             var titleTextBlock = new TextBlock {Text = "Turtler"};
+            this.levelTextBlock = new TextBlock {Text = $"Level: {this.gameManager.CurrentLevel.ToString()}"};
             this.gameOverTextBlock = new TextBlock {Text = "Game Over"};
 
             this.canvas.Children.Add(this.livesTextBlock);
+            this.canvas.Children.Add(this.levelTextBlock);
             this.canvas.Children.Add(this.scoreTextBlock);
             this.canvas.Children.Add(titleTextBlock);
 
@@ -82,9 +85,14 @@ namespace FroggerStarter.View
             Canvas.SetLeft(this.livesTextBlock, 10);
             this.livesTextBlock.Foreground = HudBrush;
 
+            this.levelTextBlock.FontSize = 15;
+            Canvas.SetTop(this.levelTextBlock, 10);
+            Canvas.SetLeft(this.levelTextBlock, 80);
+            this.levelTextBlock.Foreground = HudBrush;
+
             this.scoreTextBlock.FontSize = 15;
             Canvas.SetTop(this.scoreTextBlock, 10);
-            Canvas.SetLeft(this.scoreTextBlock, this.applicationWidth - 70);
+            Canvas.SetLeft(this.scoreTextBlock, this.applicationWidth - 80);
             this.scoreTextBlock.Foreground = HudBrush;
 
             titleTextBlock.FontSize = 20;
@@ -94,6 +102,7 @@ namespace FroggerStarter.View
 
             this.gameManager.LivesUpdated += this.onLivesUpdated;
             this.gameManager.ScoreUpdated += this.onScoreUpdated;
+            this.gameManager.LevelUpdated += this.onLevelUpdated;
             this.gameManager.GameOver += this.onGameOver;
 
             this.soundPlayer = new MediaPlayer();
@@ -180,6 +189,11 @@ namespace FroggerStarter.View
             {
                 this.playSoundEffect(this.timerDeathSound);
             }
+        }
+
+        private void onLevelUpdated(object sender, EventArgs eventArgs)
+        {
+            this.levelTextBlock.Text = $"Level: {this.gameManager.CurrentLevel.ToString()}";
         }
 
         private void playSoundEffect(StorageFile sound)

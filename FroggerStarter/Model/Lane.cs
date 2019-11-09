@@ -13,32 +13,58 @@ namespace FroggerStarter.Model
         #region Data members
 
         /// <summary>
-        ///     Gets or sets the speed.
-        /// </summary>
-        /// <value>
-        ///     The speed of vehicles in this lane.
-        /// </value>
-        public readonly int Speed;
-
-        /// <summary>
         ///     The vehicles driving in this lane.
         /// </summary>
         private readonly List<Vehicle.Vehicle> vehicles;
 
-        private readonly int maxVehicles;
-        private readonly VehicleType vehicleType;
+        /// <summary>
+        ///     Gets the lane settings.
+        /// </summary>
+        private readonly LaneSettings settings;
 
         #endregion
 
         #region Properties
 
         /// <summary>
-        ///     Gets the Direction.
+        ///     Gets the start speed.
         /// </summary>
         /// <value>
-        ///     The Direction that vehicles in this lane drive in.
+        ///     The start speed.
         /// </value>
-        public Direction Direction { get; }
+        public int StartSpeed
+        {
+            get => this.settings.StartSpeed;
+            set => this.settings.StartSpeed = value;
+        }
+
+        /// <summary>
+        ///     Gets the direction.
+        /// </summary>
+        /// <value>
+        ///     The direction.
+        /// </value>
+        public Direction Direction => this.settings.Direction;
+
+        /// <summary>
+        ///     Gets or sets the maximum number vehicles.
+        /// </summary>
+        /// <value>
+        ///     The maximum number vehicles.
+        /// </value>
+        public int MaxNumVehicles
+        {
+            get => this.settings.MaxNumVehicles;
+            set => this.settings.MaxNumVehicles = value;
+        }
+
+        /// <summary>
+        ///     Gets the type of the vehicle.
+        /// </summary>
+        /// <value>
+        ///     The type of the vehicle.
+        /// </value>
+        public VehicleType VehicleType => this.settings.VehicleType;
 
         #endregion
 
@@ -50,11 +76,8 @@ namespace FroggerStarter.Model
         /// <param name="laneSettings">The speed, Direction, and maximum number of vehicles for the lane.</param>
         public Lane(LaneSettings laneSettings)
         {
-            this.Speed = laneSettings.StartSpeed;
-            this.maxVehicles = laneSettings.MaxNumVehicles;
-            this.Direction = laneSettings.Direction;
             this.vehicles = new List<Vehicle.Vehicle>();
-            this.vehicleType = laneSettings.VehicleType;
+            this.settings = laneSettings;
             this.AddVehicle();
         }
 
@@ -91,9 +114,9 @@ namespace FroggerStarter.Model
         /// </summary>
         public void AddVehicle()
         {
-            if (this.vehicles.Count < this.maxVehicles)
+            if (this.vehicles.Count < this.MaxNumVehicles)
             {
-                this.vehicles.Add(VehicleFactory.MakeVehicle(this.vehicleType, this.Speed, this.Direction));
+                this.vehicles.Add(VehicleFactory.MakeVehicle(this.VehicleType, this.StartSpeed, this.Direction));
             }
         }
 
@@ -107,7 +130,7 @@ namespace FroggerStarter.Model
         /// <param name="laneLength">The length of this lane</param>
         public void AddVehicle(double laneLength)
         {
-            if (this.vehicles.Count < this.maxVehicles)
+            if (this.vehicles.Count < this.MaxNumVehicles)
             {
                 this.placeVehicle(laneLength);
             }
@@ -128,7 +151,7 @@ namespace FroggerStarter.Model
 
             if (this.hasSpaceForNewVehicle(laneLength))
             {
-                this.vehicles.Add(VehicleFactory.MakeVehicle(this.vehicleType, this.Speed, this.Direction));
+                this.vehicles.Add(VehicleFactory.MakeVehicle(this.VehicleType, this.StartSpeed, this.Direction));
                 this.vehicles[this.vehicles.Count - 1].X = xLocal;
                 this.vehicles[this.vehicles.Count - 1].Y = prevVehicle.Y;
             }

@@ -11,7 +11,7 @@ namespace FroggerStarter.Model.Vehicle
     {
         #region Properties
 
-        protected int Speed
+        public int Speed
         {
             get => SpeedX;
             set => SetSpeed(value, 0);
