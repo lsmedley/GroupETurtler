@@ -253,6 +253,23 @@ namespace FroggerStarter.Controller
 
         private void gameTimerOnTick(object sender, object e)
         {
+            this.updateRoad();
+            this.timerBar.Value = GameSettings.TimerBlockWidth * this.TimeLeft;
+            this.updatePowerUps();
+        }
+
+        private void updatePowerUps()
+        {
+            this.powerUpManager.OnTick(this.backgroundWidth, GameSettings.TopOfGameOffset, this.roadHeight);
+            if (this.powerUpManager.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
+            {
+                this.levelTimer.AddTime(7);
+                this.onPowerUp();
+            }
+        }
+
+        private void updateRoad()
+        {
             var speedToAdd = 0;
             if (this.CurrentLevel == 2)
             {
@@ -263,19 +280,12 @@ namespace FroggerStarter.Controller
                 speedToAdd = GameSettings.Level3AdditionalSpeedOnTick;
             }
 
-            this.road.OnTick(this.backgroundWidth, speedToAdd);
-            this.timerBar.Value = GameSettings.TimerBlockWidth * this.TimeLeft;
-            this.powerUpManager.OnTick(this.backgroundWidth, GameSettings.TopOfGameOffset, this.roadHeight);
             if (this.road.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
                 this.onPlayerDeath(SoundType.VehicleDeath);
             }
 
-            if (this.powerUpManager.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
-            {
-                this.levelTimer.AddTime(7);
-                this.onPowerUp();
-            }
+            this.road.OnTick(this.backgroundWidth, speedToAdd);
         }
 
         private void deathTimerOnTick(object sender, object e)
