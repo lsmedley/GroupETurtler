@@ -39,6 +39,7 @@ namespace FroggerStarter.View
         private readonly TextBlock gameOverTextBlock;
 
         private readonly MediaPlayer soundPlayer;
+        private StorageFile levelWonSound;
         private StorageFile gameOverSound;
         private StorageFile gameWonSound;
         private StorageFile vehicleCollisionSound;
@@ -49,6 +50,9 @@ namespace FroggerStarter.View
 
         private readonly MediaPlayer musicPlayer;
         private StorageFile level1Music;
+        private StorageFile level2Music;
+        private StorageFile level3Music;
+
 
         #endregion
 
@@ -129,15 +133,23 @@ namespace FroggerStarter.View
             var musicFolder =
                 await Package.Current.InstalledLocation.GetFolderAsync(@"View\\Music");
             this.level1Music = await musicFolder.GetFileAsync("Level1Song.wav");
+            this.level2Music = await musicFolder.GetFileAsync("Level2Song.wav");
+            this.level3Music = await musicFolder.GetFileAsync("Level3Song.wav");
             this.musicPlayer.AutoPlay = true;
             this.musicPlayer.IsLoopingEnabled = true;
-            this.musicPlayer.Source = MediaSource.CreateFromStorageFile(this.level1Music);
+            this.setMusic(this.level1Music);
+        }
+
+        private void setMusic(StorageFile music)
+        {
+            this.musicPlayer.Source = MediaSource.CreateFromStorageFile(music);
         }
 
         private async Task setUpSoundPlayer()
         {
             var folder =
                 await Package.Current.InstalledLocation.GetFolderAsync(@"View\\SoundEffects");
+            this.levelWonSound = await folder.GetFileAsync("LevelWonSound.wav");
             this.gameOverSound = await folder.GetFileAsync("GameOverSound.wav");
             this.gameWonSound = await folder.GetFileAsync("GameWonSound.wav");
             this.vehicleCollisionSound = await folder.GetFileAsync("CarCollisionSound.wav");
@@ -198,6 +210,16 @@ namespace FroggerStarter.View
         private void onLevelUpdated(object sender, EventArgs eventArgs)
         {
             this.levelTextBlock.Text = $"Level: {this.gameManager.CurrentLevel.ToString()}";
+            this.playSoundEffect(this.levelWonSound);
+            switch (this.gameManager.CurrentLevel)
+            {
+                case 2:
+                    this.setMusic(this.level2Music);
+                    break;
+                case 3:
+                    this.setMusic(this.level3Music);
+                    break;
+            }
         }
 
         private void onPowerUp(object sender, SoundType e)

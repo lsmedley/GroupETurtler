@@ -265,6 +265,7 @@ namespace FroggerStarter.Controller
 
             this.road.OnTick(this.backgroundWidth, speedToAdd);
             this.timerBar.Value = GameSettings.TimerBlockWidth * this.TimeLeft;
+            this.powerUpManager.OnTick(this.backgroundWidth, GameSettings.TopOfGameOffset, this.roadHeight);
             if (this.road.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
                 this.onPlayerDeath(SoundType.VehicleDeath);
