@@ -35,6 +35,56 @@ namespace FroggerStarter.Utils
         public const int ScoresToWin = 5;
 
         /// <summary>
+        ///     The vehicle action tick (add car, increase speed)
+        /// </summary>
+        public const int VehicleActionTick = 500;
+
+        /// <summary>
+        ///     The lane height
+        /// </summary>
+        public const int LaneHeight = 50;
+
+        /// <summary>
+        ///     The vehicle offset spacing
+        /// </summary>
+        public const int VehicleOffset = 5;
+
+        /// <summary>
+        ///     The bottom lane offset
+        /// </summary>
+        public const int BottomLaneOffset = 5;
+
+        /// <summary>
+        ///     The timer block width
+        /// </summary>
+        public const int TimerBlockWidth = 5;
+
+        /// <summary>
+        ///     The timer bar height
+        /// </summary>
+        public const int TimerBarHeight = 10;
+
+        /// <summary>
+        ///     The top of game offset
+        /// </summary>
+        public const int TopOfGameOffset = 100;
+
+        /// <summary>
+        ///     The tile height
+        /// </summary>
+        public const int TileHeight = 50;
+
+        /// <summary>
+        ///     The additional speed to add in level 2 on tick
+        /// </summary>
+        public const int Level2AdditionalSpeedOnTick = 1;
+
+        /// <summary>
+        ///     The additional speed to add in level 2 on tick
+        /// </summary>
+        public const int Level3AdditionalSpeedOnTick = 2;
+
+        /// <summary>
         ///     The collection of lane settings
         /// </summary>
         public static readonly ICollection<LaneSettings> LaneSettingsCollection = new ReadOnlyCollection<LaneSettings>

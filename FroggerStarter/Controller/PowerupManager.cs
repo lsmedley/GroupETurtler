@@ -1,28 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FroggerStarter.Model;
 using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Controller
 {
     /// <summary>
-    /// Manages powerups, including where and when they appear.
+    ///     Manages powerups, including where and when they appear.
     /// </summary>
     public class PowerupManager
     {
-        private Powerup timePowerup;
-        private Random random;
-        private int timePowerTick = 0;
+        #region Data members
 
         private const double TimeAppearChance = 0.01;
         private const int TimeDisappearTick = 200;
         private const int TileWidth = 50;
+        private readonly Powerup timePowerup;
+        private readonly Random random;
+        private int timePowerTick;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PowerupManager"/> class.
+        ///     Initializes a new instance of the <see cref="PowerupManager" /> class.
         /// </summary>
         public PowerupManager()
         {
@@ -30,16 +31,21 @@ namespace FroggerStarter.Controller
             this.random = new Random();
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
-        /// Called when [tick].
+        ///     Called when [tick].
         /// </summary>
         /// <param name="maxRight">The maximum right.</param>
+        /// <param name="minDown">The minimum down.</param>
         /// <param name="maxDown">The maximum down.</param>
         public void OnTick(double maxRight, double minDown, double maxDown)
         {
-            double appears = this.random.NextDouble();
-            int xLocal = (this.random.Next(Convert.ToInt32(maxRight)) / TileWidth) * TileWidth;
-            int yLocal = (this.random.Next(Convert.ToInt32(minDown), Convert.ToInt32(maxDown)) / TileWidth) * TileWidth;
+            var appears = this.random.NextDouble();
+            var xLocal = this.random.Next(Convert.ToInt32(maxRight)) / TileWidth * TileWidth;
+            var yLocal = this.random.Next(Convert.ToInt32(minDown), Convert.ToInt32(maxDown)) / TileWidth * TileWidth;
 
             if (this.timePowerup.IsActive)
             {
@@ -66,7 +72,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Gets the time sprite.
+        ///     Gets the time sprite.
         /// </summary>
         /// <returns>the time powerup's sprite.</returns>
         public BaseSprite GetTimeSprite()
@@ -74,6 +80,12 @@ namespace FroggerStarter.Controller
             return this.timePowerup.Sprite;
         }
 
+        /// <summary>
+        ///     Checks the collision.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="playerManagerDisabled">if set to <c>true</c> [player manager disabled].</param>
+        /// <returns></returns>
         public bool CheckCollision(GameObject player, bool playerManagerDisabled)
         {
             if (this.timePowerup.IsColliding(player) && !playerManagerDisabled && this.timePowerup.IsActive)
@@ -84,5 +96,7 @@ namespace FroggerStarter.Controller
 
             return false;
         }
+
+        #endregion
     }
 }

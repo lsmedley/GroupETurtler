@@ -11,18 +11,33 @@ namespace FroggerStarter.Model.Vehicle
     {
         #region Properties
 
-        protected int Speed
+        /// <summary>
+        ///     Gets or sets the speed.
+        /// </summary>
+        /// <value>
+        ///     The speed.
+        /// </value>
+        public int Speed
         {
             get => SpeedX;
             set => SetSpeed(value, 0);
         }
 
+        /// <summary>
+        ///     Gets or sets the direction.
+        /// </summary>
+        /// <value>
+        ///     The direction.
+        /// </value>
         protected Direction Direction { get; set; }
 
         #endregion
 
         #region Methods
 
+        /// <summary>
+        ///     Renders the sprite.
+        /// </summary>
         protected void RenderSprite()
         {
             if (this.Direction == Direction.Right)

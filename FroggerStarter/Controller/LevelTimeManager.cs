@@ -101,15 +101,15 @@ namespace FroggerStarter.Controller
             this.TimeUp?.Invoke(this, EventArgs.Empty);
         }
 
-        #endregion
-
         /// <summary>
-        /// Increases the time left.
+        ///     Increases the time left.
         /// </summary>
         /// <param name="increment">The increment.</param>
         public void AddTime(int increment)
         {
             this.CurrTime -= increment;
         }
+
+        #endregion
     }
 }

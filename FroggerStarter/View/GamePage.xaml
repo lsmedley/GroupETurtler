@@ -14,7 +14,6 @@
         <Rectangle Canvas.Top="55" Fill="Gray" Width="{StaticResource AppWidth}" Height="50" />
 
         <Rectangle Canvas.Top="355" Fill="LightGoldenrodYellow" Width="{StaticResource AppWidth}" Height="55" />
-        <!--<TextBlock Canvas.Left="10" Canvas.Top="10" Text="Lives: " TextWrapping="Wrap" Foreground="GreenYellow"/>-->
 
     </Canvas>
 </Page>

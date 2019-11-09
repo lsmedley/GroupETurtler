@@ -35,7 +35,7 @@ namespace FroggerStarter.Controller
         /// <value>
         ///     The scores made by the player.
         /// </value>
-        public int ScoresMade { get; private set; }
+        public int ScoresMade { get; internal set; }
 
         /// <summary>
         ///     Gets the scores to win.

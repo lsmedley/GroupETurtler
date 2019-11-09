@@ -13,7 +13,7 @@
         /// <value>
         ///     The start speed.
         /// </value>
-        public int StartSpeed { get; }
+        public int StartSpeed { get; set; }
 
         /// <summary>
         ///     Gets the direction.
@@ -21,15 +21,15 @@
         /// <value>
         ///     The direction.
         /// </value>
-        public Direction Direction { get; }
+        public Direction Direction { get; set; }
 
         /// <summary>
-        ///     Gets the maximum number vehicles.
+        ///     Gets or sets the maximum number vehicles.
         /// </summary>
         /// <value>
         ///     The maximum number vehicles.
         /// </value>
-        public int MaxNumVehicles { get; }
+        public int MaxNumVehicles { get; set; }
 
         /// <summary>
         ///     Gets the type of the vehicle.
