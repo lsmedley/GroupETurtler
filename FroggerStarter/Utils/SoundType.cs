@@ -1,4 +1,4 @@
-﻿namespace FroggerStarter.Controller
+﻿namespace FroggerStarter.Utils
 {
     /// <summary>
     ///     Stores the types of sounds.
