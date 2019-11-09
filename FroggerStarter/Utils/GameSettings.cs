@@ -90,8 +90,8 @@ namespace FroggerStarter.Utils
         public static readonly ICollection<LaneSettings> LaneSettingsCollection = new ReadOnlyCollection<LaneSettings>
         (new List<LaneSettings> {
             new LaneSettings(1, Direction.Left, 3, VehicleType.Car),
-            new LaneSettings(3, Direction.Right, 2, VehicleType.Bus),
-            new LaneSettings(5, Direction.Left, 4, VehicleType.Car),
+            new LaneSettings(5, Direction.Right, 2, VehicleType.Bus),
+            new LaneSettings(3, Direction.Left, 4, VehicleType.TowingCar),
             new LaneSettings(7, Direction.Left, 3, VehicleType.Bus),
             new LaneSettings(9, Direction.Right, 5, VehicleType.Car)
         });

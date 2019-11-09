@@ -8,7 +8,7 @@ namespace FroggerStarter.View.Sprites
     /// <seealso cref="FroggerStarter.View.Sprites.BaseSprite" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
-    public sealed partial class CarSprite
+    public partial class CarSprite
     {
         #region Constructors
 
