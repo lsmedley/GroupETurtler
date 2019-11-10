@@ -10,7 +10,7 @@
     Width="50">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="BodyColor" Color="Green" />
+        <!--<SolidColorBrush x:Key="BodyColor" Color="Green" />-->
         <SolidColorBrush x:Key="SpotColor" Color="Goldenrod" />
     </UserControl.Resources>
 

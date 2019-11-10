@@ -1,7 +1,7 @@
 ﻿namespace FroggerStarter.Utils
 {
     /// <summary>
-    ///     Describes the Direction a Vehicle is facing.
+    ///     Describes the Direction a Vehicle or Player is facing.
     /// </summary>
     public enum Direction
     {
@@ -13,6 +13,14 @@
         /// <summary>
         ///     The right
         /// </summary>
-        Right
+        Right,
+        /// <summary>
+        /// Up
+        /// </summary>
+        Up,
+        /// <summary>
+        /// Down
+        /// </summary>
+        Down
     }
 }

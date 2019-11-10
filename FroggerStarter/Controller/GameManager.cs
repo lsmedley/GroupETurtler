@@ -207,6 +207,7 @@ namespace FroggerStarter.Controller
         {
             this.playerManager.SetLocation(this.backgroundWidth / 2 - this.playerManager.Player.Sprite.Width / 2,
                 this.roadHeight);
+            this.playerManager.TurnPlayer(Direction.Up);
         }
 
         private void setUpTimers(int timerLen)
@@ -446,6 +447,7 @@ namespace FroggerStarter.Controller
         {
             this.timer.Stop();
             this.levelTimer.Pause();
+            this.playerManager.Disabled = true;
             if (this.Lives <= 0)
             {
                 this.setPlayerGameOverSprite();
