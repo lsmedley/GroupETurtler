@@ -121,13 +121,18 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controller\PowerupManager.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Model\HighScores.cs" />
     <Compile Include="Model\Powerup.cs" />
+    <Compile Include="Model\HighScore.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Utils\GameSettings.cs" />
     <Compile Include="Controller\HomeManager.cs" />
     <Compile Include="Utils\LaneSettings.cs" />
     <Compile Include="Controller\LevelTimeManager.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Model\Road.cs" />
+    <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="Utils\SoundType.cs" />
     <Compile Include="Model\Vehicle\Bus.cs" />
     <Compile Include="Model\Vehicle\Car.cs" />
@@ -140,6 +145,11 @@
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\Vehicle\VehicleFactory.cs" />
     <Compile Include="Utils\VehicleType.cs" />
+    <Compile Include="Utils\ScoreSerializer.cs" />
+    <Compile Include="ViewModel\HighScoreBoardViewModel.cs" />
+    <Compile Include="View\HighScoreBoard.xaml.cs">
+      <DependentUpon>HighScoreBoard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -178,6 +188,9 @@
     <Compile Include="View\Sprites\TimePowerUpSprite.xaml.cs">
       <DependentUpon>TimePowerUpSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\StartScreen.xaml.cs">
+      <DependentUpon>StartScreen.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -211,6 +224,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\HighScoreBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\GamePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -256,6 +273,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\TimePowerUpSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StartScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

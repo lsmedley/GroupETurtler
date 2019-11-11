@@ -11,8 +11,8 @@
     Width="50">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="BodyColor" Color="Red" />
-        <SolidColorBrush x:Key="SpotColor" Color="DarkRed" />
+        <SolidColorBrush x:Key="BodyColor" Color="DarkRed" />
+        <SolidColorBrush x:Key="SpotColor" Color="Red" />
         <SolidColorBrush x:Key="ShellColor" Color="SaddleBrown"/>
     </UserControl.Resources>
 

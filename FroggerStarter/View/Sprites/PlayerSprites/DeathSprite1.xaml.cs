@@ -19,6 +19,8 @@ namespace FroggerStarter.View.Sprites.PlayerSprites
         public DeathSprite1()
         {
             this.InitializeComponent();
+            this.basePlayerSprite.Resources["BodyColor"] = this.Resources["BodyColor"];
+            this.basePlayerSprite.Resources["SpotColor"] = this.Resources["SpotColor"];
         }
 
         #endregion

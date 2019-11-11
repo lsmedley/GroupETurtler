@@ -1,0 +1,29 @@
+﻿<Page
+    x:Class="FroggerStarter.View.HighScoreBoard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FroggerStarter.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:FroggerStarter.ViewModel"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}">
+
+    <Page.DataContext>
+        <viewModel:HighScoreBoardViewModel/>
+    </Page.DataContext>
+
+    <Grid Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}">
+        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" Text="High Scores:" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontSize="24"/>
+        <ListView x:Name="highScoresListView"
+            Background="LightCyan"
+            ItemsSource="{Binding Path=Scores, Mode=TwoWay}" Margin="166,80,10,10"
+            />
+        <TextBlock HorizontalAlignment="Left" Margin="18,80,0,0" Text="Sort by:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Button x:Name="sortScoreNameLevelButton" Content="score/name/level" Margin="18,104,0,0" VerticalAlignment="Top" Command="{Binding SortScoresByScoreNameLevelButtonCommand}"/>
+        <Button x:Name="sortNameScoreLevelButton" Content="name/score/level" Margin="18,150,0,0" VerticalAlignment="Top" Command="{Binding SortScoresByNameScoreLevelButtonCommand}"/>
+        <Button x:Name="sortLevelScoreNameButton" Content="level/score/name" Margin="18,196,0,0" VerticalAlignment="Top" Command="{Binding SortScoresByLevelScoreNameButtonCommand}"/>
+        <Button x:Name="restartButton" Content="go to start screen" Margin="18,367,0,0" VerticalAlignment="Top" Command="{Binding RestartApplicationButtonCommand}"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,47,0,0" Text="Level indicates level completed" TextWrapping="Wrap" VerticalAlignment="Top"/>
+    </Grid>
+</Page>

@@ -53,7 +53,6 @@ namespace FroggerStarter.View
         private StorageFile level2Music;
         private StorageFile level3Music;
 
-
         #endregion
 
         #region Constructors
@@ -164,6 +163,14 @@ namespace FroggerStarter.View
         private void onGameOver(object sender, SoundType sound)
         {
             this.initializeGameOverText();
+            this.playGameOverSound(sound);
+            this.nameBoxLabel.Visibility = Visibility.Visible;
+            this.playerNameTextBox.Visibility = Visibility.Visible;
+            this.nameSubmitButton.Visibility = Visibility.Visible;
+        }
+
+        private void playGameOverSound(SoundType sound)
+        {
             this.musicPlayer.Pause();
             if (sound == SoundType.GameLost)
             {
@@ -256,5 +263,13 @@ namespace FroggerStarter.View
         }
 
         #endregion
+
+        private void NameSubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.nameBoxLabel.Visibility = Visibility.Collapsed;
+            this.playerNameTextBox.Visibility = Visibility.Collapsed;
+            this.nameSubmitButton.Visibility = Visibility.Collapsed;
+            this.gameManager.SaveHighScore(this.playerNameTextBox.Text);
+        }
     }
 }

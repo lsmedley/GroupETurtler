@@ -30,18 +30,18 @@ namespace FroggerStarter.Controller
         public int Lives { get; private set; }
 
         /// <summary>
-        ///     Gets the scores made by the player.
+        ///     Gets the Scores made by the player.
         /// </summary>
         /// <value>
-        ///     The scores made by the player.
+        ///     The Scores made by the player.
         /// </value>
         public int ScoresMade { get; internal set; }
 
         /// <summary>
-        ///     Gets the scores to win.
+        ///     Gets the Scores to win.
         /// </summary>
         /// <value>
-        ///     The scores to win.
+        ///     The Scores to win.
         /// </value>
         public int ScoresToWin { get; }
 

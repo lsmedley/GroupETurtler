@@ -14,6 +14,10 @@
         <Rectangle Canvas.Top="55" Fill="Gray" Width="{StaticResource AppWidth}" Height="50" />
 
         <Rectangle Canvas.Top="355" Fill="LightGoldenrodYellow" Width="{StaticResource AppWidth}" Height="55" />
+        <TextBox x:Name="playerNameTextBox" Canvas.Left="152" Canvas.Top="318" Text="" TextWrapping="Wrap" Width="346" Visibility="Collapsed"/>
+        <TextBlock x:Name="nameBoxLabel" Canvas.Left="71" Canvas.Top="325" Text="Your Name:" TextWrapping="Wrap" Foreground="White" Visibility="Collapsed"/>
+        <Button x:Name="nameSubmitButton" Content="Submit" Canvas.Left="521" Canvas.Top="316" Foreground="White" Background="Gray" Visibility="Collapsed" Click="NameSubmitButton_Click"/>
+        <Grid Height="410" Width="650"/>
 
     </Canvas>
 </Page>

@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
 using FroggerStarter.Utils;
+using FroggerStarter.View;
 using FroggerStarter.View.Sprites.PlayerSprites;
 
 namespace FroggerStarter.Controller
@@ -29,6 +35,7 @@ namespace FroggerStarter.Controller
 
         private Road road;
         private PlayerManager playerManager;
+        private HighScoreBoard highScoreBoard;
         private HomeManager homes;
         private PowerupManager powerUpManager;
 
@@ -55,10 +62,10 @@ namespace FroggerStarter.Controller
         public int Lives => this.playerManager.Lives;
 
         /// <summary>
-        ///     Gets the scores made by the playerManager.
+        ///     Gets the Scores made by the playerManager.
         /// </summary>
         /// <value>
-        ///     The number of scores made by the playerManager.
+        ///     The number of Scores made by the playerManager.
         /// </value>
         public int ScoresMade
         {
@@ -448,12 +455,14 @@ namespace FroggerStarter.Controller
             if (this.Lives <= 0)
             {
                 this.setPlayerGameOverSprite();
+                this.CurrentLevel--;
                 this.GameOver?.Invoke(this, SoundType.GameLost);
             }
             else
             {
                 this.GameOver?.Invoke(this, SoundType.GameWon);
             }
+
         }
 
         private void changeToRound3()
@@ -526,6 +535,23 @@ namespace FroggerStarter.Controller
                     this.gameCanvas.Children.Add(vehicle.Sprite);
                 }
             }
+        }
+
+        /// <summary>
+        /// Saves the high score.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        public async Task SaveHighScore(string name)
+        {
+            var highScore = new HighScore
+                {LevelCompleted = this.CurrentLevel, PlayerName = name, Score = this.TotalScore};
+
+            var highScores = ScoreSerializer.Deserialize();
+            highScores.Add(highScore);
+
+            await ScoreSerializer.SerializeObject(highScores);
+
+            this.gameCanvas.Children.Add(new HighScoreBoard());
         }
 
         #endregion

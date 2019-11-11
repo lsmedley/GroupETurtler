@@ -30,7 +30,7 @@ namespace FroggerStarter.Utils
         ///     Gets the number of times the player has to score to win.
         /// </summary>
         /// <value>
-        ///     The scores to win.
+        ///     The Scores to win.
         /// </value>
         public const int ScoresToWin = 5;
 
@@ -95,6 +95,11 @@ namespace FroggerStarter.Utils
             new LaneSettings(7, Direction.Left, 3, VehicleType.Bus),
             new LaneSettings(9, Direction.Right, 5, VehicleType.Car)
         });
+
+        /// <summary>
+        ///     The filename for high Scores
+        /// </summary>
+        public const string HighScoresFilename = "highscores.xml";
 
         #endregion
     }
