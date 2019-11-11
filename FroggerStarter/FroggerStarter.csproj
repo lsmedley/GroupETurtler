@@ -124,6 +124,8 @@
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Model\HighScores.cs" />
     <Compile Include="Model\Powerup.cs" />
+    <Compile Include="Model\River.cs" />
+    <Compile Include="Model\Vehicle\TowingCar.cs" />
     <Compile Include="Model\HighScore.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Utils\GameSettings.cs" />
@@ -157,10 +159,10 @@
     <Compile Include="View\Sprites\BaseSprite.xaml.cs">
       <DependentUpon>BaseSprite.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\BusSprite.xaml.cs">
+    <Compile Include="View\Sprites\VehicleSprites\BusSprite.xaml.cs">
       <DependentUpon>BusSprite.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\CarSprite.xaml.cs">
+    <Compile Include="View\Sprites\VehicleSprites\CarSprite.xaml.cs">
       <DependentUpon>CarSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\PlayerSprites\DeathSprite1.xaml.cs">
@@ -181,12 +183,21 @@
     <Compile Include="View\Sprites\PlayerHomeSprite.xaml.cs">
       <DependentUpon>PlayerHomeSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Sprites\PlayerSprites\PlayerMovingSprite.xaml.cs">
+      <DependentUpon>PlayerMovingSprite.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Sprites\PlayerSprites\PlayerSprite.xaml.cs">
       <DependentUpon>PlayerSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\ISpriteRenderer.cs" />
     <Compile Include="View\Sprites\TimePowerUpSprite.xaml.cs">
       <DependentUpon>TimePowerUpSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\VehicleSprites\TowingCarSprite.xaml.cs">
+      <DependentUpon>TowingCarSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\VehiclePowerUpSprite.xaml.cs">
+      <DependentUpon>VehiclePowerUpSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StartScreen.xaml.cs">
       <DependentUpon>StartScreen.xaml</DependentUpon>
@@ -236,11 +247,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\BusSprite.xaml">
+    <Page Include="View\Sprites\VehicleSprites\BusSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\CarSprite.xaml">
+    <Page Include="View\Sprites\VehicleSprites\CarSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -268,6 +279,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Sprites\PlayerSprites\PlayerMovingSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Sprites\PlayerSprites\PlayerSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -277,6 +292,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\StartScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\VehicleSprites\TowingCarSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\VehiclePowerUpSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

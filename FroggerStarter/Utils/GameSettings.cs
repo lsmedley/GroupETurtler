@@ -40,6 +40,16 @@ namespace FroggerStarter.Utils
         public const int VehicleActionTick = 500;
 
         /// <summary>
+        /// The vehicle slow down length in ticks
+        /// </summary>
+        public const int VehicleSlowDownTickLength = 250;
+
+        /// <summary>
+        /// The time power up amount
+        /// </summary>
+        public const int TimePowerUpAmount = 7;
+
+        /// <summary>
         ///     The lane height
         /// </summary>
         public const int LaneHeight = 50;
@@ -90,8 +100,8 @@ namespace FroggerStarter.Utils
         public static readonly ICollection<LaneSettings> LaneSettingsCollection = new ReadOnlyCollection<LaneSettings>
         (new List<LaneSettings> {
             new LaneSettings(1, Direction.Left, 3, VehicleType.Car),
-            new LaneSettings(3, Direction.Right, 2, VehicleType.Bus),
-            new LaneSettings(5, Direction.Left, 4, VehicleType.Car),
+            new LaneSettings(5, Direction.Right, 2, VehicleType.Bus),
+            new LaneSettings(3, Direction.Left, 4, VehicleType.TowingCar),
             new LaneSettings(7, Direction.Left, 3, VehicleType.Bus),
             new LaneSettings(9, Direction.Right, 5, VehicleType.Car)
         });
@@ -100,6 +110,14 @@ namespace FroggerStarter.Utils
         ///     The filename for high Scores
         /// </summary>
         public const string HighScoresFilename = "highscores.xml";
+
+        public static readonly ICollection<LaneSettings> RiverLaneSettingsCollection = new ReadOnlyCollection<LaneSettings>(new List<LaneSettings> {
+            new LaneSettings(1, Direction.Left, 4, VehicleType.Car),
+            new LaneSettings(1, Direction.Right, 3, VehicleType.Bus),
+            new LaneSettings(1, Direction.Left, 2, VehicleType.TowingCar),
+            new LaneSettings(1, Direction.Left, 3, VehicleType.Bus),
+            new LaneSettings(1, Direction.Right, 4, VehicleType.Car)
+        });
 
         #endregion
     }

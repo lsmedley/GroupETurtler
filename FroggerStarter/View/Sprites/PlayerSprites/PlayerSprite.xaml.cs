@@ -1,5 +1,7 @@
 ﻿// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
+using Windows.UI.Xaml.Media;
+
 namespace FroggerStarter.View.Sprites.PlayerSprites
 {
     /// <summary>
@@ -17,9 +19,12 @@ namespace FroggerStarter.View.Sprites.PlayerSprites
         /// </summary>
         public PlayerSprite()
         {
+            
+                SolidColorBrush myColor = new SolidColorBrush(Windows.UI.Colors.Green);
+                base.Resources["BodyColor"] = myColor;
+            
             this.InitializeComponent();
         }
-
         #endregion
     }
 }

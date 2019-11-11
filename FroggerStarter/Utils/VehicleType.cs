@@ -13,6 +13,11 @@
         /// <summary>
         ///     The bus is a 40x100 vehicle.
         /// </summary>
-        Bus
+        Bus,
+
+        /// <summary>
+        /// The towing car is a 40x70 vehicle.
+        /// </summary>
+        TowingCar
     }
 }

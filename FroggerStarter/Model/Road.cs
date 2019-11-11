@@ -15,6 +15,7 @@ namespace FroggerStarter.Model
         private readonly IList<Lane> lanes;
         private readonly ICollection<LaneSettings> laneSettingsCollection;
         private int currentTick;
+        private int endSlowDownTick;
 
         #endregion
 
@@ -38,6 +39,7 @@ namespace FroggerStarter.Model
 
             this.laneSettingsCollection = laneSettingsCollection;
             this.currentTick = 0;
+            this.endSlowDownTick = Int32.MaxValue;
 
             this.lanes = new List<Lane>();
             this.SetUpLanes(totalHeight, laneLength);
@@ -87,6 +89,11 @@ namespace FroggerStarter.Model
         public event EventHandler<EventArgs> CarAdded;
 
         /// <summary>
+        /// Occurs when [slowdown ended].
+        /// </summary>
+        public event EventHandler<EventArgs> SlowdownEnded; 
+
+        /// <summary>
         ///     Sets up lanes.
         ///     <param name="totalHeight">The total height of the road.</param>
         ///     <param name="laneLength">Length of the lane.</param>
@@ -125,12 +132,16 @@ namespace FroggerStarter.Model
         public void OnTick(double laneLen, int speedToAddOnVehicleAction)
         {
             this.currentTick++;
+            if (this.currentTick >= this.endSlowDownTick)
+            {
+                this.ResetSpeeds();
+            }
             if (this.currentTick >= GameSettings.VehicleActionTick)
             {
                 this.vehicleActionOnTick(laneLen, speedToAddOnVehicleAction);
             }
 
-            this.moveLaneVehicles(laneLen);
+            this.MoveLaneVehicles(laneLen);
         }
 
         private void vehicleActionOnTick(double laneLen, int speedToAddOnVehicleAction)
@@ -154,7 +165,11 @@ namespace FroggerStarter.Model
             }
         }
 
-        private void moveLaneVehicles(double laneLen)
+        /// <summary>
+        /// Moves the lane vehicles.
+        /// </summary>
+        /// <param name="laneLen">Length of the lane.</param>
+        protected void MoveLaneVehicles(double laneLen)
         {
             foreach (var lane in this.lanes)
             {
@@ -236,8 +251,31 @@ namespace FroggerStarter.Model
                     vehicle.Speed = lane.StartSpeed;
                 }
             }
+            this.onSlowdownEnded();
         }
 
         #endregion
+
+        /// <summary>
+        /// Slows down vehicles for i ticks.
+        /// </summary>
+        /// <param name="i">The i.</param>
+        public void SlowDownVehicles(int i)
+        {
+            this.currentTick = 0;
+            this.endSlowDownTick = i;
+            foreach (var lane in this.lanes)
+            {
+                foreach (var vehicle in lane)
+                {
+                    vehicle.Speed = 1;
+                }
+            }
+        }
+
+        private void onSlowdownEnded()
+        {
+            this.SlowdownEnded?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

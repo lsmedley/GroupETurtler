@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using Windows.Foundation;
+using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
+using FroggerStarter.Utils;
 using FroggerStarter.View.Sprites;
 using FroggerStarter.View.Sprites.PlayerSprites;
 
@@ -69,6 +72,14 @@ namespace FroggerStarter.Controller
         /// </value>
         public bool Disabled { get; set; }
 
+        /// <summary>
+        /// Gets the moving sprite.
+        /// </summary>
+        /// <value>
+        /// The moving sprite.
+        /// </value>
+        public BaseSprite MovingSprite { get; }
+
         #endregion
 
         #region Constructors
@@ -90,6 +101,7 @@ namespace FroggerStarter.Controller
             this.ScoresToWin = winScore;
             this.ScoresMade = 0;
             this.TotalScore = 0;
+            this.MovingSprite = new PlayerMovingSprite();
             this.PlayerSprites = new List<BaseSprite>();
             this.Player = new Player();
             this.setUpSprites();
@@ -142,6 +154,7 @@ namespace FroggerStarter.Controller
         {
             if (this.Player.X > 0 && this.Lives > 0 && this.ScoresMade < this.ScoresToWin && !this.Disabled)
             {
+                this.TurnPlayer(Direction.Left);
                 this.Player.MoveLeft();
             }
         }
@@ -155,6 +168,7 @@ namespace FroggerStarter.Controller
             if (this.Player.X < maxRight - this.Player.Width && this.Lives > 0 && this.ScoresMade < this.ScoresToWin &&
                 !this.Disabled)
             {
+                this.TurnPlayer(Direction.Right);
                 this.Player.MoveRight();
             }
         }
@@ -168,6 +182,7 @@ namespace FroggerStarter.Controller
             if (this.Player.Y > topOfGameOffset && this.Lives > 0 && this.ScoresMade < this.ScoresToWin &&
                 !this.Disabled)
             {
+                this.TurnPlayer(Direction.Up);
                 this.Player.MoveUp();
             }
         }
@@ -180,8 +195,51 @@ namespace FroggerStarter.Controller
         {
             if (this.Player.Y < roadHeight && this.Lives > 0 && this.ScoresMade < this.ScoresToWin && !this.Disabled)
             {
+                this.animateMovement(Direction.Down);
+                this.TurnPlayer(Direction.Down);
                 this.Player.MoveDown();
             }
+        }
+        /// <summary>
+        /// Turns the player in the specified direction.
+        /// Postcondtion: this.Player.Sprite is facing the specified direction.
+        /// </summary>
+        /// <param name="dir">The direction to turn.</param>
+        public void TurnPlayer(Direction dir)
+        {
+            this.Player.Sprite.RenderTransformOrigin = new Point(0.5, 0.5);
+            RotateTransform rt = new RotateTransform();
+            rt.CenterX = .5;
+            rt.CenterY = .5;
+
+            switch (dir)
+            {
+                case Direction.Right:
+                    rt.Angle = 90;
+                    this.Player.Sprite.RenderTransform = rt;
+                    break;
+                case Direction.Left:
+                    rt.Angle = 270;
+                    this.Player.Sprite.RenderTransform = rt;
+                    break;
+                case Direction.Up:
+                    rt.Angle = 0;
+                    this.Player.Sprite.RenderTransform = rt;
+                    break;
+                case Direction.Down:
+                    rt.Angle = 180;
+                    this.Player.Sprite.RenderTransform = rt;
+                    break;
+
+            }
+        }
+
+        private void animateMovement(Direction dir)
+        {
+            this.Player.ChangeSprite(this.MovingSprite);
+            this.syncSpriteToLocation();
+            this.TurnPlayer(dir);
+            this.Player.ChangeSprite(this.PlayerSprites[0]);
         }
 
         /// <summary>

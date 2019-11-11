@@ -108,12 +108,18 @@ namespace FroggerStarter.View
             this.gameManager.LivesUpdated += this.onLivesUpdated;
             this.gameManager.ScoreUpdated += this.onScoreUpdated;
             this.gameManager.LevelUpdated += this.onLevelUpdated;
+            this.gameManager.SlowDownEnded += this.onSlowDownEnded;
             this.gameManager.GameOver += this.onGameOver;
             this.gameManager.PowerUpActivated += this.onPowerUp;
 
             this.soundPlayer = new MediaPlayer();
             this.musicPlayer = new MediaPlayer();
             this.setUpPlayers();
+        }
+
+        private void onSlowDownEnded(object sender, EventArgs e)
+        {
+            this.musicPlayer.PlaybackSession.PlaybackRate = 1;
         }
 
         #endregion
@@ -231,10 +237,13 @@ namespace FroggerStarter.View
 
         private void onPowerUp(object sender, SoundType e)
         {
-            if (e == SoundType.TimePowerUp)
+            
+            this.playSoundEffect(this.timerPowerupSound);
+            if(e == SoundType.VehiclePowerUp)
             {
-                this.playSoundEffect(this.timerPowerupSound);
+                this.musicPlayer.PlaybackSession.PlaybackRate = .5;
             }
+
         }
 
         private void playSoundEffect(StorageFile sound)

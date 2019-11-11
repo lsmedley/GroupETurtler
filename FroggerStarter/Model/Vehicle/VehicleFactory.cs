@@ -27,6 +27,9 @@ namespace FroggerStarter.Model.Vehicle
                 case VehicleType.Bus:
                     vehicle = new Bus(speed, direction);
                     break;
+                case VehicleType.TowingCar:
+                    vehicle = new TowingCar(speed, direction);
+                    break;
             }
 
             return vehicle;
