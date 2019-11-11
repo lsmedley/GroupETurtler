@@ -1,5 +1,8 @@
 ﻿// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
+using Windows.UI;
+using Windows.UI.Xaml.Media;
+
 namespace FroggerStarter.View.Sprites.PlayerSprites
 {
     /// <summary>
@@ -18,6 +21,9 @@ namespace FroggerStarter.View.Sprites.PlayerSprites
         public DeathSprite2()
         {
             this.InitializeComponent();
+            this.basePlayerSprite.Resources["BodyColor"] = this.Resources["BodyColor"];
+            this.basePlayerSprite.Resources["SpotColor"] = this.Resources["SpotColor"];
+            this.basePlayerSprite.Resources["ShellColor"] = this.Resources["ShellColor"];
         }
 
         #endregion
