@@ -12,8 +12,10 @@
 
     <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}" Background="Black">
         <Rectangle Canvas.Top="55" Fill="Gray" Width="{StaticResource AppWidth}" Height="50" />
+        <Rectangle Canvas.Top="105" Fill="DodgerBlue" Width="{StaticResource AppWidth}" Height="250" />
 
-        <Rectangle Canvas.Top="355" Fill="LightGoldenrodYellow" Width="{StaticResource AppWidth}" Height="55" />
+        <Rectangle Canvas.Top="355" Fill="SandyBrown" Width="{StaticResource AppWidth}" Height="55" />
+        <Rectangle Canvas.Top="655" Fill="LightGoldenrodYellow" Width="{StaticResource AppWidth}" Height="55" />
 
     </Canvas>
 </Page>
