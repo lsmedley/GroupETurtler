@@ -1,22 +1,25 @@
-﻿<local:PlayerSprite
+﻿<sprites:BaseSprite
     x:Class="FroggerStarter.View.Sprites.PlayerSprites.DeathSprite1"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:FroggerStarter.View.Sprites.PlayerSprites"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sprites="using:FroggerStarter.View.Sprites"
+    xmlns:playerSprites="using:FroggerStarter.View.Sprites.PlayerSprites"
     mc:Ignorable="d"
     Height="50"
     Width="50">
 
     <UserControl.Resources>
-        <!--<SolidColorBrush x:Key="BodyColor" Color="Red" />
-        <SolidColorBrush x:Key="SpotColor" Color="DarkOrange" />-->
+        <SolidColorBrush x:Key="BodyColor" Color="Red" />
+        <SolidColorBrush x:Key="SpotColor" Color="DarkOrange" />
 
     </UserControl.Resources>
 
     <Canvas Width="50" Height="50" Background="Transparent">
 
-        <local:PlayerSprite />
+        <playerSprites:PlayerSprite/>
+        <Ellipse Width="10" Height="10" Fill="Blue"></Ellipse>
     </Canvas>
-</local:PlayerSprite>
+</sprites:BaseSprite>

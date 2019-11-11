@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="Controller\PowerupManager.cs" />
     <Compile Include="Model\Powerup.cs" />
+    <Compile Include="Model\River.cs" />
     <Compile Include="Model\Vehicle\TowingCar.cs" />
     <Compile Include="Utils\GameSettings.cs" />
     <Compile Include="Controller\HomeManager.cs" />
@@ -171,6 +172,9 @@
     </Compile>
     <Compile Include="View\Sprites\PlayerHomeSprite.xaml.cs">
       <DependentUpon>PlayerHomeSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\PlayerSprites\PlayerMovingSprite.xaml.cs">
+      <DependentUpon>PlayerMovingSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\PlayerSprites\PlayerSprite.xaml.cs">
       <DependentUpon>PlayerSprite.xaml</DependentUpon>
@@ -252,6 +256,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\PlayerHomeSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\PlayerSprites\PlayerMovingSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

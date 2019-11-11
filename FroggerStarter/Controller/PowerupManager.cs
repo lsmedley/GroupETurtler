@@ -12,11 +12,14 @@ namespace FroggerStarter.Controller
         #region Data members
 
         private const double TimeAppearChance = 0.01;
-        private const int TimeDisappearTick = 200;
+        private const double VehicleAppearChance = 0.5;
+        private const int PowerUpDisappearTick = 200;
         private const int TileWidth = 50;
         private readonly Powerup timePowerup;
+        private readonly Powerup vehiclePowerup;
         private readonly Random random;
         private int timePowerTick;
+        private int vehiclePowerTick;
 
         #endregion
 
@@ -28,6 +31,7 @@ namespace FroggerStarter.Controller
         public PowerupManager()
         {
             this.timePowerup = new Powerup(new TimePowerUpSprite());
+            this.vehiclePowerup = new Powerup(new TowingCarSprite());
             this.random = new Random();
         }
 
@@ -43,9 +47,45 @@ namespace FroggerStarter.Controller
         /// <param name="maxDown">The maximum down.</param>
         public void OnTick(double maxRight, double minDown, double maxDown)
         {
+            //TODO: Refactor so that this is two meths for vehicle powerup and timepowerup, and each meth is called in the respective tick /when/ that powerup is activated.
+
+            this.tickTimePowerUp(maxRight, minDown, maxDown);
+            this.tickVehiclePowerUp(maxRight, minDown, maxDown);
+        }
+
+        private void tickVehiclePowerUp(double maxRight, double minDown, double maxDown)
+        {
             var appears = this.random.NextDouble();
+
+            if (this.vehiclePowerup.IsActive)
+            {
+                this.vehiclePowerTick++;
+            }
+
+            if (appears <= VehicleAppearChance && !this.vehiclePowerup.IsActive)
+            {
+                this.placeVehiclePowerUp(maxRight, minDown, maxDown);
+                this.vehiclePowerup.Activate();
+            }
+
+            if (this.vehiclePowerTick >= PowerUpDisappearTick)
+            {
+                this.deactivateVehiclePowerUp();
+            }
+        }
+
+        private void placeVehiclePowerUp(double maxRight, double minDown, double maxDown)
+        {
             var xLocal = this.random.Next(Convert.ToInt32(maxRight)) / TileWidth * TileWidth;
             var yLocal = this.random.Next(Convert.ToInt32(minDown), Convert.ToInt32(maxDown)) / TileWidth * TileWidth;
+
+            this.vehiclePowerup.X = xLocal;
+            this.vehiclePowerup.Y = yLocal;
+        }
+
+        private void tickTimePowerUp(double maxRight, double minDown, double maxDown)
+        {
+            var appears = this.random.NextDouble();
 
             if (this.timePowerup.IsActive)
             {
@@ -54,21 +94,35 @@ namespace FroggerStarter.Controller
 
             if (appears <= TimeAppearChance && !this.timePowerup.IsActive)
             {
-                this.timePowerup.X = xLocal;
-                this.timePowerup.Y = yLocal;
+                this.placeTimePowerUp(maxRight, minDown, maxDown);
                 this.timePowerup.Activate();
             }
 
-            if (this.timePowerTick >= TimeDisappearTick)
+            if (this.timePowerTick >= PowerUpDisappearTick)
             {
                 this.deactivateTimePowerUp();
             }
+        }
+
+        private void placeTimePowerUp(double maxRight, double minDown, double maxDown)
+        {
+            var xLocal = this.random.Next(Convert.ToInt32(maxRight)) / TileWidth * TileWidth;
+            var yLocal = this.random.Next(Convert.ToInt32(minDown), Convert.ToInt32(maxDown)) / TileWidth * TileWidth;
+
+            this.timePowerup.X = xLocal;
+            this.timePowerup.Y = yLocal;
         }
 
         private void deactivateTimePowerUp()
         {
             this.timePowerup.Deactivate();
             this.timePowerTick = 0;
+        }
+
+        private void deactivateVehiclePowerUp()
+        {
+            this.vehiclePowerup.Deactivate();
+            this.vehiclePowerTick = 0;
         }
 
         /// <summary>
@@ -81,16 +135,42 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        ///     Checks the collision.
+        /// Gets the vehicle powerup sprite.
+        /// </summary>
+        /// <returns></returns>
+        public BaseSprite GetVehicleSprite()
+        {
+            return this.vehiclePowerup.Sprite;
+        }
+
+        /// <summary>
+        ///     Checks the collision with the time powerup.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="playerManagerDisabled">if set to <c>true</c> [player manager disabled].</param>
         /// <returns></returns>
-        public bool CheckCollision(GameObject player, bool playerManagerDisabled)
+        public bool CheckTimeCollision(GameObject player, bool playerManagerDisabled)
         {
             if (this.timePowerup.IsColliding(player) && !playerManagerDisabled && this.timePowerup.IsActive)
             {
                 this.deactivateTimePowerUp();
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks the collision with the vehicle powerup.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="playerManagerDisabled">if set to <c>true</c> [player manager disabled].</param>
+        /// <returns></returns>
+        public bool CheckVehicleCollision(GameObject player, bool playerManagerDisabled)
+        {
+            if (this.vehiclePowerup.IsColliding(player) && !playerManagerDisabled && this.vehiclePowerup.IsActive)
+            {
+                this.deactivateVehiclePowerUp();
                 return true;
             }
 

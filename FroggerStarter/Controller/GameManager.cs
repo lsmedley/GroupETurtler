@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,6 +20,7 @@ namespace FroggerStarter.Controller
         #region Data members
 
         private readonly double roadHeight;
+        private readonly double riverHeight;
         private readonly double backgroundWidth;
 
         private Canvas gameCanvas;
@@ -29,6 +31,7 @@ namespace FroggerStarter.Controller
         private ProgressBar timerBar;
 
         private Road road;
+        private River river;
         private PlayerManager playerManager;
         private HomeManager homes;
         private PowerupManager powerUpManager;
@@ -103,6 +106,7 @@ namespace FroggerStarter.Controller
 
             this.backgroundWidth = backgroundWidth;
             this.roadHeight = backgroundHeight - GameSettings.BottomLaneOffset - GameSettings.TileHeight;
+            this.riverHeight = backgroundHeight - this.roadHeight - GameSettings.TileHeight;
             this.CurrentLevel = 1;
         }
 
@@ -149,14 +153,21 @@ namespace FroggerStarter.Controller
             this.createHomeManager(GameSettings.ScoresToWin);
             this.createAndPlacePlayer(GameSettings.PlayerLives, GameSettings.ScoresToWin);
             this.createRoadManager();
+            this.createRiver();
             this.createPowerupManager();
             this.setUpTimers(GameSettings.TimerLengthSeconds);
+
+            //BaseSprite pms = new PlayerMovingSprite();
+            //this.gameCanvas.Children.Add(pms);
+            //Canvas.SetTop(pms,305);
+            //Canvas.SetLeft(pms, 400);
         }
 
         private void createPowerupManager()
         {
             this.powerUpManager = new PowerupManager();
             this.gameCanvas.Children.Add(this.powerUpManager.GetTimeSprite());
+            this.gameCanvas.Children.Add(this.powerUpManager.GetVehicleSprite());
         }
 
         private void createHomeManager(int numHomes)
@@ -188,6 +199,20 @@ namespace FroggerStarter.Controller
             this.road.CarAdded += this.onCarAdded;
         }
 
+        private void createRiver()
+        {
+            this.river = new River(GameSettings.RiverLaneSettingsCollection, this.riverHeight, this.backgroundWidth);
+            this.initializeRiver();
+        }
+
+        private void initializeRiver()
+        {
+            foreach (var debris in this.river)
+            {
+                this.gameCanvas.Children.Add(debris.Sprite);
+            }
+        }
+
         private void createAndPlacePlayer(int lives, int score)
         {
             this.playerManager = new PlayerManager(lives, score);
@@ -199,6 +224,8 @@ namespace FroggerStarter.Controller
                     sprite.Visibility = Visibility.Collapsed;
                 }
             }
+            this.gameCanvas.Children.Add(this.playerManager.MovingSprite);
+            this.playerManager.MovingSprite.Visibility = Visibility.Collapsed;
 
             this.setPlayerToCenterOfBottomLane();
         }
@@ -256,16 +283,27 @@ namespace FroggerStarter.Controller
         private void gameTimerOnTick(object sender, object e)
         {
             this.updateRoad();
+            this.updateRiver();
             this.timerBar.Value = GameSettings.TimerBlockWidth * this.TimeLeft;
             this.updatePowerUps();
+        }
+
+        private void updateRiver()
+        {
+            this.river.MoveRiver(this.backgroundWidth, this.playerManager.Player);
         }
 
         private void updatePowerUps()
         {
             this.powerUpManager.OnTick(this.backgroundWidth, GameSettings.TopOfGameOffset, this.roadHeight);
-            if (this.powerUpManager.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))
+            if (this.powerUpManager.CheckTimeCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
-                this.levelTimer.AddTime(7);
+                this.levelTimer.AddTime(GameSettings.TimePowerUpAmount);
+                this.onPowerUp();
+            }
+            if (this.powerUpManager.CheckVehicleCollision(this.playerManager.Player, this.playerManager.Disabled))
+            {
+                this.road.SlowDownVehicles(GameSettings.VehicleSlowDownTickLength);
                 this.onPowerUp();
             }
         }
@@ -382,8 +420,10 @@ namespace FroggerStarter.Controller
         public void MovePlayerUp()
         {
             this.playerManager.MoveUp(GameSettings.TopOfGameOffset);
-
-            this.checkVictory();
+            if (!this.playerManager.Disabled)
+            {
+                this.checkVictory();
+            }
         }
 
         /// <summary>
@@ -394,6 +434,16 @@ namespace FroggerStarter.Controller
         public void MovePlayerDown()
         {
             this.playerManager.MoveDown(this.roadHeight);
+            this.animateMoving(Direction.Down);
+        }
+
+        private void animateMoving(Direction down)
+        {
+            this.playerManager.Player.Sprite.Visibility = Visibility.Collapsed;
+            this.playerManager.MovingSprite.Visibility = Visibility.Visible;
+            Thread.Sleep(50);
+            this.playerManager.Player.Sprite.Visibility = Visibility.Visible;
+            this.playerManager.MovingSprite.Visibility = Visibility.Collapsed;
         }
 
         private void checkVictory()
