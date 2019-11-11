@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FroggerStarter.Utils;
 using FroggerStarter.View.Sprites;
+using FroggerStarter.View.Sprites.VehicleSprites;
 
 namespace FroggerStarter.Model.Vehicle
 {
