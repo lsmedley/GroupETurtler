@@ -89,6 +89,11 @@ namespace FroggerStarter.Model
         public event EventHandler<EventArgs> CarAdded;
 
         /// <summary>
+        /// Occurs when [slowdown ended].
+        /// </summary>
+        public event EventHandler<EventArgs> SlowdownEnded; 
+
+        /// <summary>
         ///     Sets up lanes.
         ///     <param name="totalHeight">The total height of the road.</param>
         ///     <param name="laneLength">Length of the lane.</param>
@@ -246,6 +251,7 @@ namespace FroggerStarter.Model
                     vehicle.Speed = lane.StartSpeed;
                 }
             }
+            this.onSlowdownEnded();
         }
 
         #endregion
@@ -265,6 +271,11 @@ namespace FroggerStarter.Model
                     vehicle.Speed = 1;
                 }
             }
+        }
+
+        private void onSlowdownEnded()
+        {
+            this.SlowdownEnded?.Invoke(this, EventArgs.Empty);
         }
     }
 }

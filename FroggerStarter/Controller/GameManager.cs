@@ -140,6 +140,11 @@ namespace FroggerStarter.Controller
         public event EventHandler<SoundType> PowerUpActivated;
 
         /// <summary>
+        /// Occurs when [slow down ended].
+        /// </summary>
+        public event EventHandler<EventArgs> SlowDownEnded; 
+
+        /// <summary>
         ///     Initializes the game working with appropriate classes to play frog
         ///     and vehicle on game screen.
         ///     Precondition: background != null
@@ -197,6 +202,7 @@ namespace FroggerStarter.Controller
             }
 
             this.road.CarAdded += this.onCarAdded;
+            this.road.SlowdownEnded += this.onSlowDownEnded;
         }
 
         private void createRiver()
@@ -299,12 +305,12 @@ namespace FroggerStarter.Controller
             if (this.powerUpManager.CheckTimeCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
                 this.levelTimer.AddTime(GameSettings.TimePowerUpAmount);
-                this.onPowerUp();
+                this.onPowerUp(SoundType.TimePowerUp);
             }
             if (this.powerUpManager.CheckVehicleCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
                 this.road.SlowDownVehicles(GameSettings.VehicleSlowDownTickLength);
-                this.onPowerUp();
+                this.onPowerUp(SoundType.VehiclePowerUp);
             }
         }
 
@@ -560,9 +566,9 @@ namespace FroggerStarter.Controller
             this.LevelUpdated?.Invoke(this, EventArgs.Empty);
         }
 
-        private void onPowerUp()
+        private void onPowerUp(SoundType sound)
         {
-            this.PowerUpActivated?.Invoke(this, SoundType.TimePowerUp);
+            this.PowerUpActivated?.Invoke(this, sound);
         }
 
         private void onTimeUp(object sender, EventArgs e)
@@ -580,7 +586,12 @@ namespace FroggerStarter.Controller
                 }
             }
         }
+        private void onSlowDownEnded(object sender, EventArgs e)
+        {
+            this.SlowDownEnded?.Invoke(this, EventArgs.Empty);
+        }
 
         #endregion
+
     }
 }

@@ -186,6 +186,9 @@
     <Compile Include="View\Sprites\TowingCarSprite.xaml.cs">
       <DependentUpon>TowingCarSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Sprites\VehiclePowerUpSprite.xaml.cs">
+      <DependentUpon>VehiclePowerUpSprite.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -272,6 +275,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\TowingCarSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\VehiclePowerUpSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

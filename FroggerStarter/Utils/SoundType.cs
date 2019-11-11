@@ -34,6 +34,11 @@
         /// <summary>
         ///     The time power up
         /// </summary>
-        TimePowerUp
+        TimePowerUp,
+
+        /// <summary>
+        /// The vehicle power up
+        /// </summary>
+        VehiclePowerUp
     }
 }

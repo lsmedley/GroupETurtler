@@ -12,7 +12,7 @@ namespace FroggerStarter.Controller
         #region Data members
 
         private const double TimeAppearChance = 0.01;
-        private const double VehicleAppearChance = 0.5;
+        private const double VehicleAppearChance = 0.005;
         private const int PowerUpDisappearTick = 200;
         private const int TileWidth = 50;
         private readonly Powerup timePowerup;
@@ -31,7 +31,7 @@ namespace FroggerStarter.Controller
         public PowerupManager()
         {
             this.timePowerup = new Powerup(new TimePowerUpSprite());
-            this.vehiclePowerup = new Powerup(new TowingCarSprite());
+            this.vehiclePowerup = new Powerup(new VehiclePowerUpSprite());
             this.random = new Random();
         }
 
@@ -47,8 +47,6 @@ namespace FroggerStarter.Controller
         /// <param name="maxDown">The maximum down.</param>
         public void OnTick(double maxRight, double minDown, double maxDown)
         {
-            //TODO: Refactor so that this is two meths for vehicle powerup and timepowerup, and each meth is called in the respective tick /when/ that powerup is activated.
-
             this.tickTimePowerUp(maxRight, minDown, maxDown);
             this.tickVehiclePowerUp(maxRight, minDown, maxDown);
         }
