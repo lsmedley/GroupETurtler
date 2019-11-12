@@ -1,6 +1,8 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -64,7 +66,7 @@ namespace FroggerStarter
                     // parameter
                     rootFrame.Navigate(typeof(StartScreen), e.Arguments);
                 }
-
+                //ApplicationView.PreferredLaunchViewSize = new Size(650, 710);
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
