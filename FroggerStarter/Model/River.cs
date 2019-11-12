@@ -15,6 +15,11 @@ namespace FroggerStarter.Model
             this.StartOfRiver = totalHeight;
             base.SetUpLanes(totalHeight, laneLength);
 
+            this.placeAllVehiclesInLanes(laneLength);
+        }
+
+        private void placeAllVehiclesInLanes(double laneLength)
+        {
             foreach (Lane lane in this.Lanes)
             {
                 double laneY = 0;
@@ -22,15 +27,16 @@ namespace FroggerStarter.Model
                 {
                     laneY = debris.Y;
                 }
+
                 for (int i = 0; i < lane.MaxNumVehicles; i++)
                 {
                     lane.AddVehicle();
                 }
+
                 lane.PlaceAllVehiclesInLane(laneLength);
                 lane.SetVehicleYs(laneY);
             }
         }
-        //Add all 'vehicles' to river at start
 
         /// <summary>
         /// Moves the objects in the river, returning the value by which the player needs to be moved if it
