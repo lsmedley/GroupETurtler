@@ -27,6 +27,11 @@
         WallDeath,
 
         /// <summary>
+        /// Death by water
+        /// </summary>
+        WaterDeath,
+
+        /// <summary>
         ///     Death by the inescapable march of time
         /// </summary>
         TimeDeath,

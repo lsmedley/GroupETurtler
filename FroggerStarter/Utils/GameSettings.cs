@@ -112,11 +112,11 @@ namespace FroggerStarter.Utils
         public const string HighScoresFilename = "highscores.xml";
 
         public static readonly ICollection<LaneSettings> RiverLaneSettingsCollection = new ReadOnlyCollection<LaneSettings>(new List<LaneSettings> {
-            new LaneSettings(1, Direction.Left, 4, VehicleType.Car),
-            new LaneSettings(1, Direction.Right, 3, VehicleType.Bus),
-            new LaneSettings(1, Direction.Left, 2, VehicleType.TowingCar),
-            new LaneSettings(1, Direction.Left, 3, VehicleType.Bus),
-            new LaneSettings(1, Direction.Right, 4, VehicleType.Car)
+            new LaneSettings(1, Direction.Left, 4, VehicleType.SmallLog),
+            new LaneSettings(2, Direction.Right, 3, VehicleType.LargeLog),
+            new LaneSettings(3, Direction.Left, 2, VehicleType.SmallLog),
+            new LaneSettings(2, Direction.Left, 3, VehicleType.LargeLog),
+            new LaneSettings(3, Direction.Right, 4, VehicleType.SmallLog)
         });
 
         #endregion

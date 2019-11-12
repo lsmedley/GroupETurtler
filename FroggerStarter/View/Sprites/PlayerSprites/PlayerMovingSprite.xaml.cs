@@ -8,7 +8,7 @@ namespace FroggerStarter.View.Sprites.PlayerSprites
     /// Contains functionality for the player's moving animation.
     /// </summary>
     /// <seealso cref="PlayerSprite" />
-    public sealed partial class PlayerMovingSprite : BaseSprite
+    public sealed partial class PlayerMovingSprite
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerMovingSprite" /> class.

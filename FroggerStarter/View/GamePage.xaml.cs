@@ -45,6 +45,7 @@ namespace FroggerStarter.View
         private StorageFile vehicleCollisionSound;
         private StorageFile scoreMadeSound;
         private StorageFile wallCollisionSound;
+        private StorageFile waterCollisionSound;
         private StorageFile timerDeathSound;
         private StorageFile timerPowerupSound;
 
@@ -159,6 +160,7 @@ namespace FroggerStarter.View
             this.gameWonSound = await folder.GetFileAsync("GameWonSound.wav");
             this.vehicleCollisionSound = await folder.GetFileAsync("CarCollisionSound.wav");
             this.wallCollisionSound = await folder.GetFileAsync("WallCollisionSound.wav");
+            this.waterCollisionSound = await folder.GetFileAsync("WaterDeathSound.wav");
             this.timerDeathSound = await folder.GetFileAsync("TimerDeathSound.wav");
             this.timerPowerupSound = await folder.GetFileAsync("PowerupSound.wav");
             this.scoreMadeSound = await folder.GetFileAsync("ScoreMadeSound.wav");
@@ -213,6 +215,10 @@ namespace FroggerStarter.View
             else if (sound.Equals(SoundType.WallDeath))
             {
                 this.playSoundEffect(this.wallCollisionSound);
+            }
+            else if (sound.Equals(SoundType.WaterDeath))
+            {
+                this.playSoundEffect(this.waterCollisionSound);
             }
             else if (sound.Equals(SoundType.TimeDeath))
             {

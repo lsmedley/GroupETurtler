@@ -125,6 +125,8 @@
     <Compile Include="Model\HighScores.cs" />
     <Compile Include="Model\Powerup.cs" />
     <Compile Include="Model\River.cs" />
+    <Compile Include="Model\Vehicle\LargeLog.cs" />
+    <Compile Include="Model\Vehicle\SmallLog.cs" />
     <Compile Include="Model\Vehicle\TowingCar.cs" />
     <Compile Include="Model\HighScore.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -192,6 +194,12 @@
     <Compile Include="View\Sprites\ISpriteRenderer.cs" />
     <Compile Include="View\Sprites\TimePowerUpSprite.xaml.cs">
       <DependentUpon>TimePowerUpSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\VehicleSprites\LargeLogSprite.xaml.cs">
+      <DependentUpon>LargeLogSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\VehicleSprites\SmallLogSprite.xaml.cs">
+      <DependentUpon>SmallLogSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\VehicleSprites\TowingCarSprite.xaml.cs">
       <DependentUpon>TowingCarSprite.xaml</DependentUpon>
@@ -288,6 +296,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\TimePowerUpSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\VehicleSprites\LargeLogSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\VehicleSprites\SmallLogSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

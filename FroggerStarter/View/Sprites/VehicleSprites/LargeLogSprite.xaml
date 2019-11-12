@@ -1,0 +1,23 @@
+﻿<local:BaseSprite
+    x:Class="FroggerStarter.View.Sprites.VehicleSprites.LargeLogSprite"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FroggerStarter.View.Sprites"
+    xmlns:custom="using:FroggerStarter.View.Sprites.VehicleSprites"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Width="150"
+    Height="40">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="BarkColor" Color="Brown" />
+        <SolidColorBrush x:Key="FleshColor" Color="RosyBrown" />
+    </UserControl.Resources>
+
+    <Canvas>
+        <custom:SmallLogSprite></custom:SmallLogSprite>
+        <Rectangle Width="50" Height="40" Fill="{StaticResource BarkColor}" Canvas.Left="90" />
+        <Ellipse Width="20" Height="40" Fill="{StaticResource FleshColor}" Canvas.Left="130" />
+    </Canvas>
+</local:BaseSprite>

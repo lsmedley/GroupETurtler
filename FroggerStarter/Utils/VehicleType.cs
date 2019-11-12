@@ -18,6 +18,16 @@
         /// <summary>
         /// The towing car is a 40x70 vehicle.
         /// </summary>
-        TowingCar
+        TowingCar,
+
+        /// <summary>
+        /// The small log is a 40x100 vehicle.
+        /// </summary>
+        SmallLog,
+
+        /// <summary>
+        /// The large log is a 40x150 vehicle.
+        /// </summary>
+        LargeLog
     }
 }

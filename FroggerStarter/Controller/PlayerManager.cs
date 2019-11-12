@@ -195,7 +195,6 @@ namespace FroggerStarter.Controller
         {
             if (this.Player.Y < roadHeight && this.Lives > 0 && this.ScoresMade < this.ScoresToWin && !this.Disabled)
             {
-                this.animateMovement(Direction.Down);
                 this.TurnPlayer(Direction.Down);
                 this.Player.MoveDown();
             }
@@ -236,8 +235,7 @@ namespace FroggerStarter.Controller
 
         private void animateMovement(Direction dir)
         {
-            this.Player.ChangeSprite(this.MovingSprite);
-            this.syncSpriteToLocation();
+            
             this.TurnPlayer(dir);
             this.Player.ChangeSprite(this.PlayerSprites[0]);
         }
@@ -259,6 +257,10 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MoveToNextSprite()
         {
+            if (!this.PlayerSprites.Contains(this.Player.Sprite))
+            {
+                this.Player.ChangeSprite(this.PlayerSprites[0]);
+            }
             var current = this.PlayerSprites.IndexOf(this.Player.Sprite);
             if (current == this.PlayerSprites.Count - 1)
             {
@@ -283,5 +285,35 @@ namespace FroggerStarter.Controller
         }
 
         #endregion
+
+        /// <summary>
+        /// Toggles the moving sprite.
+        /// Postcondition: if this.Sprite @prev == normal player sprite, this sprite == the moving sprite.
+        /// Else this sprite == the normal player sprite.
+        /// </summary>
+        public void ToggleMovingSprite()
+        {
+            //var trans = this.Player.Sprite.RenderTransform.GetValue(RotateTransform.AngleProperty);
+            if (this.Player.Sprite == this.PlayerSprites[0])
+            {
+                this.Player.ChangeSprite(this.MovingSprite);
+            }
+            else
+            {
+                this.Player.ChangeSprite(this.PlayerSprites[0]);
+
+            }
+
+            //this.Player.Sprite.RenderTransform.SetValue(RotateTransform.AngleProperty, trans);
+            this.syncSpriteToLocation();
+        }
+
+        /// <summary>
+        /// Adds a life.
+        /// </summary>
+        public void AddLife()
+        {
+            this.Lives++;
+        }
     }
 }

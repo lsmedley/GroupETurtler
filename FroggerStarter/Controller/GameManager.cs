@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
 using FroggerStarter.Utils;
 using FroggerStarter.View;
+using FroggerStarter.View.Sprites;
 using FroggerStarter.View.Sprites.PlayerSprites;
 
 namespace FroggerStarter.Controller
@@ -33,6 +34,7 @@ namespace FroggerStarter.Controller
 
         private DispatcherTimer timer;
         private DispatcherTimer deathTimer;
+        private DispatcherTimer movementAnimationTimer;
         private LevelTimeManager levelTimer;
         private ProgressBar timerBar;
 
@@ -113,7 +115,7 @@ namespace FroggerStarter.Controller
 
             this.backgroundWidth = backgroundWidth;
             this.roadHeight = backgroundHeight - GameSettings.BottomLaneOffset - GameSettings.TileHeight;
-            this.riverHeight = backgroundHeight - this.roadHeight - GameSettings.TileHeight;
+            this.riverHeight = backgroundHeight - GameSettings.TopOfGameOffset - GameSettings.RiverLaneSettingsCollection.Count * GameSettings.TileHeight;
             this.CurrentLevel = 1;
         }
 
@@ -163,16 +165,12 @@ namespace FroggerStarter.Controller
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
             this.createHomeManager(GameSettings.ScoresToWin);
+            this.createRiver();
             this.createAndPlacePlayer(GameSettings.PlayerLives, GameSettings.ScoresToWin);
             this.createRoadManager();
-            this.createRiver();
             this.createPowerupManager();
             this.setUpTimers(GameSettings.TimerLengthSeconds);
 
-            //BaseSprite pms = new PlayerMovingSprite();
-            //this.gameCanvas.Children.Add(pms);
-            //Canvas.SetTop(pms,305);
-            //Canvas.SetLeft(pms, 400);
         }
 
         private void createPowerupManager()
@@ -254,7 +252,27 @@ namespace FroggerStarter.Controller
         {
             this.setupGameTimer();
             this.setupDeathTimer();
+            this.setupAnimationTimer();
             this.setUpLevelTimer(timerLen);
+        }
+
+        private void setupAnimationTimer()
+        {
+            this.movementAnimationTimer = new DispatcherTimer();
+            this.movementAnimationTimer.Tick += this.movementTimerOnTick;
+            this.movementAnimationTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+        }
+
+        private void movementTimerOnTick(object sender, object e)
+        {
+            this.playerManager.Player.Sprite.Visibility = Visibility.Collapsed;
+            this.playerManager.ToggleMovingSprite();
+            this.playerManager.Player.Sprite.Visibility = Visibility.Visible;
+            if (this.playerManager.Player.Sprite.Equals(this.playerManager.PlayerSprites[0]))
+            {
+                this.movementAnimationTimer.Stop();
+            }
+
         }
 
         private void setUpLevelTimer(int tLen)
@@ -303,7 +321,12 @@ namespace FroggerStarter.Controller
 
         private void updateRiver()
         {
-            this.river.MoveRiver(this.backgroundWidth, this.playerManager.Player);
+            this.playerManager.Player.X += this.river.MoveRiver(this.backgroundWidth, this.playerManager.Player);
+            if (this.playerManager.Player.Y <= this.riverHeight - GameSettings.TileHeight &&
+                !this.river.CheckCollision(this.playerManager.Player, this.playerManager.Disabled) && !this.playerManager.Disabled)
+            {
+                this.onPlayerDeath(SoundType.WaterDeath);
+            }
         }
 
         private void updatePowerUps()
@@ -432,6 +455,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
+            //this.movementAnimationTimer.Start();
             this.playerManager.MoveUp(GameSettings.TopOfGameOffset);
             if (!this.playerManager.Disabled)
             {
@@ -532,6 +556,8 @@ namespace FroggerStarter.Controller
             this.road.IncreaseMaxVehiclesBy(1);
             this.road.IncreaseStartSpeedBy(1);
             this.road.ResetSpeeds();
+            this.playerManager.AddLife();
+            this.onLivesUpdated(SoundType.GameWon);
         }
 
         private void changeToRound2()
@@ -539,6 +565,8 @@ namespace FroggerStarter.Controller
             this.resetHomes();
             this.CurrentLevel = 2;
             this.onLevelUpdated();
+            this.playerManager.AddLife();
+            this.onLivesUpdated(SoundType.GameWon);
         }
 
         private void resetHomes()

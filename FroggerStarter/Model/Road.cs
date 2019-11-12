@@ -12,7 +12,10 @@ namespace FroggerStarter.Model
     {
         #region Data members
 
-        private readonly IList<Lane> lanes;
+        /// <summary>
+        /// The lanes
+        /// </summary>
+        protected readonly IList<Lane> Lanes;
         private readonly ICollection<LaneSettings> laneSettingsCollection;
         private int currentTick;
         private int endSlowDownTick;
@@ -41,7 +44,7 @@ namespace FroggerStarter.Model
             this.currentTick = 0;
             this.endSlowDownTick = Int32.MaxValue;
 
-            this.lanes = new List<Lane>();
+            this.Lanes = new List<Lane>();
             this.SetUpLanes(totalHeight, laneLength);
         }
 
@@ -57,7 +60,7 @@ namespace FroggerStarter.Model
         /// </returns>
         public IEnumerator<Vehicle.Vehicle> GetEnumerator()
         {
-            foreach (var lane in this.lanes)
+            foreach (var lane in this.Lanes)
             {
                 foreach (var vehicle in lane)
                 {
@@ -74,7 +77,7 @@ namespace FroggerStarter.Model
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            foreach (var lane in this.lanes)
+            foreach (var lane in this.Lanes)
             {
                 foreach (var vehicle in lane)
                 {
@@ -100,12 +103,12 @@ namespace FroggerStarter.Model
         /// </summary>
         public void SetUpLanes(double totalHeight, double laneLength)
         {
-            this.lanes.Clear();
+            this.Lanes.Clear();
 
             foreach (var laneSettings in this.laneSettingsCollection)
             {
                 var lane = new Lane(laneSettings);
-                this.lanes.Add(lane);
+                this.Lanes.Add(lane);
             }
 
             this.placeVehiclesInLanes(totalHeight, laneLength);
@@ -113,11 +116,11 @@ namespace FroggerStarter.Model
 
         private void placeVehiclesInLanes(double totalHeight, double laneLength)
         {
-            for (var i = 0; i < this.lanes.Count; i++)
+            for (var i = 0; i < this.Lanes.Count; i++)
             {
-                this.lanes[i].SetVehicleYs(totalHeight - GameSettings.LaneHeight * (i + 1) +
+                this.Lanes[i].SetVehicleYs(totalHeight - GameSettings.LaneHeight * (i + 1) +
                                            GameSettings.VehicleOffset);
-                this.lanes[i].PlaceAllVehiclesInLane(laneLength);
+                this.Lanes[i].PlaceAllVehiclesInLane(laneLength);
             }
         }
 
@@ -159,7 +162,7 @@ namespace FroggerStarter.Model
 
         private void addVehicles(double laneLength)
         {
-            foreach (var lane in this.lanes)
+            foreach (var lane in this.Lanes)
             {
                 lane.AddVehicle(laneLength);
             }
@@ -171,7 +174,7 @@ namespace FroggerStarter.Model
         /// <param name="laneLen">Length of the lane.</param>
         protected void MoveLaneVehicles(double laneLen)
         {
-            foreach (var lane in this.lanes)
+            foreach (var lane in this.Lanes)
             {
                 lane.MoveVehicles(laneLen);
             }
@@ -192,7 +195,7 @@ namespace FroggerStarter.Model
                 return false;
             }
 
-            foreach (var lane in this.lanes)
+            foreach (var lane in this.Lanes)
             {
                 if (lane.CheckCollision(g))
                 {
@@ -221,7 +224,7 @@ namespace FroggerStarter.Model
         /// <param name="amount">The amount to increase amount by.</param>
         public void IncreaseStartSpeedBy(int amount)
         {
-            foreach (var lane in this.lanes)
+            foreach (var lane in this.Lanes)
             {
                 lane.StartSpeed += amount;
             }
@@ -233,7 +236,7 @@ namespace FroggerStarter.Model
         /// <param name="amount">The amount to increase amount by.</param>
         public void IncreaseMaxVehiclesBy(int amount)
         {
-            foreach (var lane in this.lanes)
+            foreach (var lane in this.Lanes)
             {
                 lane.MaxNumVehicles += amount;
             }
@@ -244,7 +247,7 @@ namespace FroggerStarter.Model
         /// </summary>
         public void ResetSpeeds()
         {
-            foreach (var lane in this.lanes)
+            foreach (var lane in this.Lanes)
             {
                 foreach (var vehicle in lane)
                 {
@@ -264,7 +267,7 @@ namespace FroggerStarter.Model
         {
             this.currentTick = 0;
             this.endSlowDownTick = i;
-            foreach (var lane in this.lanes)
+            foreach (var lane in this.Lanes)
             {
                 foreach (var vehicle in lane)
                 {

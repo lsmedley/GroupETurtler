@@ -30,6 +30,12 @@ namespace FroggerStarter.Model.Vehicle
                 case VehicleType.TowingCar:
                     vehicle = new TowingCar(speed, direction);
                     break;
+                case VehicleType.SmallLog:
+                    vehicle = new SmallLog(speed, direction);
+                    break;
+                case VehicleType.LargeLog:
+                    vehicle = new LargeLog(speed, direction);
+                    break;
             }
 
             return vehicle;

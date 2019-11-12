@@ -29,7 +29,7 @@ namespace FroggerStarter.Model.Vehicle
         /// <value>
         ///     The direction.
         /// </value>
-        protected Direction Direction { get; set; }
+        public Direction Direction { get; protected set; }
 
         #endregion
 

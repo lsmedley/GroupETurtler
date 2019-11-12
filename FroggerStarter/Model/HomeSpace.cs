@@ -60,7 +60,7 @@ namespace FroggerStarter.Model
         {
             var isCol = false;
 
-            var tolerance = 0.1;
+            var tolerance = 0.1 * this.Width;
             if (Math.Abs(gameObject.X - X) < tolerance && Math.Abs(gameObject.Y - Y) < tolerance)
             {
                 this.IsTaken = true;

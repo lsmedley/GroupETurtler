@@ -14,6 +14,21 @@ namespace FroggerStarter.Model
         {
             this.StartOfRiver = totalHeight;
             base.SetUpLanes(totalHeight, laneLength);
+
+            foreach (Lane lane in this.Lanes)
+            {
+                double laneY = 0;
+                foreach (var debris in lane)
+                {
+                    laneY = debris.Y;
+                }
+                for (int i = 0; i < lane.MaxNumVehicles; i++)
+                {
+                    lane.AddVehicle();
+                }
+                lane.PlaceAllVehiclesInLane(laneLength);
+                lane.SetVehicleYs(laneY);
+            }
         }
         //Add all 'vehicles' to river at start
 
@@ -34,12 +49,27 @@ namespace FroggerStarter.Model
             {
                 if (debris.IsColliding(player))
                 {
-                    changeX = debris.Speed;
+                    changeX = this.getDebrisMovement(debris);
                 }
             }
             base.MoveLaneVehicles(laneLen);
 
             //return newX - prevX;
+            return changeX;
+        }
+
+        private double getDebrisMovement(Vehicle.Vehicle debris)
+        {
+            double changeX;
+            if (debris.Direction == Direction.Right)
+            {
+                changeX = debris.Speed;
+            }
+            else
+            {
+                changeX = -debris.Speed;
+            }
+
             return changeX;
         }
     }
