@@ -31,16 +31,8 @@ namespace FroggerStarter.Model
         /// <param name="laneSettingsCollection">The collection of lane settings for this road's lanes.</param>
         /// <param name="totalHeight">The total height of the road.</param>
         /// <param name="laneLength">Length of the lanes.</param>
-        /// <exception cref="Exception">Each lane must be fully defined</exception>
         public Road(ICollection<LaneSettings> laneSettingsCollection, double totalHeight, double laneLength)
         {
-//            if (laneSettingsCollection.Vehicles.Count != laneSettingsCollection.TrafficDirections.Count 
-//                || laneSettingsCollection.Vehicles.Count != laneSettingsCollection.TrafficSpeeds.Count 
-//                || laneSettingsCollection.TrafficDirections.Count != laneSettingsCollection.TrafficSpeeds.Count)
-//            {
-//                throw new Exception("Each lane must be fully defined");
-//            } //TODO figure out this
-
             this.laneSettingsCollection = laneSettingsCollection;
             this.currentTick = 0;
             this.endSlowDownTick = int.MaxValue;

@@ -40,7 +40,7 @@ namespace FroggerStarter.Controller
         #region Methods
 
         /// <summary>
-        ///     Called when [tick].
+        ///     Called when timer ticks
         /// </summary>
         /// <param name="maxRight">The maximum right.</param>
         /// <param name="minDown">The minimum down.</param>
@@ -135,7 +135,7 @@ namespace FroggerStarter.Controller
         /// <summary>
         ///     Gets the vehicle powerup sprite.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the vehicle powerup sprite.</returns>
         public BaseSprite GetVehicleSprite()
         {
             return this.vehiclePowerup.Sprite;
@@ -146,7 +146,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="playerManagerDisabled">if set to <c>true</c> [player manager disabled].</param>
-        /// <returns></returns>
+        /// <returns>true if collision with the time powerup, false if not</returns>
         public bool CheckTimeCollision(GameObject player, bool playerManagerDisabled)
         {
             if (this.timePowerup.IsColliding(player) && !playerManagerDisabled && this.timePowerup.IsActive)
@@ -163,7 +163,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="playerManagerDisabled">if set to <c>true</c> [player manager disabled].</param>
-        /// <returns></returns>
+        /// <returns>true if collision with the vehicle powerup, false if not</returns>
         public bool CheckVehicleCollision(GameObject player, bool playerManagerDisabled)
         {
             if (this.vehiclePowerup.IsColliding(player) && !playerManagerDisabled && this.vehiclePowerup.IsActive)

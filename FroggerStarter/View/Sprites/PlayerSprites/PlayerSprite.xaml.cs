@@ -20,8 +20,7 @@ namespace FroggerStarter.View.Sprites.PlayerSprites
         /// </summary>
         public PlayerSprite()
         {
-            var myColor = new SolidColorBrush(Colors.Green);
-            Resources["BodyColor"] = myColor;
+            Resources["BodyColor"] = new SolidColorBrush(Colors.Green);
 
             this.InitializeComponent();
         }

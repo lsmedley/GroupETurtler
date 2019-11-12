@@ -35,7 +35,7 @@ namespace FroggerStarter.Utils
         /// <summary>
         ///     Deserializes this instance.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the deserialized list</returns>
         public static List<HighScore> Deserialize()
         {
             var highScores = new List<HighScore>();
@@ -54,7 +54,7 @@ namespace FroggerStarter.Utils
         /// <summary>
         ///     Deserializes the specified file name.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the deserialized list</returns>
         private static async Task<List<HighScore>> deserialize()
         {
             var folder = ApplicationData.Current.LocalFolder;

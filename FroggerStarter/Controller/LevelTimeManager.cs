@@ -23,12 +23,12 @@ namespace FroggerStarter.Controller
         #region Properties
 
         /// <summary>
-        ///     Gets the current time.
+        ///     Gets the amount of time used.
         /// </summary>
         /// <value>
-        ///     The current time.
+        ///     The amount of time used.
         /// </value>
-        public int CurrTime { get; private set; }
+        public int TimeUsed { get; private set; }
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace FroggerStarter.Controller
         public LevelTimeManager(int maxTime)
         {
             this.MaxTime = maxTime;
-            this.CurrTime = 0;
+            this.TimeUsed = 0;
             this.setUpTimer();
         }
 
@@ -50,7 +50,7 @@ namespace FroggerStarter.Controller
         #region Methods
 
         /// <summary>
-        ///     Occurs when [time up].
+        ///     Occurs when no time is remaining
         /// </summary>
         public event EventHandler<EventArgs> TimeUp;
 
@@ -64,11 +64,11 @@ namespace FroggerStarter.Controller
 
         private void timerOnTick(object sender, object e)
         {
-            this.CurrTime++;
-            if (this.CurrTime >= this.MaxTime)
+            this.TimeUsed++;
+            if (this.TimeUsed >= this.MaxTime)
             {
                 this.onTimeUp();
-                this.CurrTime = 0;
+                this.TimeUsed = 0;
             }
         }
 
@@ -77,7 +77,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void Reset()
         {
-            this.CurrTime = 0;
+            this.TimeUsed = 0;
         }
 
         /// <summary>
@@ -102,12 +102,12 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        ///     Increases the time left.
+        ///     Reduces the time used by the given amount.
         /// </summary>
-        /// <param name="increment">The increment.</param>
-        public void AddTime(int increment)
+        /// <param name="amount">The amount.</param>
+        public void ReduceTimeUsedBy(int amount)
         {
-            this.CurrTime -= increment;
+            this.TimeUsed -= amount;
         }
 
         #endregion

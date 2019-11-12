@@ -49,7 +49,7 @@ namespace FroggerStarter.Controller
         /// </value>
         public int CurrentLevel { get; private set; }
 
-        private int TimeLeft => Math.Abs(this.levelTimer.CurrTime - this.levelTimer.MaxTime);
+        private int TimeLeft => Math.Abs(this.levelTimer.TimeUsed - this.levelTimer.MaxTime);
 
         /// <summary>
         ///     Gets the lives the playerManager has left.
@@ -313,7 +313,7 @@ namespace FroggerStarter.Controller
 
         private void updateRiver()
         {
-            this.playerManager.Player.X += this.river.MoveRiver(this.backgroundWidth, this.playerManager.Player);
+            this.playerManager.Player.X += this.river.MoveRiverObjects(this.backgroundWidth, this.playerManager.Player);
             if (this.playerManager.Player.Y <= this.riverHeight - GameSettings.TileHeight &&
                 !this.river.CheckCollision(this.playerManager.Player, this.playerManager.Disabled) &&
                 !this.playerManager.Disabled)
@@ -327,7 +327,7 @@ namespace FroggerStarter.Controller
             this.powerUpManager.OnTick(this.backgroundWidth, GameSettings.TopOfGameOffset, this.roadHeight);
             if (this.powerUpManager.CheckTimeCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
-                this.levelTimer.AddTime(GameSettings.TimePowerUpAmount);
+                this.levelTimer.ReduceTimeUsedBy(GameSettings.TimePowerUpAmount);
                 this.onPowerUp(SoundType.TimePowerUp);
             }
 
@@ -426,7 +426,6 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         ///     Moves the playerManager to the left.
-        ///     Precondition: none
         ///     Postcondition: playerManager.X = playerManager.X@prev - playerManager.Width
         /// </summary>
         public void MovePlayerLeft()
@@ -440,7 +439,6 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         ///     Moves the playerManager to the right.
-        ///     Precondition: none
         ///     Postcondition: playerManager.X = playerManager.X@prev + playerManager.Width
         /// </summary>
         public void MovePlayerRight()
@@ -454,7 +452,6 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         ///     Moves the playerManager up.
-        ///     Precondition: none
         ///     Postcondition: playerManager.Y = playerManager.Y@prev - playerManager.Height
         /// </summary>
         public void MovePlayerUp()
@@ -469,7 +466,6 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         ///     Moves the playerManager down.
-        ///     Precondition: none
         ///     Postcondition: playerManager.Y = playerManager.Y@prev + playerManager.Height
         /// </summary>
         public void MovePlayerDown()
@@ -545,6 +541,15 @@ namespace FroggerStarter.Controller
             }
         }
 
+        private void changeToRound2()
+        {
+            this.resetHomes();
+            this.CurrentLevel = 2;
+            this.onLevelUpdated();
+            this.playerManager.AddLife();
+            this.onLivesUpdated(SoundType.GameWon);
+        }
+
         private void changeToRound3()
         {
             this.resetHomes();
@@ -553,15 +558,6 @@ namespace FroggerStarter.Controller
             this.road.IncreaseMaxVehiclesBy(1);
             this.road.IncreaseStartSpeedBy(1);
             this.road.ResetSpeeds();
-            this.playerManager.AddLife();
-            this.onLivesUpdated(SoundType.GameWon);
-        }
-
-        private void changeToRound2()
-        {
-            this.resetHomes();
-            this.CurrentLevel = 2;
-            this.onLevelUpdated();
             this.playerManager.AddLife();
             this.onLivesUpdated(SoundType.GameWon);
         }

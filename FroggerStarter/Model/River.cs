@@ -35,9 +35,13 @@ namespace FroggerStarter.Model
             this.placeAllVehiclesInLanes(laneLength);
         }
 
+        #endregion
+
+        #region Methods
+
         private void placeAllVehiclesInLanes(double laneLength)
         {
-            foreach (Lane lane in this.Lanes)
+            foreach (var lane in Lanes)
             {
                 double laneY = 0;
                 foreach (var debris in lane)
@@ -45,7 +49,7 @@ namespace FroggerStarter.Model
                     laneY = debris.Y;
                 }
 
-                for (int i = 0; i < lane.MaxNumVehicles; i++)
+                for (var i = 0; i < lane.MaxNumVehicles; i++)
                 {
                     lane.AddVehicle();
                 }
@@ -61,11 +65,19 @@ namespace FroggerStarter.Model
         /// </summary>
         /// <param name="laneLen">Length of the lane.</param>
         /// <param name="player">The player.</param>
-        /// <returns></returns>
-        public double MoveRiver(double laneLen, GameObject player)
+        /// <returns>the value by which the player needs to be moved if it is riding on a river object</returns>
+        public double MoveRiverObjects(double laneLen, GameObject player)
         {
-            double changeX = 0;
+            var changeX = this.calculateChangeX(player);
 
+            MoveLaneVehicles(laneLen);
+
+            return changeX;
+        }
+
+        private double calculateChangeX(GameObject player)
+        {
+            var changeX = 0.0;
             foreach (var debris in this)
             {
                 if (debris.IsColliding(player))
@@ -73,8 +85,6 @@ namespace FroggerStarter.Model
                     changeX = getDebrisMovement(debris);
                 }
             }
-
-            MoveLaneVehicles(laneLen);
 
             return changeX;
         }

@@ -7,7 +7,7 @@ namespace FroggerStarter.Model.Vehicle
     ///     Holds functionality for a car towing a trailer.
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.Vehicle.Vehicle" />
-    public class TowingCar : Vehicle
+    public class TowingCar : Car
     {
         #region Constructors
 
@@ -16,12 +16,9 @@ namespace FroggerStarter.Model.Vehicle
         /// </summary>
         /// <param name="speed">The speed.</param>
         /// <param name="direction">The direction.</param>
-        public TowingCar(int speed, Direction direction)
+        public TowingCar(int speed, Direction direction) : base(speed, direction)
         {
-            Speed = speed;
-            Direction = direction;
             Sprite = new TowingCarSprite();
-            RenderSprite();
         }
 
         #endregion
