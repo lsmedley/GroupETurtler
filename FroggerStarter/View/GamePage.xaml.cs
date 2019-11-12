@@ -8,6 +8,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -265,11 +266,22 @@ namespace FroggerStarter.View
 
         private async void NameSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            this.nameBoxLabel.Visibility = Visibility.Collapsed;
-            this.playerNameTextBox.Visibility = Visibility.Collapsed;
-            this.nameSubmitButton.Visibility = Visibility.Collapsed;
-            this.gameOverTextBlock.Visibility = Visibility.Collapsed;
-            await this.gameManager.SaveHighScore(this.playerNameTextBox.Text);
+            if (string.IsNullOrWhiteSpace(this.playerNameTextBox.Text))
+            {
+                var messageDialog = new MessageDialog("Please enter your name");
+                messageDialog.Commands.Add(new UICommand(
+                    "OK"));
+                messageDialog.CancelCommandIndex = 0;
+                await messageDialog.ShowAsync();
+            }
+            else
+            {
+                this.nameBoxLabel.Visibility = Visibility.Collapsed;
+                this.playerNameTextBox.Visibility = Visibility.Collapsed;
+                this.nameSubmitButton.Visibility = Visibility.Collapsed;
+                this.gameOverTextBlock.Visibility = Visibility.Collapsed;
+                await this.gameManager.SaveHighScore(this.playerNameTextBox.Text);
+            }
         }
 
         #endregion
