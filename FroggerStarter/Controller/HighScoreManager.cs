@@ -2,14 +2,15 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using FroggerStarter.Model;
 using FroggerStarter.Utils;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Controller
 {
     /// <summary>
     ///     Manages high score tasks
     /// </summary>
-    public class HighScores
+    public class HighScoreManager
     {
         #region Properties
 
@@ -28,9 +29,9 @@ namespace FroggerStarter.Model
         #region Constructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="HighScores" /> class.
+        ///     Initializes a new instance of the <see cref="HighScoreManager" /> class.
         /// </summary>
-        public HighScores()
+        public HighScoreManager()
         {
             this.Scores = new List<HighScore>();
             this.populateHighScores();
@@ -49,6 +50,7 @@ namespace FroggerStarter.Model
 
         /// <summary>
         ///     Sorts by score, then name, then level
+        ///     Postcondition: this.scores == sorted scores
         /// </summary>
         public void SortByScoreNameLevel()
         {
@@ -61,6 +63,7 @@ namespace FroggerStarter.Model
 
         /// <summary>
         ///     Sorts by name, then score, then level
+        ///     Postcondition: this.scores == sorted scores
         /// </summary>
         public void SortByNameScoreLevel()
         {
@@ -73,6 +76,7 @@ namespace FroggerStarter.Model
 
         /// <summary>
         ///     Sorts by level, then score, then name
+        ///     Postcondition: this.scores == sorted scores
         /// </summary>
         public void SortByLevelScoreName()
         {

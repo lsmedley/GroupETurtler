@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Windows.ApplicationModel.Core;
+using FroggerStarter.Controller;
 using FroggerStarter.Extensions;
 using FroggerStarter.Model;
 using FroggerStarter.Properties;
@@ -20,7 +21,7 @@ namespace FroggerStarter.ViewModel
 
         private ObservableCollection<HighScore> scores;
 
-        private readonly HighScores highScores;
+        private readonly HighScoreManager highScores;
 
         #endregion
 
@@ -83,7 +84,7 @@ namespace FroggerStarter.ViewModel
         /// </summary>
         public HighScoreBoardViewModel()
         {
-            this.highScores = new HighScores();
+            this.highScores = new HighScoreManager();
             this.sortScoresByScoreNameLevel();
             this.SortScoresByScoreNameLevelButtonCommand =
                 new RelayCommand(o => this.sortScoresByScoreNameLevel(), null);

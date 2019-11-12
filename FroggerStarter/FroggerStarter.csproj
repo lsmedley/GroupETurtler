@@ -122,7 +122,7 @@
     </Compile>
     <Compile Include="Controller\PowerupManager.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
-    <Compile Include="Model\HighScores.cs" />
+    <Compile Include="Controller\HighScoreManager.cs" />
     <Compile Include="Model\Powerup.cs" />
     <Compile Include="Model\River.cs" />
     <Compile Include="Model\Vehicle\LargeLog.cs" />
