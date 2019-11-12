@@ -39,8 +39,7 @@ namespace FroggerStarter.Model
         {
             Sprite = new HomeSprite();
             this.IsTaken = false;
-            this.TakenSprite = new PlayerHomeSprite();
-            this.TakenSprite.Visibility = Visibility.Collapsed;
+            this.TakenSprite = new PlayerHomeSprite {Visibility = Visibility.Collapsed};
         }
 
         #endregion
@@ -60,7 +59,7 @@ namespace FroggerStarter.Model
         {
             var isCol = false;
 
-            var tolerance = 0.2 * this.Width;
+            var tolerance = 0.2 * Width;
             if (Math.Abs(gameObject.X - X) < tolerance && Math.Abs(gameObject.Y - Y) < tolerance)
             {
                 this.IsTaken = true;

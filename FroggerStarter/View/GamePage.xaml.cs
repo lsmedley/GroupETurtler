@@ -116,14 +116,14 @@ namespace FroggerStarter.View
             this.setUpPlayers();
         }
 
+        #endregion
+
+        #region Methods
+
         private void onSlowDownEnded(object sender, EventArgs e)
         {
             this.musicPlayer.PlaybackSession.PlaybackRate = 1;
         }
-
-        #endregion
-
-        #region Methods
 
         private async void setUpPlayers()
         {
@@ -144,7 +144,7 @@ namespace FroggerStarter.View
             this.setMusic(this.level1Music);
         }
 
-        private void setMusic(StorageFile music)
+        private void setMusic(IStorageFile music)
         {
             this.musicPlayer.Source = MediaSource.CreateFromStorageFile(music);
         }
@@ -197,21 +197,20 @@ namespace FroggerStarter.View
         private void onLivesUpdated(object sender, SoundType sound)
         {
             this.livesTextBlock.Text = $"Lives: {this.gameManager.Lives.ToString()}";
-            if (sound.Equals(SoundType.VehicleDeath))
+            switch (sound)
             {
-                this.playSoundEffect(this.vehicleCollisionSound);
-            }
-            else if (sound.Equals(SoundType.WallDeath))
-            {
-                this.playSoundEffect(this.wallCollisionSound);
-            }
-            else if (sound.Equals(SoundType.WaterDeath))
-            {
-                this.playSoundEffect(this.waterCollisionSound);
-            }
-            else if (sound.Equals(SoundType.TimeDeath))
-            {
-                this.playSoundEffect(this.timerDeathSound);
+                case SoundType.VehicleDeath:
+                    this.playSoundEffect(this.vehicleCollisionSound);
+                    break;
+                case SoundType.WallDeath:
+                    this.playSoundEffect(this.wallCollisionSound);
+                    break;
+                case SoundType.WaterDeath:
+                    this.playSoundEffect(this.waterCollisionSound);
+                    break;
+                case SoundType.TimeDeath:
+                    this.playSoundEffect(this.timerDeathSound);
+                    break;
             }
         }
 
@@ -232,16 +231,14 @@ namespace FroggerStarter.View
 
         private void onPowerUp(object sender, SoundType e)
         {
-            
             this.playSoundEffect(this.timerPowerupSound);
-            if(e == SoundType.VehiclePowerUp)
+            if (e == SoundType.VehiclePowerUp)
             {
                 this.musicPlayer.PlaybackSession.PlaybackRate = .5;
             }
-
         }
 
-        private void playSoundEffect(StorageFile sound)
+        private void playSoundEffect(IStorageFile sound)
         {
             this.soundPlayer.Source = MediaSource.CreateFromStorageFile(sound);
             this.soundPlayer.Play();
@@ -266,8 +263,6 @@ namespace FroggerStarter.View
             }
         }
 
-        #endregion
-
         private async void NameSubmitButton_Click(object sender, RoutedEventArgs e)
         {
             this.nameBoxLabel.Visibility = Visibility.Collapsed;
@@ -276,5 +271,7 @@ namespace FroggerStarter.View
             this.gameOverTextBlock.Visibility = Visibility.Collapsed;
             await this.gameManager.SaveHighScore(this.playerNameTextBox.Text);
         }
+
+        #endregion
     }
 }

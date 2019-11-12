@@ -6,13 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="{StaticResource AppWidth}"
+    Height="{StaticResource AppHeight}">
 
     <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}">
-        <TextBlock Margin="0,70,0,0" Text="Welcome to Turtler!" TextWrapping="Wrap" FontSize="36" FontWeight="Bold" Canvas.Left="156" Canvas.Top="36"/>
-        <Button x:Name="startGameButton" Content="Start Game" Margin="121,225,0,0" VerticalAlignment="Top" Click="StartGameButton_Click"/>
-        <Button x:Name="viewHighScoresButton" Content="View High Scores" Margin="234,225,0,0" VerticalAlignment="Top" Click="ViewHighScoresButton_Click"/>
-        <Button x:Name="resetHighScoresButton" Content="Reset High Scores" Margin="384,225,0,0" VerticalAlignment="Top" Click="ResetHighScoresButton_Click"/>
+        <TextBlock Margin="0,70,0,0" Text="Welcome to Turtler!" TextWrapping="Wrap" FontSize="36" FontWeight="Bold"
+                   Canvas.Left="156" Canvas.Top="36" />
+        <Button x:Name="startGameButton" Content="Start Game" Margin="121,225,0,0" VerticalAlignment="Top"
+                Click="StartGameButton_Click" />
+        <Button x:Name="viewHighScoresButton" Content="View High Scores" Margin="234,225,0,0" VerticalAlignment="Top"
+                Click="ViewHighScoresButton_Click" />
+        <Button x:Name="resetHighScoresButton" Content="Reset High Scores" Margin="384,225,0,0" VerticalAlignment="Top"
+                Click="ResetHighScoresButton_Click" />
 
     </Canvas>
 </Page>

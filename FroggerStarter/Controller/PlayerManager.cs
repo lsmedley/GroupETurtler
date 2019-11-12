@@ -73,10 +73,10 @@ namespace FroggerStarter.Controller
         public bool Disabled { get; set; }
 
         /// <summary>
-        /// Gets the moving sprite.
+        ///     Gets the moving sprite.
         /// </summary>
         /// <value>
-        /// The moving sprite.
+        ///     The moving sprite.
         /// </value>
         public BaseSprite MovingSprite { get; }
 
@@ -199,17 +199,16 @@ namespace FroggerStarter.Controller
                 this.Player.MoveDown();
             }
         }
+
         /// <summary>
-        /// Turns the player in the specified direction.
-        /// Postcondtion: this.Player.Sprite is facing the specified direction.
+        ///     Turns the player in the specified direction.
+        ///     Postcondtion: this.Player.Sprite is facing the specified direction.
         /// </summary>
         /// <param name="dir">The direction to turn.</param>
         public void TurnPlayer(Direction dir)
         {
             this.Player.Sprite.RenderTransformOrigin = new Point(0.5, 0.5);
-            RotateTransform rt = new RotateTransform();
-            rt.CenterX = .5;
-            rt.CenterY = .5;
+            var rt = new RotateTransform {CenterX = .5, CenterY = .5};
 
             switch (dir)
             {
@@ -229,15 +228,7 @@ namespace FroggerStarter.Controller
                     rt.Angle = 180;
                     this.Player.Sprite.RenderTransform = rt;
                     break;
-
             }
-        }
-
-        private void animateMovement(Direction dir)
-        {
-            
-            this.TurnPlayer(dir);
-            this.Player.ChangeSprite(this.PlayerSprites[0]);
         }
 
         /// <summary>
@@ -261,6 +252,7 @@ namespace FroggerStarter.Controller
             {
                 this.Player.ChangeSprite(this.PlayerSprites[0]);
             }
+
             var current = this.PlayerSprites.IndexOf(this.Player.Sprite);
             if (current == this.PlayerSprites.Count - 1)
             {
@@ -284,17 +276,14 @@ namespace FroggerStarter.Controller
             this.syncSpriteToLocation();
         }
 
-        #endregion
-
         /// <summary>
-        /// Toggles the moving sprite.
-        /// Postcondition: if this.Sprite @prev == normal player sprite, this sprite == the moving sprite.
-        /// Else this sprite == the normal player sprite.
+        ///     Toggles the moving sprite.
+        ///     Postcondition: if this.Sprite @prev == normal player sprite, this sprite == the moving sprite.
+        ///     Else this sprite == the normal player sprite.
         /// </summary>
         public void ToggleMovingSprite()
         {
             var trans = this.Player.Sprite.RenderTransform;
-
 
             if (this.Player.Sprite == this.PlayerSprites[0])
             {
@@ -303,23 +292,24 @@ namespace FroggerStarter.Controller
             else
             {
                 this.Player.ChangeSprite(this.PlayerSprites[0]);
-
             }
 
             if (trans != null)
             {
                 this.Player.Sprite.RenderTransform = trans;
-
             }
+
             this.syncSpriteToLocation();
         }
 
         /// <summary>
-        /// Adds a life.
+        ///     Adds a life.
         /// </summary>
         public void AddLife()
         {
             this.Lives++;
         }
+
+        #endregion
     }
 }

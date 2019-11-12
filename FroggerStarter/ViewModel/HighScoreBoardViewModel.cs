@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Windows.ApplicationModel.Core;
-using FroggerStarter.Annotations;
 using FroggerStarter.Extensions;
 using FroggerStarter.Model;
+using FroggerStarter.Properties;
 using FroggerStarter.Utils;
 
 namespace FroggerStarter.ViewModel
@@ -19,6 +19,8 @@ namespace FroggerStarter.ViewModel
         #region Data members
 
         private ObservableCollection<HighScore> scores;
+
+        private readonly HighScores highScores;
 
         #endregion
 
@@ -40,56 +42,67 @@ namespace FroggerStarter.ViewModel
             }
         }
 
-        private readonly HighScores highScores;
-
-        #endregion
-
         /// <summary>
-        /// Gets or sets the sort Scores by score name level button command.
+        ///     Gets or sets the sort Scores by score name level button command.
         /// </summary>
         /// <value>
-        /// The sort Scores by score name level button command.
+        ///     The sort Scores by score name level button command.
         /// </value>
         public ICommand SortScoresByScoreNameLevelButtonCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the sort Scores by name score level button command.
+        ///     Gets or sets the sort Scores by name score level button command.
         /// </summary>
         /// <value>
-        /// The sort Scores by name score level button command.
+        ///     The sort Scores by name score level button command.
         /// </value>
         public ICommand SortScoresByNameScoreLevelButtonCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the sort Scores by level score name button command.
+        ///     Gets or sets the sort Scores by level score name button command.
         /// </summary>
         /// <value>
-        /// The sort Scores by level score name button command.
+        ///     The sort Scores by level score name button command.
         /// </value>
         public ICommand SortScoresByLevelScoreNameButtonCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the restart application button command.
+        ///     Gets or sets the restart application button command.
         /// </summary>
         /// <value>
-        /// The restart application button command.
+        ///     The restart application button command.
         /// </value>
         public ICommand RestartApplicationButtonCommand { get; set; }
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="HighScoreBoardViewModel"/> class.
+        ///     Initializes a new instance of the <see cref="HighScoreBoardViewModel" /> class.
         /// </summary>
         public HighScoreBoardViewModel()
         {
             this.highScores = new HighScores();
             this.sortScoresByScoreNameLevel();
-            this.SortScoresByScoreNameLevelButtonCommand = new RelayCommand(o => this.sortScoresByScoreNameLevel(), null);
-            this.SortScoresByNameScoreLevelButtonCommand = new RelayCommand(o => this.sortScoresByNameScoreLevel(), null);
-            this.SortScoresByLevelScoreNameButtonCommand = new RelayCommand(o => this.sortScoresByLevelScoreName(), null);
-            this.RestartApplicationButtonCommand = new RelayCommand(o => this.restartApplication(), null);
+            this.SortScoresByScoreNameLevelButtonCommand =
+                new RelayCommand(o => this.sortScoresByScoreNameLevel(), null);
+            this.SortScoresByNameScoreLevelButtonCommand =
+                new RelayCommand(o => this.sortScoresByNameScoreLevel(), null);
+            this.SortScoresByLevelScoreNameButtonCommand =
+                new RelayCommand(o => this.sortScoresByLevelScoreName(), null);
+            this.RestartApplicationButtonCommand = new RelayCommand(o => restartApplication(), null);
         }
 
+        #endregion
+
         #region Methods
+
+        /// <summary>
+        ///     Occurs when a property value changes.
+        /// </summary>
+        /// <returns>the PropertyChanged event</returns>
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void sortScoresByScoreNameLevel()
         {
@@ -109,16 +122,10 @@ namespace FroggerStarter.ViewModel
             this.Scores = this.highScores.Scores.ToObservableCollection();
         }
 
-        private async void restartApplication()
+        private static async void restartApplication()
         {
             await CoreApplication.RequestRestartAsync("");
         }
-
-        /// <summary>
-        ///     Occurs when a property value changes.
-        /// </summary>
-        /// <returns>the PropertyChanged event</returns>
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         ///     Called when [property changed].

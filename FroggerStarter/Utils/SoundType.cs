@@ -2,7 +2,6 @@
 {
     /// <summary>
     ///     Stores the types of sounds.
-    ///     TODO: Find the best folder for this file.
     /// </summary>
     public enum SoundType
     {
@@ -27,7 +26,7 @@
         WallDeath,
 
         /// <summary>
-        /// Death by water
+        ///     Death by water
         /// </summary>
         WaterDeath,
 
@@ -42,7 +41,7 @@
         TimePowerUp,
 
         /// <summary>
-        /// The vehicle power up
+        ///     The vehicle power up
         /// </summary>
         VehiclePowerUp
     }

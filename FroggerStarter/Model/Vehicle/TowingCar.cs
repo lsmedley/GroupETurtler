@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FroggerStarter.Utils;
-using FroggerStarter.View.Sprites;
+﻿using FroggerStarter.Utils;
 using FroggerStarter.View.Sprites.VehicleSprites;
 
 namespace FroggerStarter.Model.Vehicle
 {
     /// <summary>
-    /// Holds functionality for a car towing a trailer.
+    ///     Holds functionality for a car towing a trailer.
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.Vehicle.Vehicle" />
     public class TowingCar : Vehicle
     {
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="TowingCar"/> class.
+        ///     Initializes a new instance of the <see cref="TowingCar" /> class.
         /// </summary>
         /// <param name="speed">The speed.</param>
         /// <param name="direction">The direction.</param>
@@ -27,5 +23,7 @@ namespace FroggerStarter.Model.Vehicle
             Sprite = new TowingCarSprite();
             RenderSprite();
         }
+
+        #endregion
     }
 }

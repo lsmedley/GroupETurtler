@@ -1,19 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using FroggerStarter.Utils;
 
 namespace FroggerStarter.Model
 {
+    /// <summary>
+    ///     The River
+    /// </summary>
+    /// <seealso cref="FroggerStarter.Model.Road" />
     public class River : Road
     {
+        #region Data members
+
+        /// <summary>
+        ///     The start of river
+        /// </summary>
         public double StartOfRiver;
-        public River(ICollection<LaneSettings> laneSettingsCollection, double totalHeight, double laneLength) : base(laneSettingsCollection, totalHeight, laneLength)
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="River" /> class.
+        /// </summary>
+        /// <param name="laneSettingsCollection">The collection of lane settings for this road's lanes.</param>
+        /// <param name="totalHeight">The total height of the road.</param>
+        /// <param name="laneLength">Length of the lanes.</param>
+        public River(ICollection<LaneSettings> laneSettingsCollection, double totalHeight, double laneLength) : base(
+            laneSettingsCollection, totalHeight, laneLength)
         {
             this.StartOfRiver = totalHeight;
-            base.SetUpLanes(totalHeight, laneLength);
+            SetUpLanes(totalHeight, laneLength);
 
             this.placeAllVehiclesInLanes(laneLength);
         }
@@ -39,32 +56,30 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Moves the objects in the river, returning the value by which the player needs to be moved if it
-        /// is riding on one..
+        ///     Moves the objects in the river, returning the value by which the player needs to be moved if it
+        ///     is riding on one..
         /// </summary>
         /// <param name="laneLen">Length of the lane.</param>
         /// <param name="player">The player.</param>
         /// <returns></returns>
         public double MoveRiver(double laneLen, GameObject player)
         {
-            //double prevX = 0;
-            //double newX = 0;
             double changeX = 0;
 
             foreach (var debris in this)
             {
                 if (debris.IsColliding(player))
                 {
-                    changeX = this.getDebrisMovement(debris);
+                    changeX = getDebrisMovement(debris);
                 }
             }
-            base.MoveLaneVehicles(laneLen);
 
-            //return newX - prevX;
+            MoveLaneVehicles(laneLen);
+
             return changeX;
         }
 
-        private double getDebrisMovement(Vehicle.Vehicle debris)
+        private static double getDebrisMovement(Vehicle.Vehicle debris)
         {
             double changeX;
             if (debris.Direction == Direction.Right)
@@ -78,5 +93,7 @@ namespace FroggerStarter.Model
 
             return changeX;
         }
+
+        #endregion
     }
 }

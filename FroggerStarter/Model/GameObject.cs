@@ -184,13 +184,13 @@ namespace FroggerStarter.Model
         /// </returns>
         public virtual bool IsColliding(GameObject gameObject)
         {
-            var thisObjectRect = this.createRectangleForSprite(this.Sprite);
-            var otherObjectRect = this.createRectangleForSprite(gameObject.Sprite);
+            var thisObjectRect = createRectangleForSprite(this.Sprite);
+            var otherObjectRect = createRectangleForSprite(gameObject.Sprite);
 
             return thisObjectRect.IntersectsWith(otherObjectRect);
         }
 
-        private RectangleF createRectangleForSprite(FrameworkElement sprite)
+        private static RectangleF createRectangleForSprite(FrameworkElement sprite)
         {
             var spriteRectangle = new RectangleF {
                 X = (float) Canvas.GetLeft(sprite),

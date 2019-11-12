@@ -14,12 +14,14 @@
         ///     The right
         /// </summary>
         Right,
+
         /// <summary>
-        /// Up
+        ///     Up
         /// </summary>
         Up,
+
         /// <summary>
-        /// Down
+        ///     Down
         /// </summary>
         Down
     }

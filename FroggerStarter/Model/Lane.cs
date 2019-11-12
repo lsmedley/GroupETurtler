@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using FroggerStarter.Model.Vehicle;
 using FroggerStarter.Utils;
 
@@ -159,15 +160,8 @@ namespace FroggerStarter.Model
 
         private bool hasSpaceForNewVehicle(double laneLength)
         {
-            foreach (var vehicle in this.vehicles)
-            {
-                if (vehicle.X >= laneLength - vehicle.Width || vehicle.X <= vehicle.Width)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return this.vehicles.All(vehicle =>
+                !(vehicle.X >= laneLength - vehicle.Width) && !(vehicle.X <= vehicle.Width));
         }
 
         /// <summary>
@@ -223,11 +217,7 @@ namespace FroggerStarter.Model
         /// <returns>The space between vehicles</returns>
         public double GetSpacing(double laneLength)
         {
-            double totalCarLength = 0;
-            foreach (var vehicle in this.vehicles)
-            {
-                totalCarLength += vehicle.Width;
-            }
+            var totalCarLength = this.vehicles.Sum(vehicle => vehicle.Width);
 
             return (laneLength - totalCarLength) / this.vehicles.Count;
         }
@@ -260,15 +250,7 @@ namespace FroggerStarter.Model
         /// <returns>True if one of the vehicles has collided with g, false otherwise.</returns>
         public bool CheckCollision(GameObject g)
         {
-            foreach (var vehicle in this.vehicles)
-            {
-                if (vehicle.IsColliding(g))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return this.vehicles.Any(vehicle => vehicle.IsColliding(g));
         }
 
         #endregion

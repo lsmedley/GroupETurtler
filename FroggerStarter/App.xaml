@@ -5,9 +5,6 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <!-- Original appheight: 410 
-            Orig width: 650
-            Height of original app + 5 river lanes: 660 (+a rest tile = 710)-->
             <x:Double x:Key="AppHeight">710</x:Double>
             <x:Double x:Key="AppWidth">650</x:Double>
             <x:Double x:Key="HighRoadYLocation">55</x:Double>
