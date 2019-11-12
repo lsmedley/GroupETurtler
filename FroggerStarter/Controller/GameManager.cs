@@ -341,13 +341,14 @@ namespace FroggerStarter.Controller
         private void updateRoad()
         {
             var speedToAdd = 0;
-            if (this.CurrentLevel == 2)
+            switch (this.CurrentLevel)
             {
-                speedToAdd = GameSettings.Level2AdditionalSpeedOnTick;
-            }
-            else if (this.CurrentLevel == 3)
-            {
-                speedToAdd = GameSettings.Level3AdditionalSpeedOnTick;
+                case 2:
+                    speedToAdd = GameSettings.Level2AdditionalSpeedOnTick;
+                    break;
+                case 3:
+                    speedToAdd = GameSettings.Level3AdditionalSpeedOnTick;
+                    break;
             }
 
             if (this.road.CheckCollision(this.playerManager.Player, this.playerManager.Disabled))

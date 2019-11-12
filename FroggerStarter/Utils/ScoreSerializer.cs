@@ -16,7 +16,7 @@ namespace FroggerStarter.Utils
         #region Methods
 
         /// <summary>
-        /// Serializes the object.
+        ///     Serializes the object.
         /// </summary>
         /// <param name="highScores">The high scores.</param>
         public static async Task SerializeObject(IList<HighScore> highScores)
@@ -43,7 +43,7 @@ namespace FroggerStarter.Utils
             {
                 highScores = Task.Run(deserialize).Result;
             }
-            catch (AggregateException e)
+            catch (AggregateException)
             {
                 return highScores;
             }
@@ -52,7 +52,7 @@ namespace FroggerStarter.Utils
         }
 
         /// <summary>
-        /// Deserializes the specified file name.
+        ///     Deserializes the specified file name.
         /// </summary>
         /// <returns></returns>
         private static async Task<List<HighScore>> deserialize()

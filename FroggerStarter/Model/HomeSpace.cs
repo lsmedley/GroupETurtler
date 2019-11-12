@@ -39,8 +39,7 @@ namespace FroggerStarter.Model
         {
             Sprite = new HomeSprite();
             this.IsTaken = false;
-            this.TakenSprite = new PlayerHomeSprite();
-            this.TakenSprite.Visibility = Visibility.Collapsed;
+            this.TakenSprite = new PlayerHomeSprite {Visibility = Visibility.Collapsed};
         }
 
         #endregion

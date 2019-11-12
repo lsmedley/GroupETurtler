@@ -2,7 +2,6 @@
 using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using FroggerStarter.Utils;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -12,7 +11,7 @@ namespace FroggerStarter.View
     /// <summary>
     ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class StartScreen : Page
+    public sealed partial class StartScreen
     {
         #region Constructors
 
@@ -50,7 +49,7 @@ namespace FroggerStarter.View
 
             messageDialog.Commands.Add(new UICommand(
                 "Yes",
-                this.resetHighScores));
+                resetHighScores));
             messageDialog.Commands.Add(new UICommand(
                 "No"));
             messageDialog.DefaultCommandIndex = 0;
@@ -59,7 +58,7 @@ namespace FroggerStarter.View
             await messageDialog.ShowAsync();
         }
 
-        private async void resetHighScores(IUICommand command)
+        private static async void resetHighScores(IUICommand command)
         {
             var folder = ApplicationData.Current.LocalFolder;
 

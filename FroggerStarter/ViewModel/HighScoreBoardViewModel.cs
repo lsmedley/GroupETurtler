@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Windows.ApplicationModel.Core;
-using FroggerStarter.Annotations;
 using FroggerStarter.Extensions;
 using FroggerStarter.Model;
+using FroggerStarter.Properties;
 using FroggerStarter.Utils;
 
 namespace FroggerStarter.ViewModel
@@ -91,7 +91,7 @@ namespace FroggerStarter.ViewModel
                 new RelayCommand(o => this.sortScoresByNameScoreLevel(), null);
             this.SortScoresByLevelScoreNameButtonCommand =
                 new RelayCommand(o => this.sortScoresByLevelScoreName(), null);
-            this.RestartApplicationButtonCommand = new RelayCommand(o => this.restartApplication(), null);
+            this.RestartApplicationButtonCommand = new RelayCommand(o => restartApplication(), null);
         }
 
         #endregion
@@ -122,7 +122,7 @@ namespace FroggerStarter.ViewModel
             this.Scores = this.highScores.Scores.ToObservableCollection();
         }
 
-        private async void restartApplication()
+        private static async void restartApplication()
         {
             await CoreApplication.RequestRestartAsync("");
         }

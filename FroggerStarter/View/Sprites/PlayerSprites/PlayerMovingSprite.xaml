@@ -4,14 +4,14 @@
     xmlns:local="using:FroggerStarter.View.Sprites"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Custom="using:FroggerStarter.View.Sprites.PlayerSprites"
+    xmlns:custom="using:FroggerStarter.View.Sprites.PlayerSprites"
     x:Class="FroggerStarter.View.Sprites.PlayerSprites.PlayerMovingSprite"
     mc:Ignorable="d"
     Height="50"
     Width="50">
 
     <Canvas Width="50" Height="50" Background="Transparent">
-        <Custom:PlayerSprite />
+        <custom:PlayerSprite />
         <Ellipse Width="6" Height="19" Fill="Green" Canvas.Top="15" Canvas.Left="42" />
         <Ellipse Width="6" Height="19" Fill="Green" Canvas.Top="15" Canvas.Left="2" />
 

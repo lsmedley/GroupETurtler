@@ -6,9 +6,8 @@ using FroggerStarter.Utils;
 
 namespace FroggerStarter.Model
 {
-
     /// <summary>
-    /// Manages high score tasks
+    ///     Manages high score tasks
     /// </summary>
     public class HighScores
     {

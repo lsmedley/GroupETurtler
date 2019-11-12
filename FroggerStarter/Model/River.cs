@@ -4,7 +4,7 @@ using FroggerStarter.Utils;
 namespace FroggerStarter.Model
 {
     /// <summary>
-    /// The River
+    ///     The River
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.Road" />
     public class River : Road
@@ -12,7 +12,7 @@ namespace FroggerStarter.Model
         #region Data members
 
         /// <summary>
-        /// The start of river
+        ///     The start of river
         /// </summary>
         public double StartOfRiver;
 
@@ -21,7 +21,7 @@ namespace FroggerStarter.Model
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="River"/> class.
+        ///     Initializes a new instance of the <see cref="River" /> class.
         /// </summary>
         /// <param name="laneSettingsCollection">The collection of lane settings for this road's lanes.</param>
         /// <param name="totalHeight">The total height of the road.</param>
@@ -71,7 +71,7 @@ namespace FroggerStarter.Model
             {
                 if (debris.IsColliding(player))
                 {
-                    changeX = this.getDebrisMovement(debris);
+                    changeX = getDebrisMovement(debris);
                 }
             }
 
@@ -80,7 +80,7 @@ namespace FroggerStarter.Model
             return changeX;
         }
 
-        private double getDebrisMovement(Vehicle.Vehicle debris)
+        private static double getDebrisMovement(Vehicle.Vehicle debris)
         {
             double changeX;
             if (debris.Direction == Direction.Right)
