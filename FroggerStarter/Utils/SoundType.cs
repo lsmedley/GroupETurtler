@@ -2,7 +2,6 @@
 {
     /// <summary>
     ///     Stores the types of sounds.
-    ///     TODO: Find the best folder for this file.
     /// </summary>
     public enum SoundType
     {
