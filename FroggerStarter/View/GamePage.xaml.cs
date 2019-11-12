@@ -36,7 +36,6 @@ namespace FroggerStarter.View
         private readonly TextBlock livesTextBlock;
         private readonly TextBlock levelTextBlock;
         private readonly TextBlock scoreTextBlock;
-        private readonly TextBlock gameOverTextBlock;
 
         private readonly MediaPlayer soundPlayer;
         private StorageFile levelWonSound;
@@ -79,7 +78,6 @@ namespace FroggerStarter.View
             this.scoreTextBlock = new TextBlock {Text = $"Score: {this.gameManager.TotalScore.ToString()}"};
             var titleTextBlock = new TextBlock {Text = "Turtler"};
             this.levelTextBlock = new TextBlock {Text = $"Level: {this.gameManager.CurrentLevel.ToString()}"};
-            this.gameOverTextBlock = new TextBlock {Text = "Game Over"};
 
             this.canvas.Children.Add(this.livesTextBlock);
             this.canvas.Children.Add(this.levelTextBlock);
@@ -170,11 +168,11 @@ namespace FroggerStarter.View
 
         private void onGameOver(object sender, SoundType sound)
         {
-            this.initializeGameOverText();
             this.playGameOverSound(sound);
             this.nameBoxLabel.Visibility = Visibility.Visible;
             this.playerNameTextBox.Visibility = Visibility.Visible;
             this.nameSubmitButton.Visibility = Visibility.Visible;
+            this.gameOverTextBlock.Visibility = Visibility.Visible;
         }
 
         private void playGameOverSound(SoundType sound)
@@ -188,15 +186,6 @@ namespace FroggerStarter.View
             {
                 this.playSoundEffect(this.gameWonSound);
             }
-        }
-
-        private void initializeGameOverText()
-        {
-            this.gameOverTextBlock.FontSize = 60;
-            this.gameOverTextBlock.Foreground = HudBrush;
-            Canvas.SetTop(this.gameOverTextBlock, this.applicationHeight / 2 - 40);
-            Canvas.SetLeft(this.gameOverTextBlock, this.applicationWidth / 2 - 150);
-            this.canvas.Children.Add(this.gameOverTextBlock);
         }
 
         private void onScoreUpdated(object sender, EventArgs e)
@@ -279,12 +268,13 @@ namespace FroggerStarter.View
 
         #endregion
 
-        private void NameSubmitButton_Click(object sender, RoutedEventArgs e)
+        private async void NameSubmitButton_Click(object sender, RoutedEventArgs e)
         {
             this.nameBoxLabel.Visibility = Visibility.Collapsed;
             this.playerNameTextBox.Visibility = Visibility.Collapsed;
             this.nameSubmitButton.Visibility = Visibility.Collapsed;
-            this.gameManager.SaveHighScore(this.playerNameTextBox.Text);
+            this.gameOverTextBlock.Visibility = Visibility.Collapsed;
+            await this.gameManager.SaveHighScore(this.playerNameTextBox.Text);
         }
     }
 }

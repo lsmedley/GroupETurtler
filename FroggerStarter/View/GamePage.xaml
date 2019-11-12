@@ -15,9 +15,10 @@
         <Rectangle Canvas.Top="105" Fill="DodgerBlue" Width="{StaticResource AppWidth}" Height="250" />
 
         <Rectangle Canvas.Top="355" Fill="LightGoldenrodYellow" Width="{StaticResource AppWidth}" Height="55" />
-        <TextBox x:Name="playerNameTextBox" Canvas.Left="152" Canvas.Top="318" Text="" TextWrapping="Wrap" Width="346" Visibility="Collapsed"/>
-        <TextBlock x:Name="nameBoxLabel" Canvas.Left="71" Canvas.Top="325" Text="Your Name:" TextWrapping="Wrap" Foreground="White" Visibility="Collapsed"/>
-        <Button x:Name="nameSubmitButton" Content="Submit" Canvas.Left="521" Canvas.Top="316" Foreground="White" Background="Gray" Visibility="Collapsed" Click="NameSubmitButton_Click"/>
+        <TextBlock x:Name="gameOverTextBlock" Canvas.Left="138" Canvas.Top="182" Text="Game Over" TextWrapping="Wrap" Foreground="#FFF1F1F1" FontWeight="Bold" FontSize="72" Canvas.ZIndex="100" Visibility="Collapsed"/>
+        <TextBox x:Name="playerNameTextBox" Canvas.Left="163" Canvas.Top="368" Text="" TextWrapping="Wrap" Width="346" Visibility="Collapsed" Canvas.ZIndex="100" BorderBrush="#66000000"/>
+        <TextBlock x:Name="nameBoxLabel" Canvas.Left="82" Canvas.Top="375" Text="Your Name:" TextWrapping="Wrap" Foreground="Black" Visibility="Collapsed" Canvas.ZIndex="100" FocusVisualPrimaryBrush="Black"/>
+        <Button x:Name="nameSubmitButton" Content="Submit" Canvas.Left="532" Canvas.Top="366" Foreground="White" Background="Gray" Visibility="Collapsed" Click="NameSubmitButton_Click" Canvas.ZIndex="100"/>
         <Grid Height="410" Width="650"/>
         <Rectangle Canvas.Top="355" Fill="SandyBrown" Width="{StaticResource AppWidth}" Height="55" />
         <Rectangle Canvas.Top="655" Fill="LightGoldenrodYellow" Width="{StaticResource AppWidth}" Height="55" />
