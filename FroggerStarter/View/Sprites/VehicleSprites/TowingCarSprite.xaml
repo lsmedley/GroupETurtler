@@ -16,13 +16,13 @@
     </UserControl.Resources>
 
     <Canvas>
-        <vehicleSprites:CarSprite></vehicleSprites:CarSprite>
+        <vehicleSprites:CarSprite />
         <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="3.5" Canvas.Left="60" />
         <Ellipse Width="10" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Top="34" Canvas.Left="60" />
 
 
         <Rectangle Width="5" Height="2.5" Fill="{StaticResource WheelColor}" Canvas.Left="45" Canvas.Top="18.75" />
-        <Ellipse  Width="10" Height="30" Fill="{StaticResource TrailerColor}" Canvas.Left="47.5" Canvas.Top="5" />
-        <Rectangle  Width="20" Height="30" Fill="{StaticResource TrailerColor}" Canvas.Left="52.5" Canvas.Top="5" />
+        <Ellipse Width="10" Height="30" Fill="{StaticResource TrailerColor}" Canvas.Left="47.5" Canvas.Top="5" />
+        <Rectangle Width="20" Height="30" Fill="{StaticResource TrailerColor}" Canvas.Left="52.5" Canvas.Top="5" />
     </Canvas>
 </local:BaseSprite>

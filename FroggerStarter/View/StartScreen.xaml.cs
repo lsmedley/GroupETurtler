@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using FroggerStarter.Utils;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -21,17 +10,23 @@ using FroggerStarter.Utils;
 namespace FroggerStarter.View
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class StartScreen : Page
     {
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="StartScreen"/> class.
+        ///     Initializes a new instance of the <see cref="StartScreen" /> class.
         /// </summary>
         public StartScreen()
         {
             this.InitializeComponent();
         }
+
+        #endregion
+
+        #region Methods
 
         private void StartGameButton_Click(object sender, RoutedEventArgs e)
         {
@@ -55,7 +50,7 @@ namespace FroggerStarter.View
 
             messageDialog.Commands.Add(new UICommand(
                 "Yes",
-                new UICommandInvokedHandler(this.resetHighScores)));
+                this.resetHighScores));
             messageDialog.Commands.Add(new UICommand(
                 "No"));
             messageDialog.DefaultCommandIndex = 0;
@@ -78,5 +73,7 @@ namespace FroggerStarter.View
 
             await messageDialog.ShowAsync();
         }
+
+        #endregion
     }
 }

@@ -1,40 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using FroggerStarter.Utils;
 
 namespace FroggerStarter.Model
 {
     public class River : Road
     {
+        #region Data members
+
         public double StartOfRiver;
-        public River(ICollection<LaneSettings> laneSettingsCollection, double totalHeight, double laneLength) : base(laneSettingsCollection, totalHeight, laneLength)
+
+        #endregion
+
+        #region Constructors
+
+        public River(ICollection<LaneSettings> laneSettingsCollection, double totalHeight, double laneLength) : base(
+            laneSettingsCollection, totalHeight, laneLength)
         {
             this.StartOfRiver = totalHeight;
-            base.SetUpLanes(totalHeight, laneLength);
+            SetUpLanes(totalHeight, laneLength);
 
-            foreach (Lane lane in this.Lanes)
+            foreach (var lane in Lanes)
             {
                 double laneY = 0;
                 foreach (var debris in lane)
                 {
                     laneY = debris.Y;
                 }
-                for (int i = 0; i < lane.MaxNumVehicles; i++)
+
+                for (var i = 0; i < lane.MaxNumVehicles; i++)
                 {
                     lane.AddVehicle();
                 }
+
                 lane.PlaceAllVehiclesInLane(laneLength);
                 lane.SetVehicleYs(laneY);
             }
         }
+
+        #endregion
+
+        #region Methods
+
         //Add all 'vehicles' to river at start
 
         /// <summary>
-        /// Moves the objects in the river, returning the value by which the player needs to be moved if it
-        /// is riding on one..
+        ///     Moves the objects in the river, returning the value by which the player needs to be moved if it
+        ///     is riding on one..
         /// </summary>
         /// <param name="laneLen">Length of the lane.</param>
         /// <param name="player">The player.</param>
@@ -52,7 +63,8 @@ namespace FroggerStarter.Model
                     changeX = this.getDebrisMovement(debris);
                 }
             }
-            base.MoveLaneVehicles(laneLen);
+
+            MoveLaneVehicles(laneLen);
 
             //return newX - prevX;
             return changeX;
@@ -72,5 +84,7 @@ namespace FroggerStarter.Model
 
             return changeX;
         }
+
+        #endregion
     }
 }

@@ -13,9 +13,10 @@ namespace FroggerStarter.Model
         #region Data members
 
         /// <summary>
-        /// The lanes
+        ///     The lanes
         /// </summary>
         protected readonly IList<Lane> Lanes;
+
         private readonly ICollection<LaneSettings> laneSettingsCollection;
         private int currentTick;
         private int endSlowDownTick;
@@ -42,7 +43,7 @@ namespace FroggerStarter.Model
 
             this.laneSettingsCollection = laneSettingsCollection;
             this.currentTick = 0;
-            this.endSlowDownTick = Int32.MaxValue;
+            this.endSlowDownTick = int.MaxValue;
 
             this.Lanes = new List<Lane>();
             this.SetUpLanes(totalHeight, laneLength);
@@ -92,9 +93,9 @@ namespace FroggerStarter.Model
         public event EventHandler<EventArgs> CarAdded;
 
         /// <summary>
-        /// Occurs when [slowdown ended].
+        ///     Occurs when [slowdown ended].
         /// </summary>
-        public event EventHandler<EventArgs> SlowdownEnded; 
+        public event EventHandler<EventArgs> SlowdownEnded;
 
         /// <summary>
         ///     Sets up lanes.
@@ -139,6 +140,7 @@ namespace FroggerStarter.Model
             {
                 this.ResetSpeeds();
             }
+
             if (this.currentTick >= GameSettings.VehicleActionTick)
             {
                 this.vehicleActionOnTick(laneLen, speedToAddOnVehicleAction);
@@ -169,7 +171,7 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Moves the lane vehicles.
+        ///     Moves the lane vehicles.
         /// </summary>
         /// <param name="laneLen">Length of the lane.</param>
         protected void MoveLaneVehicles(double laneLen)
@@ -254,13 +256,12 @@ namespace FroggerStarter.Model
                     vehicle.Speed = lane.StartSpeed;
                 }
             }
+
             this.onSlowdownEnded();
         }
 
-        #endregion
-
         /// <summary>
-        /// Slows down vehicles for i ticks.
+        ///     Slows down vehicles for i ticks.
         /// </summary>
         /// <param name="i">The i.</param>
         public void SlowDownVehicles(int i)
@@ -280,5 +281,7 @@ namespace FroggerStarter.Model
         {
             this.SlowdownEnded?.Invoke(this, EventArgs.Empty);
         }
+
+        #endregion
     }
 }

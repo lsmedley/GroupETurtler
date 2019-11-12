@@ -1,11 +1,5 @@
 ﻿using System;
-
-using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using Windows.Storage;
-using System.Threading;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -13,7 +7,6 @@ using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
 using FroggerStarter.Utils;
 using FroggerStarter.View;
-using FroggerStarter.View.Sprites;
 using FroggerStarter.View.Sprites.PlayerSprites;
 
 namespace FroggerStarter.Controller
@@ -115,7 +108,8 @@ namespace FroggerStarter.Controller
 
             this.backgroundWidth = backgroundWidth;
             this.roadHeight = backgroundHeight - GameSettings.BottomLaneOffset - GameSettings.TileHeight;
-            this.riverHeight = backgroundHeight - GameSettings.TopOfGameOffset - GameSettings.RiverLaneSettingsCollection.Count * GameSettings.TileHeight;
+            this.riverHeight = backgroundHeight - GameSettings.TopOfGameOffset -
+                               GameSettings.RiverLaneSettingsCollection.Count * GameSettings.TileHeight;
             this.CurrentLevel = 1;
         }
 
@@ -149,9 +143,9 @@ namespace FroggerStarter.Controller
         public event EventHandler<SoundType> PowerUpActivated;
 
         /// <summary>
-        /// Occurs when [slow down ended].
+        ///     Occurs when [slow down ended].
         /// </summary>
-        public event EventHandler<EventArgs> SlowDownEnded; 
+        public event EventHandler<EventArgs> SlowDownEnded;
 
         /// <summary>
         ///     Initializes the game working with appropriate classes to play frog
@@ -170,7 +164,6 @@ namespace FroggerStarter.Controller
             this.createRoadManager();
             this.createPowerupManager();
             this.setUpTimers(GameSettings.TimerLengthSeconds);
-
         }
 
         private void createPowerupManager()
@@ -235,6 +228,7 @@ namespace FroggerStarter.Controller
                     sprite.Visibility = Visibility.Collapsed;
                 }
             }
+
             this.gameCanvas.Children.Add(this.playerManager.MovingSprite);
             this.playerManager.MovingSprite.Visibility = Visibility.Collapsed;
 
@@ -272,7 +266,6 @@ namespace FroggerStarter.Controller
             {
                 this.movementAnimationTimer.Stop();
             }
-
         }
 
         private void setUpLevelTimer(int tLen)
@@ -323,7 +316,8 @@ namespace FroggerStarter.Controller
         {
             this.playerManager.Player.X += this.river.MoveRiver(this.backgroundWidth, this.playerManager.Player);
             if (this.playerManager.Player.Y <= this.riverHeight - GameSettings.TileHeight &&
-                !this.river.CheckCollision(this.playerManager.Player, this.playerManager.Disabled) && !this.playerManager.Disabled)
+                !this.river.CheckCollision(this.playerManager.Player, this.playerManager.Disabled) &&
+                !this.playerManager.Disabled)
             {
                 this.onPlayerDeath(SoundType.WaterDeath);
             }
@@ -337,6 +331,7 @@ namespace FroggerStarter.Controller
                 this.levelTimer.AddTime(GameSettings.TimePowerUpAmount);
                 this.onPowerUp(SoundType.TimePowerUp);
             }
+
             if (this.powerUpManager.CheckVehicleCollision(this.playerManager.Player, this.playerManager.Disabled))
             {
                 this.road.SlowDownVehicles(GameSettings.VehicleSlowDownTickLength);
@@ -548,7 +543,6 @@ namespace FroggerStarter.Controller
             {
                 this.GameOver?.Invoke(this, SoundType.GameWon);
             }
-
         }
 
         private void changeToRound3()
@@ -626,13 +620,14 @@ namespace FroggerStarter.Controller
                 }
             }
         }
+
         private void onSlowDownEnded(object sender, EventArgs e)
         {
             this.SlowDownEnded?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
-        /// Saves the high score.
+        ///     Saves the high score.
         /// </summary>
         /// <param name="name">The name.</param>
         public async Task SaveHighScore(string name)
@@ -649,6 +644,5 @@ namespace FroggerStarter.Controller
         }
 
         #endregion
-
     }
 }

@@ -1,5 +1,4 @@
 ﻿using FroggerStarter.Utils;
-using FroggerStarter.View.Sprites;
 using FroggerStarter.View.Sprites.VehicleSprites;
 
 namespace FroggerStarter.Model.Vehicle

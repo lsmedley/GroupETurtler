@@ -16,7 +16,7 @@
     </UserControl.Resources>
 
     <Canvas>
-        <custom:SmallLogSprite></custom:SmallLogSprite>
+        <custom:SmallLogSprite />
         <Rectangle Width="50" Height="40" Fill="{StaticResource BarkColor}" Canvas.Left="90" />
         <Ellipse Width="20" Height="40" Fill="{StaticResource FleshColor}" Canvas.Left="130" />
     </Canvas>

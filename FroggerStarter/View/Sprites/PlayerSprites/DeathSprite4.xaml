@@ -17,7 +17,7 @@
     </local:BaseSprite.Resources>
 
     <Canvas Width="50" Height="50">
-        <Custom:PlayerSprite x:Name="basePlayerSprite"/>
+        <Custom:PlayerSprite x:Name="basePlayerSprite" />
 
         <!--Hind legs -->
         <Ellipse Width="25" Height="15" Fill="{StaticResource BodyColor}" Canvas.Top="40" Canvas.Left="10" />

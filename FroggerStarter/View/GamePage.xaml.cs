@@ -116,14 +116,14 @@ namespace FroggerStarter.View
             this.setUpPlayers();
         }
 
+        #endregion
+
+        #region Methods
+
         private void onSlowDownEnded(object sender, EventArgs e)
         {
             this.musicPlayer.PlaybackSession.PlaybackRate = 1;
         }
-
-        #endregion
-
-        #region Methods
 
         private async void setUpPlayers()
         {
@@ -232,13 +232,11 @@ namespace FroggerStarter.View
 
         private void onPowerUp(object sender, SoundType e)
         {
-            
             this.playSoundEffect(this.timerPowerupSound);
-            if(e == SoundType.VehiclePowerUp)
+            if (e == SoundType.VehiclePowerUp)
             {
                 this.musicPlayer.PlaybackSession.PlaybackRate = .5;
             }
-
         }
 
         private void playSoundEffect(StorageFile sound)
@@ -266,8 +264,6 @@ namespace FroggerStarter.View
             }
         }
 
-        #endregion
-
         private async void NameSubmitButton_Click(object sender, RoutedEventArgs e)
         {
             this.nameBoxLabel.Visibility = Visibility.Collapsed;
@@ -276,5 +272,7 @@ namespace FroggerStarter.View
             this.gameOverTextBlock.Visibility = Visibility.Collapsed;
             await this.gameManager.SaveHighScore(this.playerNameTextBox.Text);
         }
+
+        #endregion
     }
 }

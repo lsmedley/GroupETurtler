@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
 using FroggerStarter.Model;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading.Tasks;
 
 namespace FroggerStarter.Utils
 {
@@ -24,7 +23,8 @@ namespace FroggerStarter.Utils
         public static async Task SerializeObject(IList<HighScore> highScores)
         {
             var folder = ApplicationData.Current.LocalFolder;
-            var file = await folder.CreateFileAsync(GameSettings.HighScoresFilename, CreationCollisionOption.ReplaceExisting);
+            var file = await folder.CreateFileAsync(GameSettings.HighScoresFilename,
+                CreationCollisionOption.ReplaceExisting);
             var serializer = new XmlSerializer(typeof(List<HighScore>));
             var outStream = await file.OpenStreamForWriteAsync();
             using (outStream)
@@ -34,7 +34,7 @@ namespace FroggerStarter.Utils
         }
 
         /// <summary>
-        /// Deserializes this instance.
+        ///     Deserializes this instance.
         /// </summary>
         /// <returns></returns>
         public static List<HighScore> Deserialize()
@@ -48,6 +48,7 @@ namespace FroggerStarter.Utils
             {
                 return highScores;
             }
+
             return highScores;
         }
 

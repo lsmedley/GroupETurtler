@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -8,20 +7,20 @@ using FroggerStarter.Utils;
 namespace FroggerStarter.Model
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="System.Collections.Generic.IList{FroggerStarter.Model.HighScore}" />
     public class HighScores
     {
-        #region Data members
+        #region Properties
 
         /// <summary>
-        /// Gets or sets the scores.
+        ///     Gets or sets the scores.
         /// </summary>
         /// <value>
-        /// The scores.
+        ///     The scores.
         /// </value>
-        [XmlArray("Scores"), XmlArrayItem(typeof(HighScore), ElementName = "HighScore")]
+        [XmlArray("Scores")]
+        [XmlArrayItem(typeof(HighScore), ElementName = "HighScore")]
         public List<HighScore> Scores { get; set; }
 
         #endregion
@@ -49,7 +48,7 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Sorts by score, then name, then level
+        ///     Sorts by score, then name, then level
         /// </summary>
         public void SortByScoreNameLevel()
         {
@@ -61,7 +60,7 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Sorts by name, then score, then level
+        ///     Sorts by name, then score, then level
         /// </summary>
         public void SortByNameScoreLevel()
         {
@@ -73,7 +72,7 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Sorts by level, then score, then name
+        ///     Sorts by level, then score, then name
         /// </summary>
         public void SortByLevelScoreName()
         {

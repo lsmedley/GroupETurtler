@@ -133,7 +133,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Gets the vehicle powerup sprite.
+        ///     Gets the vehicle powerup sprite.
         /// </summary>
         /// <returns></returns>
         public BaseSprite GetVehicleSprite()
@@ -159,7 +159,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Checks the collision with the vehicle powerup.
+        ///     Checks the collision with the vehicle powerup.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="playerManagerDisabled">if set to <c>true</c> [player manager disabled].</param>

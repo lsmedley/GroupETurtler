@@ -1,21 +1,23 @@
-﻿
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+﻿// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace FroggerStarter.View.Sprites.PlayerSprites
 {
     /// <summary>
-    /// Contains functionality for the player's moving animation.
+    ///     Contains functionality for the player's moving animation.
     /// </summary>
     /// <seealso cref="PlayerSprite" />
     public sealed partial class PlayerMovingSprite
     {
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerMovingSprite" /> class.
+        ///     Initializes a new instance of the <see cref="PlayerMovingSprite" /> class.
         /// </summary>
-        public PlayerMovingSprite() 
+        public PlayerMovingSprite()
         {
             this.InitializeComponent();
         }
+
+        #endregion
     }
 }

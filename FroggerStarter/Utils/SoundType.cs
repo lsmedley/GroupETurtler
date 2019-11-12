@@ -27,7 +27,7 @@
         WallDeath,
 
         /// <summary>
-        /// Death by water
+        ///     Death by water
         /// </summary>
         WaterDeath,
 
@@ -42,7 +42,7 @@
         TimePowerUp,
 
         /// <summary>
-        /// The vehicle power up
+        ///     The vehicle power up
         /// </summary>
         VehiclePowerUp
     }
