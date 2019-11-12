@@ -407,6 +407,7 @@ namespace FroggerStarter.Controller
         {
             this.playerManager.Disabled = true;
             this.levelTimer.Pause();
+            this.movementAnimationTimer.Stop();
             this.deathTimer.Start();
             this.playerManager.LoseLife();
             this.onLivesUpdated(deathType);
@@ -435,7 +436,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerLeft()
         {
-            this.playerManager.MoveLeft();
+            if (!this.playerManager.Disabled)
+            {
+                this.movementAnimationTimer.Start();
+                this.playerManager.MoveLeft();
+            }
         }
 
         /// <summary>
@@ -445,7 +450,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerRight()
         {
-            this.playerManager.MoveRight(this.backgroundWidth);
+            if (!this.playerManager.Disabled)
+            {
+                this.movementAnimationTimer.Start();
+                this.playerManager.MoveRight(this.backgroundWidth);
+            }
         }
 
         /// <summary>
@@ -455,11 +464,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            //this.movementAnimationTimer.Start();
-            this.playerManager.MoveUp(GameSettings.TopOfGameOffset);
             if (!this.playerManager.Disabled)
             {
+                this.playerManager.MoveUp(GameSettings.TopOfGameOffset);
                 this.checkVictory();
+                this.movementAnimationTimer.Start();
             }
         }
 
@@ -470,17 +479,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            this.playerManager.MoveDown(this.roadHeight);
-            this.animateMoving(Direction.Down);
-        }
-
-        private void animateMoving(Direction down)
-        {
-            this.playerManager.Player.Sprite.Visibility = Visibility.Collapsed;
-            this.playerManager.MovingSprite.Visibility = Visibility.Visible;
-            Thread.Sleep(50);
-            this.playerManager.Player.Sprite.Visibility = Visibility.Visible;
-            this.playerManager.MovingSprite.Visibility = Visibility.Collapsed;
+            if (!this.playerManager.Disabled)
+            {
+                this.movementAnimationTimer.Start();
+                this.playerManager.MoveDown(this.roadHeight);
+            }
         }
 
         private void checkVictory()

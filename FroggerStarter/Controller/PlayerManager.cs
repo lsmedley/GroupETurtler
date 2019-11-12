@@ -293,7 +293,9 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void ToggleMovingSprite()
         {
-            //var trans = this.Player.Sprite.RenderTransform.GetValue(RotateTransform.AngleProperty);
+            var trans = this.Player.Sprite.RenderTransform;
+
+
             if (this.Player.Sprite == this.PlayerSprites[0])
             {
                 this.Player.ChangeSprite(this.MovingSprite);
@@ -304,7 +306,11 @@ namespace FroggerStarter.Controller
 
             }
 
-            //this.Player.Sprite.RenderTransform.SetValue(RotateTransform.AngleProperty, trans);
+            if (trans != null)
+            {
+                this.Player.Sprite.RenderTransform = trans;
+
+            }
             this.syncSpriteToLocation();
         }
 
