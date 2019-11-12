@@ -34,7 +34,6 @@ namespace FroggerStarter.Controller
         private Road road;
         private River river;
         private PlayerManager playerManager;
-        private HighScoreBoard highScoreBoard;
         private HomeManager homes;
         private PowerupManager powerUpManager;
 

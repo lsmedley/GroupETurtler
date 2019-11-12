@@ -208,9 +208,7 @@ namespace FroggerStarter.Controller
         public void TurnPlayer(Direction dir)
         {
             this.Player.Sprite.RenderTransformOrigin = new Point(0.5, 0.5);
-            var rt = new RotateTransform();
-            rt.CenterX = .5;
-            rt.CenterY = .5;
+            var rt = new RotateTransform {CenterX = .5, CenterY = .5};
 
             switch (dir)
             {
@@ -231,12 +229,6 @@ namespace FroggerStarter.Controller
                     this.Player.Sprite.RenderTransform = rt;
                     break;
             }
-        }
-
-        private void animateMovement(Direction dir)
-        {
-            this.TurnPlayer(dir);
-            this.Player.ChangeSprite(this.PlayerSprites[0]);
         }
 
         /// <summary>

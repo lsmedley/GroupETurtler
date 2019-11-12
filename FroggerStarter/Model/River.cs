@@ -3,16 +3,29 @@ using FroggerStarter.Utils;
 
 namespace FroggerStarter.Model
 {
+    /// <summary>
+    /// The River
+    /// </summary>
+    /// <seealso cref="FroggerStarter.Model.Road" />
     public class River : Road
     {
         #region Data members
 
+        /// <summary>
+        /// The start of river
+        /// </summary>
         public double StartOfRiver;
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="River"/> class.
+        /// </summary>
+        /// <param name="laneSettingsCollection">The collection of lane settings for this road's lanes.</param>
+        /// <param name="totalHeight">The total height of the road.</param>
+        /// <param name="laneLength">Length of the lanes.</param>
         public River(ICollection<LaneSettings> laneSettingsCollection, double totalHeight, double laneLength) : base(
             laneSettingsCollection, totalHeight, laneLength)
         {
@@ -52,8 +65,6 @@ namespace FroggerStarter.Model
         /// <returns></returns>
         public double MoveRiver(double laneLen, GameObject player)
         {
-            //double prevX = 0;
-            //double newX = 0;
             double changeX = 0;
 
             foreach (var debris in this)
@@ -66,7 +77,6 @@ namespace FroggerStarter.Model
 
             MoveLaneVehicles(laneLen);
 
-            //return newX - prevX;
             return changeX;
         }
 

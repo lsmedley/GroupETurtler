@@ -16,10 +16,9 @@ namespace FroggerStarter.Utils
         #region Methods
 
         /// <summary>
-        ///     Serializes the object.
+        /// Serializes the object.
         /// </summary>
-        /// <param name="list">The list.</param>
-        /// <param name="fileName">Name of the file.</param>
+        /// <param name="highScores">The high scores.</param>
         public static async Task SerializeObject(IList<HighScore> highScores)
         {
             var folder = ApplicationData.Current.LocalFolder;
@@ -53,10 +52,9 @@ namespace FroggerStarter.Utils
         }
 
         /// <summary>
-        ///     Deserializes the specified file name.
+        /// Deserializes the specified file name.
         /// </summary>
-        /// <param name="list">The list.</param>
-        /// <param name="fileName">Name of the file.</param>
+        /// <returns></returns>
         private static async Task<List<HighScore>> deserialize()
         {
             var folder = ApplicationData.Current.LocalFolder;

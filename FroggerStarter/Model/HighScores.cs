@@ -6,9 +6,10 @@ using FroggerStarter.Utils;
 
 namespace FroggerStarter.Model
 {
+
     /// <summary>
+    /// Manages high score tasks
     /// </summary>
-    /// <seealso cref="System.Collections.Generic.IList{FroggerStarter.Model.HighScore}" />
     public class HighScores
     {
         #region Properties
